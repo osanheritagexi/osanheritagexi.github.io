@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0f2747">
 <meta property="og:type" content="website">
-<meta property="og:title" content="집단민원 연명 · 오산헤리티지자이 1단지·2단지 입주예정자협의회">
+<meta property="og:title" content="집단민원 연명 · 오산헤리티지자이 입주예정자협의회">
 <meta property="og:description" content="참여 코드를 넣고 민원 내용을 확인한 뒤 제출해 주세요.">
 <meta property="og:image" content="https://osanheritagexi.github.io/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -278,6 +278,12 @@ const ags=[...document.querySelectorAll('.ag')];
 const opens=[...document.querySelectorAll('.item.open')];
 function syncAll(){ $('ag-all').checked=ags.every(x=>x.checked); if(ags.every(x=>x.checked)) err('ag-err',false); }
 // 내용 창 : 열어서 '동의합니다'를 눌러야만 체크됨
+// 제출 실패(이미 제출된 세대 등)를 화면 아래 글씨가 아니라 창으로 알림
+function alertSheet(title, msg){
+  const d=document.createElement('div'); d.innerHTML='<h3></h3><p class="warn" style="margin-top:4px"></p>';
+  d.querySelector('h3').textContent=title; d.querySelector('p').textContent=msg;
+  sheet(d,()=>{},'확인',null);
+}
 function sheet(src, done, yes, no){
   const bg=document.createElement('div'); bg.className='sheet-bg';
   bg.innerHTML='<div class="sheet" role="dialog" aria-modal="true"></div>';
@@ -289,6 +295,7 @@ function sheet(src, done, yes, no){
   const close=ok=>{ bg.remove(); document.body.classList.remove('lock'); done(ok); };
   b.querySelector('.no').onclick=()=>close(false);
   b.querySelector('.yes').onclick=()=>close(true);
+  if(no===null) b.querySelector('.no').remove();   // 버튼 하나짜리 안내 창
   bg.addEventListener('click',e=>{ if(e.target===bg) close(false); });
   document.body.appendChild(bg); document.body.classList.add('lock');
 }
@@ -367,11 +374,11 @@ $('form').addEventListener('submit',async e=>{
       agree:{sign:true,privacy:true,provide:true},website:$('website').value,ua:navigator.userAgent.slice(0,160)};
     const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
     const res=await r.json();
-    if(!res.ok){ $('submit-err').textContent=res.message||'제출하지 못했습니다. 다시 시도해 주세요.'; err('submit-err',true); btn.disabled=false; btn.textContent='제출하기'; return; }
+    if(!res.ok){ btn.disabled=false; btn.textContent='제출하기'; alertSheet('제출되지 않았습니다', res.message||'제출하지 못했습니다. 다시 시도해 주세요.'); return; }
     $('done-meta').textContent=CUR.title+' · '+dong+'동 '+ho+'호 · '+res.time;
     $('done-count').innerHTML='지금까지 <b>'+res.count+'</b>세대가 함께했습니다';
     show('done');
-  }catch(x){ $('submit-err').textContent='연결이 불안정합니다. 잠시 뒤 다시 눌러 주세요.'; err('submit-err',true); btn.disabled=false; btn.textContent='제출하기'; }
+  }catch(x){ btn.disabled=false; btn.textContent='제출하기'; alertSheet('제출되지 않았습니다', '연결이 불안정합니다. 잠시 뒤 다시 눌러 주세요.'); }
 });
 
 // 처음에는 서버 응답을 기다리지 않고 참여 코드 화면을 바로 보여 줌. 코드가 필요 없는 민원이면 응답이 오는 대로 넘어감
