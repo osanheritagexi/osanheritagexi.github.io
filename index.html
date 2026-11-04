@@ -221,7 +221,9 @@ async function load(bg){
     if(!res.ok) throw new Error(res.message||'');
     PETS = res.petitions||[];
     if(!PETS.length){ $('error-msg').textContent='지금 연명을 받고 있는 민원이 없습니다.'; show('error'); return; }
-    const want = new URLSearchParams(location.search).get('p');
+    // 링크 규칙 : osanheritagexi.github.io/?번호 (예전 ?p=민원ID 형식도 받음)
+    const first = location.search.slice(1).split('&')[0];
+    const want = new URLSearchParams(location.search).get('p') || (first && first.indexOf('=')<0 ? decodeURIComponent(first) : null);
     const hit = PETS.find(p=>p.id===want);
     if(hit||PETS.length===1){ openForm(hit||PETS[0]); return; }
     const box=$('list'); box.innerHTML='';
