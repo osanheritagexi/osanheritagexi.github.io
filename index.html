@@ -268,14 +268,26 @@ function openForm(p){
 
 /* 동·호수 : 숫자만 */
 // 동 3자리를 넣으면 호수로, 호수가 완성되면 휴대전화로 바로 넘어감
+function visArea(){ const vv=window.visualViewport, top=vv?vv.offsetTop:0; return [top, top+(vv?vv.height:innerHeight)]; }
+// 동·호수 칸에 처음 들어가 키보드가 다 올라오면, 동부터 휴대전화 칸까지 한 화면에 보이도록 한 번만 부드럽게 맞춤
+let fitT=null;
+function fitBlock(){ clearTimeout(fitT); fitT=setTimeout(()=>{
+  const a=document.activeElement; if(!a||['dong','ho'].indexOf(a.id)<0) return;
+  const [top,bot]=visArea(), t=$('dong').getBoundingClientRect().top, p=$('phone').getBoundingClientRect().bottom;
+  let d=0; if(p+12>bot) d=p+12-bot; if(t-d<top+8) d=t-top-8;   // 휴대전화 칸까지 보이게, 단 동 칸이 위로 가려지지 않게
+  if(d>2) window.scrollBy({top:d,behavior:'smooth'}); },180); }
+['dong','ho'].forEach(id=>$(id).addEventListener('focus',fitBlock));
+if(window.visualViewport) visualViewport.addEventListener('resize',fitBlock);
+// 다음 칸으로 넘길 때는 브라우저가 화면을 옮기지 않게 함(이미 한 화면에 보이도록 맞춰 둠)
+function moveTo(el){ el.focus({preventScroll:true}); }
 $('dong').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,3);
-  if(e.target.value.length===3) $('ho').focus(); });
+  if(e.target.value.length===3) moveTo($('ho')); });
 $('ho').addEventListener('input',e=>{ const v=e.target.value=e.target.value.replace(/\D/g,'').slice(0,4);
   // 9층 이하는 3자리(예: 302), 10층 이상은 4자리. 그 동에 실제로 있는 호수가 되면 넘어감
-  if(v.length===4 || (v.length===3 && validUnit($('dong').value,v))) $('phone').focus(); });
+  if(v.length===4 || (v.length===3 && validUnit($('dong').value,v))) moveTo($('phone')); });
 $('phone').addEventListener('input',e=>{ let d=e.target.value.replace(/\D/g,'').slice(0,11);
   e.target.value = d.length<4?d : d.length<8? d.slice(0,3)+'-'+d.slice(3) : d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7);
-  if(d.length===11) e.target.blur(); });   // 다 입력하면 키보드를 닫음
+});   // 다 입력해도 키보드를 억지로 닫지 않음(닫힐 때 화면이 튀는 것을 막기 위함)
 
 /* 동의 */
 const ags=[...document.querySelectorAll('.ag')];
@@ -345,7 +357,7 @@ cv.addEventListener('pointermove',e=>{ if(!drawing) return; e.preventDefault(); 
   inked+=Math.hypot(p[0]-last[0],p[1]-last[1]); strokes[strokes.length-1].push(p); ctx.lineTo(p[0],p[1]); ctx.stroke(); last=p; });
 ['pointerup','pointercancel','pointerleave'].forEach(t=>cv.addEventListener(t,()=>{ drawing=false; }));
 $('sig-clear').onclick=()=>{ strokes=[]; inked=0; redraw(); $('sigph').style.display='flex'; };
-window.addEventListener('resize',()=>{ if(!$('v-form').classList.contains('hidden')) sizeCanvas(); });
+let cvW=0; window.addEventListener('resize',()=>{ if($('v-form').classList.contains('hidden')) return; const w=cv.getBoundingClientRect().width; if(Math.abs(w-cvW)>1){ cvW=w; sizeCanvas(); } });   // 키보드가 열리고 닫힐 때(높이만 바뀔 때)는 다시 그리지 않음
 
 function sigData(){ // 서명 부분만 잘라 높이 120px PNG로
   const pts=strokes.flat(); if(!pts.length) return '';
