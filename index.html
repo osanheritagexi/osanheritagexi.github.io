@@ -61,7 +61,9 @@ canvas{display:block;width:100%;height:170px;border:1.5px dashed #c7c7cc;border-
 .sigph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#b0b0b5;font-size:14px;pointer-events:none}
 .sigtools{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
 .btn-txt{border:0;background:none;color:var(--navy);font:inherit;font-size:14px;font-weight:600;padding:4px 0}
-.submit{display:block;width:100%;height:54px;margin-top:24px;border:0;border-radius:14px;background:var(--navy);color:#fff;font:inherit;font-size:17px;font-weight:700}
+.once{margin-top:24px;padding:14px 16px;border-radius:12px;background:#fdf3f3;font-size:14px;line-height:1.6;color:#333}
+.once b{color:var(--red);font-size:15px}
+.submit{display:block;width:100%;height:54px;margin-top:14px;border:0;border-radius:14px;background:var(--navy);color:#fff;font:inherit;font-size:17px;font-weight:700}
 .submit:disabled{background:#9aa4b2}
 .notice{font-size:12.5px;color:var(--mute);margin-top:12px;line-height:1.6}
 .center{text-align:center;padding:40px 10px}
@@ -83,11 +85,11 @@ footer{padding:0 20px 30px;font-size:12px;color:#a1a1a6;text-align:center}
 <!-- 불러오는 중 -->
 <section id="v-loading" class="center"><div class="meta">불러오는 중입니다…</div></section>
 
-<!-- 입장 코드 -->
+<!-- 참여 코드 -->
 <section id="v-code" class="hidden">
- <p style="margin:0 0 4px;font-weight:700;font-size:17px">입장 코드를 입력해 주세요</p>
+ <p style="margin:0 0 4px;font-weight:700;font-size:17px">참여 코드를 입력해 주세요</p>
  <p class="meta" style="margin:0">입주예정자 카페·단톡방 공지에 안내된 코드입니다.</p>
- <input id="code" type="text" autocomplete="off" style="margin-top:14px" placeholder="입장 코드">
+ <input id="code" type="text" autocomplete="off" style="margin-top:14px" placeholder="참여 코드" autocapitalize="off" spellcheck="false">
  <div class="err" id="code-err">코드가 맞지 않습니다.</div>
  <button class="submit" id="code-go">확인</button>
 </section>
@@ -150,9 +152,10 @@ footer{padding:0 20px 30px;font-size:12px;color:#a1a1a6;text-align:center}
   <div class="sigtools"><span class="hint" style="margin:0">본인이 직접 서명해 주세요.</span><button type="button" class="btn-txt" id="sig-clear">다시 쓰기</button></div>
   <div class="err" id="sig-err">서명을 해 주세요.</div>
 
-  <button class="submit" id="submit" type="submit">연명하기</button>
+  <div class="once"><b>한 세대(동·호수)당 한 번만 제출할 수 있습니다.</b><br>공동명의 세대를 포함해 가족 중 한 분만 제출해 주세요. 같은 동·호수로 이미 제출되었다면 다시 제출되지 않습니다.</div>
+  <button class="submit" id="submit" type="submit">제출하기</button>
   <div class="err" id="submit-err" style="text-align:center"></div>
-  <p class="notice">한 세대(동·호수)는 민원마다 한 번만 연명할 수 있습니다. 연명을 취소하려면 협의회(oh.heritagexi@gmail.com)로 알려 주세요.</p>
+  <p class="notice">제출을 취소하려면 협의회(oh.heritagexi@gmail.com)로 알려 주세요.</p>
  </form>
 </section>
 
@@ -319,11 +322,11 @@ $('form').addEventListener('submit',async e=>{
       agree:{sign:true,privacy:true,provide:true},website:$('website').value,ua:navigator.userAgent.slice(0,160)};
     const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
     const res=await r.json();
-    if(!res.ok){ $('submit-err').textContent=res.message||'제출하지 못했습니다. 다시 시도해 주세요.'; err('submit-err',true); btn.disabled=false; btn.textContent='연명하기'; return; }
+    if(!res.ok){ $('submit-err').textContent=res.message||'제출하지 못했습니다. 다시 시도해 주세요.'; err('submit-err',true); btn.disabled=false; btn.textContent='제출하기'; return; }
     $('done-meta').textContent=CUR.title+' · '+dong+'동 '+ho+'호 · '+res.time;
     $('done-count').innerHTML='지금까지 <b>'+res.count+'</b>세대가 함께했습니다';
     show('done');
-  }catch(x){ $('submit-err').textContent='연결이 불안정합니다. 잠시 뒤 다시 눌러 주세요.'; err('submit-err',true); btn.disabled=false; btn.textContent='연명하기'; }
+  }catch(x){ $('submit-err').textContent='연결이 불안정합니다. 잠시 뒤 다시 눌러 주세요.'; err('submit-err',true); btn.disabled=false; btn.textContent='제출하기'; }
 });
 
 load();
