@@ -31,6 +31,7 @@ main{padding:20px 20px 40px}
 .badge{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:13px;font-size:12.5px;font-weight:600;background:#f0f2f6;color:var(--navy)}
 .badge.on{background:var(--navy);color:#fff}
 .meta{font-size:13px;color:var(--mute)}
+#done-meta{white-space:pre-line}
 .summary{white-space:pre-line;font-size:14.5px;color:#333;margin-top:10px}
 .doclink{display:inline-block;margin-top:10px;font-size:14px;color:var(--navy);font-weight:600;text-decoration:none}
 .pick{display:block;width:100%;text-align:left;background:#fff;cursor:pointer;font:inherit;color:inherit}
@@ -389,7 +390,7 @@ $('form').addEventListener('submit',async e=>{
     const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
     const res=await r.json();
     if(!res.ok){ btn.disabled=false; btn.textContent='제출하기'; alertSheet('제출되지 않았습니다', res.message||'제출하지 못했습니다. 다시 시도해 주세요.'); return; }
-    $('done-meta').textContent=CUR.title+' · '+dong+'동 '+ho+'호 · '+res.time;
+    $('done-meta').textContent=CUR.title+'\n'+dong+'동 '+ho+'호\n'+res.time;
     $('done-count').innerHTML='지금까지 <b>'+res.count+'</b>세대가 함께했습니다';
     show('done');
   }catch(x){ btn.disabled=false; btn.textContent='제출하기'; alertSheet('제출되지 않았습니다', '연결이 불안정합니다. 잠시 뒤 다시 눌러 주세요.'); }
