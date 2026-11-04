@@ -5,8 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0f2747">
+<meta property="og:type" content="website">
+<meta property="og:title" content="집단민원 연명 · 오산헤리티지자이 1단지·2단지 입주예정자협의회">
+<meta property="og:description" content="참여 코드를 넣고 민원 내용을 확인한 뒤 제출해 주세요.">
+<meta property="og:image" content="https://osanheritagexi.github.io/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <title>집단민원 연명 · 오산헤리티지자이 입주예정자협의회</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <style>
 :root{--navy:#0f2747;--sky:#8bbfe9;--ink:#1d1d1f;--mute:#6e6e73;--line:#e3e3e8;--soft:#f5f5f7;--red:#c00000;--ok:#1a7f37}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -54,6 +63,12 @@ input[type=checkbox]{width:20px;height:20px;margin:1px 0 0;accent-color:var(--na
 .sheet .btns button{flex:1;height:52px;border-radius:14px;font:inherit;font-size:16px;font-weight:700}
 .sheet .no{border:1px solid var(--line);background:#fff;color:var(--ink)}
 .sheet .yes{border:0;background:var(--navy);color:#fff;flex:2!important}
+.sheet .warn{margin:16px 0 0;padding:12px 14px;border-radius:10px;background:#fdf3f3;color:var(--red);font-size:13.5px;font-weight:600;line-height:1.55}
+.goal{margin:12px 0 2px}
+.goal .bar{height:6px;border-radius:3px;background:#eef1f5;overflow:hidden}
+.goal .bar i{display:block;height:100%;background:var(--navy);border-radius:3px}
+.goal .gt{font-size:12.5px;color:var(--mute);margin-top:6px}
+.goal .gt b{color:var(--navy)}
 body.lock{overflow:hidden}
 .req{color:var(--red);font-weight:600;font-size:12px;margin-right:6px}
 .sigwrap{position:relative;margin-top:6px}
@@ -112,13 +127,13 @@ footer{padding:0 20px 30px;font-size:12px;color:#a1a1a6;text-align:center}
   <div class="err" id="name-err">성명을 입력해 주세요.</div>
 
   <div class="row">
-   <div><label class="f" for="dong">동</label><div class="unit"><input id="dong" type="tel" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="예: 101"><span>동</span></div></div>
-   <div><label class="f" for="ho">호수</label><div class="unit"><input id="ho" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="예: 1202"><span>호</span></div></div>
+   <div><label class="f" for="dong">동</label><div class="unit"><input id="dong" type="tel" inputmode="numeric" maxlength="3" autocomplete="off" enterkeyhint="next" placeholder="예: 101"><span>동</span></div></div>
+   <div><label class="f" for="ho">호수</label><div class="unit"><input id="ho" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" enterkeyhint="next" placeholder="예: 1202, 302"><span>호</span></div></div>
   </div>
   <div class="err" id="dongho-err">동과 호수를 확인해 주세요.</div>
 
   <label class="f" for="phone">휴대전화</label>
-  <input id="phone" type="tel" inputmode="numeric" maxlength="13" autocomplete="tel" placeholder="010-0000-0000">
+  <input id="phone" type="tel" inputmode="numeric" maxlength="13" autocomplete="tel" enterkeyhint="done" placeholder="010-0000-0000">
   <div class="hint">허위 연명 확인과 민원 처리기관의 확인 요청에만 쓰며, 민원 처리결과를 받은 뒤 30일이 지나면 삭제합니다.</div>
   <div class="err" id="phone-err">휴대전화 번호를 확인해 주세요.</div>
 
@@ -196,10 +211,13 @@ async function api(params){
   const r = await fetch(API_URL + (API_URL.includes('?')?'&':'?') + q, {method:'GET'});
   return r.json();
 }
-async function load(){
+let REQ=0;
+async function load(bg){
+  const my=++REQ;
   try{
     const res = await api({action:'list', code:CODE});
-    if(res.needCode){ show('code'); if(CODE){ $('code-err').style.display='block'; } return; }
+    if(my!==REQ) return;   // 그사이 새 요청을 했으면 이 응답은 버림
+    if(res.needCode){ if(!bg) show('code'); if(CODE){ failCode(); } return; }
     if(!res.ok) throw new Error(res.message||'');
     PETS = res.petitions||[];
     if(!PETS.length){ $('error-msg').textContent='지금 연명을 받고 있는 민원이 없습니다.'; show('error'); return; }
@@ -212,18 +230,32 @@ async function load(){
       b.querySelector('.meta').textContent=p.org+(p.deadline?' · '+p.deadline+'까지':'')+' · '+p.count+'세대 연명';
       b.onclick=()=>openForm(p); box.appendChild(b); });
     show('list');
-  }catch(e){ $('error-msg').textContent='연결에 실패했습니다. 잠시 뒤 다시 열어 주세요.'; show('error'); }
+  }catch(e){ if(my!==REQ||bg) return; $('error-msg').textContent='연결에 실패했습니다. 잠시 뒤 다시 열어 주세요.'; show('error'); }
 }
-$('code-go').onclick=()=>{ CODE=$('code').value.trim(); $('code-err').style.display='none'; show('loading'); load(); };
+// 참여 코드를 5번 틀리면 이 기기에서 10분 동안 입력을 막음
+function lockInfo(){ try{ return JSON.parse(localStorage.getItem('codeFail')||'{}'); }catch(e){ return {}; } }
+function saveLock(o){ try{ localStorage.setItem('codeFail',JSON.stringify(o)); }catch(e){} }
+function lockedMin(){ const o=lockInfo(); return o.until&&o.until>Date.now() ? Math.ceil((o.until-Date.now())/60000) : 0; }
+function failCode(){ const o=lockInfo(); if(o.until&&o.until<=Date.now()){ o.n=0; o.until=0; }
+  o.n=(o.n||0)+1; if(o.n>=5){ o.until=Date.now()+10*60000; o.n=0; } saveLock(o);
+  const m=lockedMin(); $('code-err').textContent=m?'코드를 5번 잘못 입력했습니다. '+m+'분 뒤에 다시 입력해 주세요.':'코드가 맞지 않습니다.'; $('code-err').style.display='block'; }
+$('code-go').onclick=()=>{ const m=lockedMin(); if(m){ $('code-err').textContent='코드를 5번 잘못 입력했습니다. '+m+'분 뒤에 다시 입력해 주세요.'; $('code-err').style.display='block'; return; }
+  CODE=$('code').value.trim(); $('code-err').style.display='none'; show('loading'); load(); };
 $('code').addEventListener('keydown',e=>{ if(e.key==='Enter') $('code-go').click(); });
 
+function dday(iso){ if(!iso) return null; const t=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Seoul'})); t.setHours(0,0,0,0);
+  const d=new Date(iso+'T00:00:00'); return Math.round((d-t)/86400000); }
 function openForm(p){
   CUR=p; const c=$('pcard'); c.innerHTML='';
   const bd=document.createElement('div'); bd.className='badges';
   const badge=(t,cls)=>{ const s=document.createElement('span'); s.className='badge'+(cls?' '+cls:''); s.textContent=t; bd.appendChild(s); };
-  badge('제출 · '+p.org); if(p.deadline) badge(p.deadline+'까지'); badge(p.count+'세대 연명','on');
+  badge('제출 · '+p.org); const dd=dday(p.deadlineISO); if(p.deadline) badge(dd===0?'오늘 마감':(dd>0?'D-'+dd+' · ':'')+p.deadline+'까지'); badge(p.count+'세대 연명','on');
   c.appendChild(bd);
   const h=document.createElement('h2'); h.textContent=p.title; c.appendChild(h);
+  // 단계 목표 : 100세대씩 올라감 (0~99 → 100, 100~199 → 200 …)
+  const goal=Math.max(100,(Math.floor(p.count/100)+1)*100), g=document.createElement('div'); g.className='goal';
+  g.innerHTML='<div class="bar"><i></i></div><div class="gt">목표 '+goal.toLocaleString()+'세대 중 <b>'+p.count.toLocaleString()+'</b>세대</div>';
+  g.querySelector('i').style.width=Math.min(100,p.count/goal*100)+'%'; c.appendChild(g);
   if(p.summary){ const s=document.createElement('div'); s.className='summary'; s.textContent=p.summary; c.appendChild(s); }
   if(p.docUrl){ const a=document.createElement('a'); a.className='doclink'; a.href=p.docUrl; a.target='_blank'; a.rel='noopener'; a.textContent='제출할 의견서 전문 보기 ›'; c.appendChild(a); }
   ORG=p.org+' 등 해당 민원의 처리기관';
@@ -231,23 +263,29 @@ function openForm(p){
 }
 
 /* 동·호수 : 숫자만 */
-$('dong').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,3); });
-$('ho').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,4); });
+// 동 3자리를 넣으면 호수로, 호수가 완성되면 휴대전화로 바로 넘어감
+$('dong').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,3);
+  if(e.target.value.length===3) $('ho').focus(); });
+$('ho').addEventListener('input',e=>{ const v=e.target.value=e.target.value.replace(/\D/g,'').slice(0,4);
+  // 9층 이하는 3자리(예: 302), 10층 이상은 4자리. 그 동에 실제로 있는 호수가 되면 넘어감
+  if(v.length===4 || (v.length===3 && validUnit($('dong').value,v))) $('phone').focus(); });
 $('phone').addEventListener('input',e=>{ let d=e.target.value.replace(/\D/g,'').slice(0,11);
-  e.target.value = d.length<4?d : d.length<8? d.slice(0,3)+'-'+d.slice(3) : d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7); });
+  e.target.value = d.length<4?d : d.length<8? d.slice(0,3)+'-'+d.slice(3) : d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7);
+  if(d.length===11) e.target.blur(); });   // 다 입력하면 키보드를 닫음
 
 /* 동의 */
 const ags=[...document.querySelectorAll('.ag')];
 const opens=[...document.querySelectorAll('.item.open')];
 function syncAll(){ $('ag-all').checked=ags.every(x=>x.checked); if(ags.every(x=>x.checked)) err('ag-err',false); }
 // 내용 창 : 열어서 '동의합니다'를 눌러야만 체크됨
-function sheet(tid, done){
+function sheet(src, done, yes, no){
   const bg=document.createElement('div'); bg.className='sheet-bg';
   bg.innerHTML='<div class="sheet" role="dialog" aria-modal="true"></div>';
-  const s=bg.firstChild; s.appendChild($(tid).content.cloneNode(true));
+  const s=bg.firstChild; s.appendChild(typeof src==='string'?$(src).content.cloneNode(true):src);
   s.querySelectorAll('.ag3-org').forEach(x=>x.textContent=ORG);
   const b=document.createElement('div'); b.className='btns';
-  b.innerHTML='<button type="button" class="no">닫기</button><button type="button" class="yes">동의합니다</button>'; s.appendChild(b);
+  b.innerHTML='<button type="button" class="no"></button><button type="button" class="yes"></button>'; s.appendChild(b);
+  b.querySelector('.no').textContent=no||'닫기'; b.querySelector('.yes').textContent=yes||'동의합니다';
   const close=ok=>{ bg.remove(); document.body.classList.remove('lock'); done(ok); };
   b.querySelector('.no').onclick=()=>close(false);
   b.querySelector('.yes').onclick=()=>close(true);
@@ -316,6 +354,13 @@ $('form').addEventListener('submit',async e=>{
   bad|=err('ag-err',!ags.every(a=>a.checked));
   bad|=err('sig-err',inked<40);
   if(bad){ const f=document.querySelector('.err[style*="block"]'); if(f) f.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  // 제출 전 확인 창 : 같은 동·호수로는 다시 제출할 수 없어 한 번 더 확인받음
+  const cf=document.createElement('div');
+  cf.innerHTML='<h3>제출 내용을 확인해 주세요</h3><dl><dt>민원</dt><dd></dd><dt>제출 기관</dt><dd></dd><dt>성명</dt><dd></dd><dt>동·호수</dt><dd></dd><dt>휴대전화</dt><dd></dd></dl>'+
+    '<p class="warn">같은 동·호수로는 다시 제출할 수 없습니다. 동·호수가 맞는지 꼭 확인해 주세요.</p>';
+  const dds=cf.querySelectorAll('dd'); [CUR.title,CUR.org,name,dong+'동 '+ho+'호',$('phone').value].forEach((v,i)=>dds[i].textContent=v);
+  const ok=await new Promise(r=>sheet(cf,r,'제출합니다','다시 확인'));
+  if(!ok) return;
   const btn=$('submit'); btn.disabled=true; btn.textContent='제출하는 중…'; err('submit-err',false);
   try{
     const body={action:'sign',code:CODE,petitionId:CUR.id,name,danji,dong,ho,phone,signature:sigData(),
@@ -329,7 +374,8 @@ $('form').addEventListener('submit',async e=>{
   }catch(x){ $('submit-err').textContent='연결이 불안정합니다. 잠시 뒤 다시 눌러 주세요.'; err('submit-err',true); btn.disabled=false; btn.textContent='제출하기'; }
 });
 
-load();
+// 처음에는 서버 응답을 기다리지 않고 참여 코드 화면을 바로 보여 줌. 코드가 필요 없는 민원이면 응답이 오는 대로 넘어감
+show('code'); load(true);
 </script>
 </body>
 </html>
