@@ -260,7 +260,9 @@ function openForm(p){
   const goal=Math.max(100,(Math.floor(p.count/100)+1)*100), g=document.createElement('div'); g.className='goal';
   g.innerHTML='<div class="bar"><i></i></div><div class="gt">목표 '+goal.toLocaleString()+'세대 중 <b>'+p.count.toLocaleString()+'</b>세대</div>';
   g.querySelector('i').style.width=Math.min(100,p.count/goal*100)+'%'; c.appendChild(g);
-  if(p.summary){ const s=document.createElement('div'); s.className='summary'; s.textContent=p.summary; c.appendChild(s); }
+  if(p.summary){ const s=document.createElement('div'); s.className='summary';
+    // 본문의 '[ ]세대'는 지금까지 모인 세대수로 채워 보여 줌(아직 없으면 ○○)
+    s.textContent=p.summary.replace(/\[ \]세대/g, p.count ? Number(p.count).toLocaleString('ko-KR')+'세대' : '○○세대'); c.appendChild(s); }
   if(p.docUrl){ const a=document.createElement('a'); a.className='doclink'; a.href=p.docUrl; a.target='_blank'; a.rel='noopener'; a.textContent='제출할 의견서 전문 보기 ›'; c.appendChild(a); }
   ORG=p.org+' 등 해당 민원의 처리기관';
   show('form'); setTimeout(sizeCanvas,0);
