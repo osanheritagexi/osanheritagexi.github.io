@@ -33,6 +33,9 @@ main{padding:20px 20px 40px}
 .meta{font-size:13px;color:var(--mute)}
 #done-meta{white-space:pre-line}
 .summary{white-space:pre-line;font-size:14.5px;color:#333;margin-top:10px}
+.summary.fold{max-height:17.5em;overflow:hidden;position:relative}
+.summary.fold::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3.5em;background:linear-gradient(rgba(255,255,255,0),#fff)}
+.more{display:block;width:100%;height:42px;margin-top:10px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--navy);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .doclink{display:inline-block;margin-top:10px;font-size:14px;color:var(--navy);font-weight:600;text-decoration:none}
 .pick{display:block;width:100%;text-align:left;background:#fff;cursor:pointer;font:inherit;color:inherit}
 .pick:active{background:var(--soft)}
@@ -68,7 +71,7 @@ input[type=checkbox]{width:20px;height:20px;margin:1px 0 0;accent-color:var(--na
 .goal{margin:12px 0 2px}
 .goal .bar{height:6px;border-radius:3px;background:#eef1f5;overflow:hidden}
 .goal .bar i{display:block;height:100%;background:var(--navy);border-radius:3px}
-.goal .gt{font-size:12.5px;color:var(--mute);margin-top:6px}
+.goal .gt{font-size:12.5px;color:var(--mute);margin-top:6px;display:flex;justify-content:space-between;gap:8px}
 .goal .gt b{color:var(--navy)}
 body.lock{overflow:hidden}
 .req{color:var(--red);font-weight:600;font-size:12px;margin-right:6px}
@@ -253,16 +256,23 @@ function openForm(p){
   CUR=p; const c=$('pcard'); c.innerHTML='';
   const bd=document.createElement('div'); bd.className='badges';
   const badge=(t,cls)=>{ const s=document.createElement('span'); s.className='badge'+(cls?' '+cls:''); s.textContent=t; bd.appendChild(s); };
-  badge('제출 · '+p.org); const dd=dday(p.deadlineISO); if(p.deadline) badge(dd===0?'오늘 마감':(dd>0?'D-'+dd+' · ':'')+p.deadline+'까지'); badge(p.count+'세대 연명','on');
+  badge('제출 · '+p.org); badge(p.count+'세대 연명','on');
   c.appendChild(bd);
   const h=document.createElement('h2'); h.textContent=p.title; c.appendChild(h);
-  // 단계 목표 : 100세대씩 올라감 (0~99 → 100, 100~199 → 200 …)
-  const goal=Math.max(100,(Math.floor(p.count/100)+1)*100), g=document.createElement('div'); g.className='goal';
-  g.innerHTML='<div class="bar"><i></i></div><div class="gt">목표 '+goal.toLocaleString()+'세대 중 <b>'+p.count.toLocaleString()+'</b>세대</div>';
+  // 목표 400세대, 넘으면 100세대 단위로 올라감. 마감일은 막대 오른쪽에 'D-n · 월/일'로 표시
+  const goal=p.count<400?400:(Math.floor(p.count/100)+1)*100, g=document.createElement('div'); g.className='goal';
+  const dd=dday(p.deadlineISO), md=p.deadlineISO?(+p.deadlineISO.slice(5,7))+'/'+(+p.deadlineISO.slice(8,10)):'';
+  const dl=!md?'':(dd===0?'<b>오늘 마감</b> · '+md:(dd>0?'<b>D-'+dd+'</b> · '+md:md+' 마감'));
+  g.innerHTML='<div class="bar"><i></i></div><div class="gt"><span>목표 '+goal.toLocaleString()+'세대 중 <b>'+p.count.toLocaleString()+'</b>세대</span><span>'+dl+'</span></div>';
   g.querySelector('i').style.width=Math.min(100,p.count/goal*100)+'%'; c.appendChild(g);
   if(p.summary){ const s=document.createElement('div'); s.className='summary';
     // 본문의 '[ ]세대'는 지금까지 모인 세대수로 채워 보여 줌(아직 없으면 ○○)
-    s.textContent=p.summary.replace(/\[ \]세대/g, p.count ? Number(p.count).toLocaleString('ko-KR')+'세대' : '○○세대'); c.appendChild(s); }
+    s.textContent=p.summary.replace(/\[ \]세대/g, p.count ? Number(p.count).toLocaleString('ko-KR')+'세대' : '○○세대'); c.appendChild(s);
+    // 본문이 길면 앞부분만 보여 주고 '전체 펼치기'로 엶
+    if(p.summary.length>350){ s.classList.add('fold'); const mb=document.createElement('button'); mb.type='button'; mb.className='more'; mb.textContent='전체 펼치기';
+      mb.onclick=()=>{ const f=s.classList.toggle('fold'); mb.textContent=f?'전체 펼치기':'접기';
+        if(f){ const t=s.getBoundingClientRect().top; if(t<0) window.scrollBy({top:t-80,behavior:'smooth'}); } };
+      c.appendChild(mb); } }
   if(p.docUrl){ const a=document.createElement('a'); a.className='doclink'; a.href=p.docUrl; a.target='_blank'; a.rel='noopener'; a.textContent='제출할 의견서 전문 보기 ›'; c.appendChild(a); }
   ORG=p.org+' 등 해당 민원의 처리기관';
   show('form'); setTimeout(sizeCanvas,0);
