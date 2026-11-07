@@ -464,8 +464,8 @@ const ti = t => TYPES.indexOf(t);
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
 const views = ['loading','code','intro','step','done','error'];
-function view(v){ views.forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v)); $('nav').classList.toggle('hidden',!['code','intro','step','done'].includes(v)); window.scrollTo(0,0); }
-let CODE='', INFO=null, TYPE='', DONG='', HO='', A={}, STEPS=[], CUR=0, BACK_TO_REVIEW=false;
+function view(v){ views.forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v)); $('nav').classList.toggle('hidden',!['code','intro','step','done'].includes(v)); window.scrollTo(0,0); if(v==='step'||v==='done') arm(); }
+let CODE='', INFO=null, TYPE='', DONG='', HO='', A={}, STEPS=[], CUR=0, BACK_TO_REVIEW=false, RESUME=0;
 
 async function api(params){
   const q=new URLSearchParams(params).toString();
@@ -528,7 +528,8 @@ function showIntro(){
   else if(draft) $('prev-meta').textContent=DONG+'동 '+HO+'호'+(TYPE?' · '+TYPE:'')+'. 아래 \'이어서 하기\'를 누르면 이어서 작성합니다.';
   view('intro'); setNav('intro', d?'다시 응답하기':(draft?'이어서 하기':'시작하기'), true); loadPhotos();
 }
-function start(){ buildSteps(); go(0); }
+function start(){ buildSteps();   // 작성 중이던 응답은 마지막으로 보던 문항부터 이어서 함
+  const r=(!doneInfo()&&DONG&&HO&&TYPE)?Math.min(RESUME,STEPS.length-1):0; RESUME=0; go(r>0?r:0); }
 
 /* ---------- 문항 목록 ---------- */
 function buildSteps(){
@@ -888,8 +889,8 @@ function total(){
 }
 
 /* ---------- 이 기기에서 쓰던 응답 기억 (다른 사람에게는 보이지 않음) ---------- */
-function save(){ try{ localStorage.setItem('optDraft2',JSON.stringify({dong:DONG,ho:HO,type:TYPE,A})); }catch(e){} }
-function restore(){ try{ const d=JSON.parse(localStorage.getItem('optDraft2')||'null'); if(!d) return; DONG=d.dong||''; HO=d.ho||''; TYPE=typeOf(DONG,HO); if(TYPE&&TYPE===d.type) A=d.A||{}; }catch(e){} }
+function save(){ try{ localStorage.setItem('optDraft2',JSON.stringify({dong:DONG,ho:HO,type:TYPE,A,cur:CUR})); }catch(e){} }
+function restore(){ try{ const d=JSON.parse(localStorage.getItem('optDraft2')||'null'); if(!d) return; DONG=d.dong||''; HO=d.ho||''; TYPE=typeOf(DONG,HO); if(TYPE&&TYPE===d.type){ A=d.A||{}; RESUME=+d.cur||0; } }catch(e){} }
 function devId(){ try{ let d=localStorage.getItem('optDev'); if(!/^[a-z0-9]{8,40}$/.test(d||'')){ d=(Math.random().toString(36).slice(2)+Date.now().toString(36)).replace(/[^a-z0-9]/g,'').slice(0,30); localStorage.setItem('optDev',d); } return d; }catch(e){ return window.__dev||(window.__dev=(Math.random().toString(36).slice(2)+Date.now().toString(36)).replace(/[^a-z0-9]/g,'').slice(0,30)); } }
 function doneInfo(){ try{ return JSON.parse(localStorage.getItem('optDone')||'null'); }catch(e){ return null; } }
 
@@ -1022,9 +1023,21 @@ function renderResults(){
   ITEMS.forEach(it=>{ const c=(d.items||{})[it.id]; if(c) row(it.name,c); });
 }
 
-/* 휴대폰 뒤로 가기 : 이전 문항으로 */
-window.addEventListener('popstate',()=>{ if(!$('v-step').classList.contains('hidden') && CUR>0){ go(CUR-1); try{ history.pushState({s:CUR},''); }catch(e){} } });
-try{ history.pushState({s:0},''); }catch(e){}
+/* 휴대폰 뒤로 가기 : 페이지를 닫지 않고 이전 화면으로
+   문항 화면에 들어가거나 화면을 누를 때 기록을 하나 쌓아 둠(누르지 않고 쌓은 기록은 브라우저가 건너뛰기 때문) */
+let GUARD=false;
+function arm(){ if(GUARD) return; try{ history.pushState({g:1},''); GUARD=true; }catch(e){} }
+document.addEventListener('pointerdown',()=>{ if(!$('v-step').classList.contains('hidden')||!$('v-done').classList.contains('hidden')) arm(); },true);
+window.addEventListener('popstate',()=>{
+  GUARD=false;
+  const lb=document.querySelector('.lbx'), sb=document.querySelector('.sheet-bg');
+  if(lb) lb.click();                                                  // 크게 본 사진 닫기
+  else if(sb){ const b=sb.querySelector('.no')||sb.querySelector('.yes'); b.click(); }   // 아래 창 닫기
+  else if(!$('v-step').classList.contains('hidden')){ if(CUR>0) go(CUR-1); else showIntro(); return; }
+  else if(!$('v-done').classList.contains('hidden')){ showIntro(); return; }
+  else return;                                                        // 참여 코드·첫 화면에서는 그대로 나감
+  arm();
+});
 
 // 처음에는 서버 응답을 기다리지 않고 참여 코드 화면을 바로 보여 줌
 if(!API_URL){ $('error-msg').textContent='설문 서버 주소가 아직 설정되지 않았습니다.'; view('error'); }
