@@ -175,10 +175,23 @@ footer{padding:0 22px 140px;font-size:12px;color:#a1a1a6;text-align:center}
 .typeout{margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--sel);font-size:15px}
 .typeout b{font-size:20px;color:var(--navy);margin-right:6px}
 .ov h4{font-size:13px;color:var(--mute);margin:20px 0 4px;font-weight:700}
-.ov .r{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #f0f0f3;font-size:15px}
-.ov .r span:last-child{font-weight:700;color:var(--navy);white-space:nowrap;text-align:right}
+.ov .r{display:flex;align-items:flex-start;gap:10px;width:100%;padding:12px 0;border:0;border-bottom:1px solid #f0f0f3;background:none;font:inherit;font-size:15px;color:var(--ink);text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ov .r .nm{flex:1;min-width:0}
+.ov .r .pv{font-weight:700;color:var(--navy);white-space:nowrap;text-align:right}
 .ov .r small{display:block;font-size:12.5px;color:var(--mute);font-weight:400}
-.ov .note{margin-top:16px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:13.5px;color:#333;line-height:1.6}
+.ov .r .chev{flex:0 0 14px;height:14px;margin-top:4px;background:no-repeat center/12px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%236e6e73' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");transition:transform .2s}
+.ov .r.open{border-bottom-color:transparent}
+.ov .r.open .chev{transform:rotate(180deg)}
+.ov .dt{margin:0 0 4px;padding:4px 14px 10px;border-radius:12px;background:var(--soft);border-bottom:1px solid #f0f0f3}
+.ov .dt .l{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:9px 0;font-size:14px;line-height:1.5}
+.ov .dt .l+.l{border-top:1px solid #e9e9ee}
+.ov .dt .l span{flex:1;min-width:0}
+.ov .dt .l small{display:block;font-size:12.5px;color:var(--mute)}
+.ov .dt .l b{font-weight:700;color:var(--navy);white-space:nowrap;text-align:right}
+.ov .dt .l b small{font-weight:500}
+.ov .dt .t{padding:9px 0 2px;font-size:12.5px;color:var(--mute);line-height:1.55}
+.ovtip{font-size:13px;color:var(--mute);margin:10px 0 0}
+.ov .note{margin-top:16px;padding:12px 14px 12px 30px;border-radius:12px;background:var(--soft);font-size:13.5px;color:#333;line-height:1.6}
 .ov .note li+li{margin-top:4px}
 .rooms{display:flex;flex-wrap:wrap;gap:6px}
 .rooms button{height:40px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer}
@@ -577,18 +590,34 @@ function stepOverview(st){
   const i=ti(TYPE), box=el('div','ov');
   st.appendChild(el('div','q',TYPE+' 타입 옵션<br>한눈에 보기'));
   st.appendChild(el('p','d','우리 집에서 고를 수 있는 유상옵션과 공급금액입니다(모집공고 옵션표 기준, 부가세 포함). 다음 화면부터 하나씩 여쭙니다.'));
-  const row=(name,small,val)=>{ const r=el('div','r','<span></span><span></span>'); r.children[0].innerHTML=esc(name)+(small?'<small>'+esc(small)+'</small>':''); r.children[1].innerHTML=val; box.appendChild(r); };
+  st.appendChild(el('p','ovtip','항목을 누르면 구성별 금액과 포함 품목이 펼쳐집니다.'));
+  // 한 줄 = 누르면 세부 내용이 펼쳐지는 버튼
+  const row=(name,small,val,detail)=>{
+    const r=el('button','r','<span class="nm"></span><span class="pv"></span><i class="chev" aria-hidden="true"></i>'); r.type='button';
+    r.children[0].innerHTML=esc(name)+(small?'<small>'+esc(small)+'</small>':''); r.children[1].innerHTML=val;
+    const d=el('div','dt hidden',detail); r.setAttribute('aria-expanded','false');
+    r.onclick=()=>{ const open=d.classList.toggle('hidden')===false; r.classList.toggle('open',open); r.setAttribute('aria-expanded',String(open)); };
+    box.appendChild(r); box.appendChild(d); };
+  const ln=(label,sub,price)=>'<div class="l"><span>'+label+(sub?'<small>'+sub+'</small>':'')+'</span><b>'+price+'</b></div>';
+  const tx=s=>'<div class="t">'+s+'</div>';
   const ac=AC[TYPE], ap=AP[TYPE];
   box.appendChild(el('h4',null,'냉난방·공기'));
-  row('천장형 시스템에어컨', ac.map(r=>r[0]+'대').join(' · ')+' 구성 중 선택', man(ac[0][2])+'~'+man(ac[ac.length-1][2]));
-  row('시스템 공기청정기', ap.length+'개 선택안 · 환기PLUS 추가 가능', man(ap[0][3])+'~'+man(ap[ap.length-1][4]));
+  row('천장형 시스템에어컨', ac.map(r=>r[0]+'대').join(' · ')+' 구성 중 선택', man(ac[0][2])+'~'+man(ac[ac.length-1][2]),
+    ac.map(r=>ln('옵션 '+r[0]+'대', esc(r[1])+(r[3]?' · '+esc(r[3]):''), man(r[2]))).join('')+tx('구성마다 설치되는 방이 정해져 있음. 옵션표에 없는 구성은 에어컨 문항에서 희망을 받음.'));
+  row('시스템 공기청정기', ap.length+'개 선택안 · 환기PLUS 추가 가능', man(ap[0][3])+'~'+man(ap[ap.length-1][4]),
+    ap.map(r=>ln('선택'+r[0]+' · '+r[1]+'대', esc(r[2]), man(r[3])+'<small>환기PLUS 포함 '+man(r[4])+'</small>')).join('')+tx('프리미엄환기PLUS(1대)를 더하면 작은 글씨 금액이 됨.'));
   const kitB=KIT.price[i]===BASE, intB=INT.price[i][1]===BASE;
+  const partsHtml=k=>partsFor(k).map(p=>ln(esc(p.name), p.small?esc(p.small):'', '')).join('');
   if(!kitB||!intB){ box.appendChild(el('h4',null,'묶음 옵션 (Style Up)'));
-    if(!kitB) row('주방 Style Up', partsFor('kit').length+'개 품목 묶음', man(KIT.price[i]));
-    if(!intB) row('인테리어 Style Up', '주방 Style Up과 함께 계약하면 '+man(INT.price[i][1]), man(INT.price[i][0])); }
+    if(!kitB) row('주방 Style Up', partsFor('kit').length+'개 품목 묶음', man(KIT.price[i]),
+      partsHtml('kit')+ln('묶음 금액','',man(KIT.price[i]))+tx('위 품목을 하나로 묶어 파는 옵션으로, 품목별로 따로 계약할 수 없음(옵션표 기준).'));
+    if(!intB) row('인테리어 Style Up', '주방 Style Up과 함께 계약하면 '+man(INT.price[i][1]), man(INT.price[i][0]),
+      partsHtml('int')+ln('인테리어 Style Up만 계약','',man(INT.price[i][0]))+ln('주방 Style Up과 함께 계약','',man(INT.price[i][1]))+tx('품목별로 따로 계약할 수 없는 묶음 옵션임(옵션표 기준).')); }
   let g='';
   ITEMS.forEach(it=>{ const p=it.price[i]; if(p===null||p===BASE) return; if(g!==it.group){ g=it.group; box.appendChild(el('h4',null,g)); }
-    const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc; row(it.name, ds&&ds.length<30?ds:'', p==='free'?'무상':man(p)); });
+    const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc, pv=p==='free'?'무상':man(p);
+    const shortDs=ds&&ds.length<30;
+    row(it.name, shortDs?ds:'', pv, ln('공급금액', ds&&!shortDs?esc(ds):'', pv)+tx(ABOUT[it.id])); });
   // 모두 고를 때 최대 금액
   let mx=ac[ac.length-1][2]+Math.max(...ap.map(r=>r[4]));
   if(!kitB) mx+=KIT.price[i]; if(!intB) mx+=INT.price[i][1];
