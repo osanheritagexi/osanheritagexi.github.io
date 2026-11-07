@@ -169,6 +169,22 @@ input:focus,textarea:focus{outline:none;border-color:var(--navy)}
 .sheet .warn.red{background:#fdf3f3;color:var(--red)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 footer{padding:0 22px 140px;font-size:12px;color:#a1a1a6;text-align:center}
+.about{margin:0 0 14px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);font-size:14px;color:#333;line-height:1.6}
+.about b{display:block;font-size:12.5px;color:var(--navy);margin-bottom:2px}
+.about .base{display:block;margin-top:6px;font-size:12.5px;color:var(--mute)}
+.typeout{margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--sel);font-size:15px}
+.typeout b{font-size:20px;color:var(--navy);margin-right:6px}
+.ov h4{font-size:13px;color:var(--mute);margin:20px 0 4px;font-weight:700}
+.ov .r{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #f0f0f3;font-size:15px}
+.ov .r span:last-child{font-weight:700;color:var(--navy);white-space:nowrap;text-align:right}
+.ov .r small{display:block;font-size:12.5px;color:var(--mute);font-weight:400}
+.ov .note{margin-top:16px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:13.5px;color:#333;line-height:1.6}
+.ov .note li+li{margin-top:4px}
+.rooms{display:flex;flex-wrap:wrap;gap:6px}
+.rooms button{height:40px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer}
+.rooms button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.inline .cntv{margin-top:10px;font-size:13.5px;color:#333}
+.inline .warn{margin-top:8px;font-size:13px;color:var(--red)}
 </style>
 </head>
 <body>
@@ -272,7 +288,7 @@ const ITEMS = [
   selfNote:'모두 폭 120cm 기준 추정치임. 자동중문은 전원공사 포함 금액임.',
   op:{optS:'가벽 철거 포함, 사제 고장 잦았다는 경험담',selfS:'수동 중문은 사제만 가능, 개별 시공 만족도 높았다는 경험담',opt:['옵션으로 하면 가벽도 터 준다는 의견','사제 중문이 고장이 잦아 이번엔 옵션으로 하겠다는 경험담'],
       self:['옵션은 자동만 있어 수동을 원하면 사제밖에 없다는 의견','박람회에서 개별로 한 세대의 만족도가 옵션보다 높았다는 경험담']}},
- {id:'bath', group:'개별 옵션', name:'욕실 특화', desc:'특화 세면대·양변기·수전, 브론즈 무광 샤워부스 및 액세서리 (부부욕실·가족욕실)',
+ {id:'bath', group:'개별 옵션', name:'욕실 특화', desc:'특화 세면대·양변기·수전, 브론즈 무광 샤워부스 및 액세서리',
   price:[2355000,2145000,2098000,2145000,2145000,2268000,2491000,BASE],
   self:'약 110만~210만원<sup>3,4</sup><small>양변기·세면대 수전·샤워 수전 교체비 합산</small>',
   selfNote:'욕실 2곳의 양변기(원피스)·세면대 수전·샤워 수전을 사제로 바꾸는 비용을 더한 값임. 샤워부스·세면대 본체는 빠졌고, 기본 제품을 떼어 내는 비용이 더 들 수 있음.',
@@ -381,6 +397,36 @@ const CHL = {opt:'옵션',self:'사제·공구',none:'안 함'};
 // 동별 [라인, 시작층, 끝층] : 동호수 배치도 기준 1,783세대 (1단지 1,069 · 2단지 714)
 const UNITS = {"101":[[1,2,25],[2,2,25],[3,2,27],[4,2,25]],"102":[[1,2,22],[2,2,22],[3,2,20],[4,2,22]],"103":[[1,3,19],[2,1,19],[3,1,20],[4,3,20]],"104":[[1,2,17],[2,2,17],[3,2,16],[4,2,16],[3,17,17]],"105":[[1,2,11],[2,2,11],[3,2,14],[4,2,14],[3,15,15]],"106":[[1,2,24],[2,2,24],[3,2,27],[4,2,27]],"107":[[1,1,25],[2,3,26],[3,3,26],[4,1,26]],"108":[[1,2,27],[2,2,27],[3,2,27],[4,2,25]],"109":[[1,3,27],[2,1,27],[3,3,27],[4,1,27]],"110":[[1,3,27],[2,1,27]],"111":[[1,2,27],[2,2,27],[3,2,27],[4,2,27]],"112":[[1,1,27],[2,1,27],[3,3,27]],"113":[[1,2,17],[2,2,17],[3,2,18],[4,2,18],[1,18,18]],"201":[[1,2,26],[2,2,26],[3,2,26],[4,2,26]],"202":[[1,2,19],[2,2,22]],"203":[[1,2,22],[2,2,25]],"204":[[1,3,26],[2,1,26],[3,1,26],[4,3,26]],"205":[[1,3,27],[2,1,27],[3,1,25],[4,3,25]],"206":[[1,3,25],[2,1,25],[3,1,24],[4,3,24],[3,25,25]],"207":[[1,2,23],[2,2,23],[3,2,22],[4,2,22],[3,23,23]],"208":[[1,3,23],[2,1,23]],"209":[[1,2,27],[2,2,27],[3,2,27],[4,2,27]]};
 function validUnit(dong,ho){ const f=+ho.slice(0,-2), l=+ho.slice(-2); return !!(UNITS[dong]||[]).find(x=>x[0]===l&&f>=x[1]&&f<=x[2]); }
+// 동·라인별 타입 : 동호수 배치도 기준 (계약인증 현황 시트 '동라인구성' 탭). 펜트하우스 5세대는 166P
+const LINE_TYPE = {"101":["124","84A","84B","84C"],"102":["124","84A","84B","84D"],"103":["84C","84B","75","84C"],"104":["84C","84B","84A","102"],"105":["84C","84B","84A","102"],"106":["84C","84B","84A","84A"],"107":["84C","75","84B","84C"],"108":["84C","84A","84B","84D"],"109":["84A","84B","84A","84C"],"110":["84C","84A"],"111":["102","84A","84B","84D"],"112":["102","84B","84C"],"113":["102","84A","84B","84D"],"201":["84A","84B","84A","84C"],"202":["84C","84A"],"203":["84C","75"],"204":["84A","84B","84A","84C"],"205":["84B","84B","84A","84C"],"206":["124","84B","84A","102"],"207":["84A","84B","84A","102"],"208":["84C","75"],"209":["84C","84B","84A","84C"]};
+const PH = ['104-1703','105-1503','113-1801','206-2503','207-2303'];
+function typeOf(dong,ho){ if(!UNITS[dong]||!/^\d{3,4}$/.test(ho)||!validUnit(dong,ho)) return ''; if(PH.includes(dong+'-'+ho)) return '166P'; return (LINE_TYPE[dong]||[])[+ho.slice(-2)-1]||''; }
+// 에어컨을 달 수 있는 공간 : 옵션표 에어컨 구성에 나오는 공간
+const ROOM_ORDER = ['거실','주방','가족실','침실1','침실2','침실3','침실4','침실5','알파룸'];
+function roomsFor(t){ const set=new Set(); AC[t].forEach(r=>r[1].split(', ').forEach(x=>set.add(x))); return ROOM_ORDER.filter(x=>set.has(x)); }
+function sameRooms(a,b){ return a.length===b.length && a.every(x=>b.includes(x)); }
+function cfgOf(rooms){ return AC[TYPE].find(r=>sameRooms(r[1].split(', '),rooms)); }
+// 문항별 설명 ('이 옵션은?') — 옵션표 기준. 옵션을 안 할 때의 기본 사양은 확인하지 못해 '모집공고 확인 필요'로 표시
+const ABOUT = {
+ ac:'천장에 실내기를 묻어 설치하는 에어컨임. 옵션표에 정해진 대수 구성 중에서만 고를 수 있고, 구성마다 설치되는 방이 정해져 있음.',
+ ap:'천장에 설치하는 LG전자 시스템 공기청정기임. 선택안마다 설치되는 방과 대수가 정해져 있고, 프리미엄환기PLUS(1대)를 더하는 구성도 있음.',
+ kitParts:'주방 가구·상판·조명·천장 마감 등을 하나로 묶어 파는 옵션임. 타입에 따라 주방 레이아웃 변경 등 포함 품목이 다름.',
+ kit:'주방 가구·상판·조명·천장 마감 등을 하나로 묶어 파는 옵션임.',
+ intParts:'현관·복도·거실 벽 타일과 천장·조명 마감을 하나로 묶어 파는 옵션임. 주방 Style Up을 함께 계약하면 금액이 조금 낮아짐.',
+ int:'현관·복도·거실 벽 타일과 천장·조명 마감을 하나로 묶어 파는 옵션임. 주방 Style Up을 함께 계약하면 금액이 조금 낮아짐.',
+ jungmun:'현관과 거실 사이에 다는 문임. 3연동 자동은 문 세 짝이 함께 움직이는 자동문이고, 84D는 수동 여닫이 도어임.',
+ bath:'욕실의 세면대·양변기·수전과 샤워부스·액세서리를 특화 제품(브론즈 무광)으로 넣는 옵션임.',
+ closet2:'침실2에 맞춤으로 짜 넣는 붙박이 옷장임.',
+ closet3:'침실3에 맞춤으로 짜 넣는 붙박이 옷장임.',
+ master:'124 타입 전용 옵션임. 침실1·침실4 문 위치를 바꾸고 복도 장식장, 침실4 슬라이딩 도어, 시트패널 벽을 넣음.',
+ storage:'주방의 가전 소물장과 로봇청소기장임. 주방 Style Up과 오브제 냉장고장을 계약한 세대만 고를 수 있음.',
+ fan:'환기 외 기능을 더한 복합형 욕실 환풍기(힘펠 기본형)임. 부부욕실·가족욕실에 들어감. 세부 기능은 모집공고 확인 필요.',
+ induction:'주방 상판에 묻어 설치하는 LG 3구 인덕션(전기레인지)임.',
+ fridge:'주방 가구에 맞춰 넣는 LG 오브제컬렉션 4도어 냉장고와 3도어 김치냉장고 세트임.',
+ oven:'LG 광파오븐(드로워 포함)임.',
+ dish:'가구 문을 붙여 주방 하부장에 넣는 LG 빌트인 식기세척기(14인용)임.'
+};
+function aboutBox(key){ return el('div','about','<b>이 옵션은?</b>'+ABOUT[key]+'<span class="base">옵션을 안 하면 무엇이 들어가는지(기본 사양): 모집공고 확인 필요</span>'); }
 
 /* ---------- 공통 ---------- */
 const $ = id => document.getElementById(id);
@@ -457,6 +503,7 @@ function start(){ buildSteps(); go(0); }
 function buildSteps(){
   STEPS=[{k:'home',sec:'우리 집'}];
   if(TYPE){ const i=ti(TYPE);
+    STEPS.push({k:'overview',sec:'우리 집 옵션'});
     STEPS.push({k:'ac',sec:'냉난방·공기'},{k:'ap',sec:'냉난방·공기'});
     if(KIT.price[i]!==BASE) STEPS.push({k:'pkgParts',id:'kit',sec:'묶음 옵션'},{k:'pkg',id:'kit',sec:'묶음 옵션'});
     if(INT.price[i][1]!==BASE) STEPS.push({k:'pkgParts',id:'int',sec:'묶음 옵션'},{k:'pkg',id:'int',sec:'묶음 옵션'});
@@ -469,7 +516,7 @@ function go(n){
   const total=TYPE?STEPS.length:19;
   $('prog').style.width=Math.round((n+1)/total*100)+'%';
   $('sec').textContent=s.sec; $('pos').textContent=TYPE?(n+1)+' / '+total:'';
-  ({home:stepHome, ac:stepAc, ap:stepAp, pkgParts:stepParts, pkg:stepPkg, item:stepItem, memo:stepMemo, review:stepReview})[s.k](st,s);
+  ({home:stepHome, overview:stepOverview, ac:stepAc, ap:stepAp, pkgParts:stepParts, pkg:stepPkg, item:stepItem, memo:stepMemo, review:stepReview})[s.k](st,s);
   view('step'); refreshNav(); save();
   try{ history.replaceState({s:n},''); }catch(e){}
 }
@@ -487,7 +534,7 @@ function next(){
 }
 function answered(s){
   if(s.k==='home') return true;
-  if(s.k==='ac'){ const a=A.ac; return !!(a&&a.c&&((a.c!=='other'&&a.c!=='self')||a.n)); }
+  if(s.k==='ac'){ const a=A.ac; if(!(a&&a.c)) return false; if(a.c!=='other'&&a.c!=='self') return true; const r=a.rooms||[]; return r.length>0 && !(a.c==='other'&&cfgOf(r)); }
   if(s.k==='ap') return !!(A.ap&&A.ap.c);
   if(s.k==='pkgParts') return !!(A[s.id+'P']&&A[s.id+'P'].length);
   if(s.k==='pkg') return !!A[s.id];
@@ -498,29 +545,66 @@ function answered(s){
 /* ---------- 1. 우리 집 ---------- */
 function stepHome(st){
   st.appendChild(el('div','q','우리 집 정보를 알려 주세요'));
-  st.appendChild(el('p','d','타입에 따라 옵션 구성과 금액이 다릅니다. 이 조사의 옵션은 모두 발코니 확장 세대만 고를 수 있습니다(옵션표 기준).'));
+  st.appendChild(el('p','d','동·호수를 넣으면 타입이 자동으로 정해지고, 그 타입의 옵션만 나옵니다.'));
   st.insertAdjacentHTML('beforeend','<div class="row"><div><label class="f" for="dong">동</label><div class="unit"><input id="dong" type="tel" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="예: 101"><span>동</span></div></div>'+
    '<div><label class="f" for="ho">호수</label><div class="unit"><input id="ho" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="예: 1202, 302"><span>호</span></div></div></div>'+
-   '<div class="err" id="dongho-err">동과 호수를 확인해 주세요.</div><label class="f">타입</label><div class="types" id="types"></div><div class="err" id="type-err">타입을 골라 주세요.</div>'+
+   '<div class="err" id="dongho-err">동과 호수를 확인해 주세요.</div><div class="typeout hidden" id="typeout"></div>'+
    '<p class="hint">동·호수는 같은 세대 중복을 막는 데만 씁니다.</p>');
   $('dong').value=DONG; $('ho').value=HO;
-  $('dong').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,3); DONG=e.target.value; $('dongho-err').style.display='none'; if(DONG.length===3) $('ho').focus({preventScroll:true}); save(); });
-  $('ho').addEventListener('input',e=>{ const v=e.target.value=e.target.value.replace(/\D/g,'').slice(0,4); HO=v; $('dongho-err').style.display='none';
+  $('dong').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,3); DONG=e.target.value; $('dongho-err').style.display='none'; setType(); if(DONG.length===3) $('ho').focus({preventScroll:true}); save(); });
+  $('ho').addEventListener('input',e=>{ const v=e.target.value=e.target.value.replace(/\D/g,'').slice(0,4); HO=v; $('dongho-err').style.display='none'; setType();
     if(v.length===4||(v.length===3&&validUnit(DONG,v))) e.target.blur(); save(); });
-  TYPES.forEach(t=>{ const b=el('button'); b.type='button'; b.textContent=t; if(TYPE===t) b.classList.add('on');
-    b.onclick=()=>{ if(TYPE!==t){ const keep=A; A={}; ITEMS.forEach(it=>{ if(keep[it.id]) A[it.id]=keep[it.id]; }); ['kit','int','memo'].forEach(k=>{ if(keep[k]) A[k]=keep[k]; }); TYPE=t; }
-      $('types').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); $('type-err').style.display='none'; save(); };
-    $('types').appendChild(b); });
+  setType();
+}
+// 동·호수로 타입을 정함. 타입이 바뀌면 타입마다 다른 응답(에어컨·공기청정기·묶음 품목)은 지움
+function setType(){
+  const t=typeOf(DONG,HO), box=$('typeout');
+  if(t!==TYPE && t){ const keep=A; A={}; ITEMS.forEach(it=>{ if(keep[it.id]) A[it.id]=keep[it.id]; }); ['kit','int','memo'].forEach(k=>{ if(keep[k]) A[k]=keep[k]; }); }
+  TYPE=t;
+  if(box){ box.classList.toggle('hidden',!t); if(t) box.innerHTML='<b>'+t+'</b>타입<div class="small" style="margin-top:4px">동호수 배치도 기준입니다. 계약하신 타입과 다르면 협의회에 알려 주세요.</div>'; }
 }
 function checkHome(){
   let bad=false;
   const dhBad=!UNITS[DONG]||!/^\d{3,4}$/.test(HO)||!validUnit(DONG,HO);
   $('dongho-err').textContent=(/^\d{3}$/.test(DONG)&&!UNITS[DONG])?DONG+'동은 우리 단지에 없는 동입니다. 동을 확인해 주세요.'
     :(UNITS[DONG]&&/^\d{3,4}$/.test(HO))?DONG+'동에는 '+HO+'호가 없습니다. 호수를 확인해 주세요.':'동과 호수를 확인해 주세요.';
-  if(dhBad){ $('dongho-err').style.display='block'; bad=true; }
-  if(!TYPE){ $('type-err').style.display='block'; bad=true; }
+  if(dhBad||!TYPE){ $('dongho-err').style.display='block'; bad=true; }
   return !bad;
 }
+
+/* ---------- 우리 집 옵션 한눈에 보기 ---------- */
+function stepOverview(st){
+  const i=ti(TYPE), box=el('div','ov');
+  st.appendChild(el('div','q',TYPE+' 타입 옵션<br>한눈에 보기'));
+  st.appendChild(el('p','d','우리 집에서 고를 수 있는 유상옵션과 공급금액입니다(모집공고 옵션표 기준, 부가세 포함). 다음 화면부터 하나씩 여쭙니다.'));
+  const row=(name,small,val)=>{ const r=el('div','r','<span></span><span></span>'); r.children[0].innerHTML=esc(name)+(small?'<small>'+esc(small)+'</small>':''); r.children[1].innerHTML=val; box.appendChild(r); };
+  const ac=AC[TYPE], ap=AP[TYPE];
+  box.appendChild(el('h4',null,'냉난방·공기'));
+  row('천장형 시스템에어컨', ac.map(r=>r[0]+'대').join(' · ')+' 구성 중 선택', man(ac[0][2])+'~'+man(ac[ac.length-1][2]));
+  row('시스템 공기청정기', ap.length+'개 선택안 · 환기PLUS 추가 가능', man(ap[0][3])+'~'+man(ap[ap.length-1][4]));
+  const kitB=KIT.price[i]===BASE, intB=INT.price[i][1]===BASE;
+  if(!kitB||!intB){ box.appendChild(el('h4',null,'묶음 옵션 (Style Up)'));
+    if(!kitB) row('주방 Style Up', partsFor('kit').length+'개 품목 묶음', man(KIT.price[i]));
+    if(!intB) row('인테리어 Style Up', '주방 Style Up과 함께 계약하면 '+man(INT.price[i][1]), man(INT.price[i][0])); }
+  let g='';
+  ITEMS.forEach(it=>{ const p=it.price[i]; if(p===null||p===BASE) return; if(g!==it.group){ g=it.group; box.appendChild(el('h4',null,g)); }
+    const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc; row(it.name, ds&&ds.length<30?ds:'', p==='free'?'무상':man(p)); });
+  // 모두 고를 때 최대 금액
+  let mx=ac[ac.length-1][2]+Math.max(...ap.map(r=>r[4]));
+  if(!kitB) mx+=KIT.price[i]; if(!intB) mx+=INT.price[i][1];
+  ITEMS.forEach(it=>{ const p=it.price[i]; if(typeof p==='number') mx+=p; });
+  const base=baseList();
+  const notes=['모든 옵션은 <b>발코니 확장 세대만</b> 고를 수 있습니다.',
+    '전부 고르면 최대 약 <b>'+man(mx)+'</b>입니다(에어컨·공기청정기는 가장 큰 구성 기준).',
+    '특화 수납장은 주방 Style Up과 오브제 냉장고장을 계약해야 고를 수 있습니다.'];
+  if(TYPE==='84A') notes.push('84A의 에어컨 6대(알파룸 포함)는 주방 Style Up을 고르면 해당이 없습니다(알파룸이 없어짐).');
+  if(base.length) notes.push(TYPE+'는 발코니 확장 시 다음 품목을 기본으로 줍니다: '+base.join(', '));
+  notes.push('옵션을 안 할 때 들어가는 기본 사양은 확인하지 못해 각 문항에 \'모집공고 확인 필요\'로 적었습니다.');
+  box.appendChild(el('ul','note',notes.map(x=>'<li>'+x+'</li>').join('')));
+  st.appendChild(box);
+}
+function baseList(){ const i=ti(TYPE), out=[]; if(KIT.price[i]===BASE) out.push('주방 Style Up'); if(INT.price[i][1]===BASE) out.push('인테리어 Style Up');
+  ITEMS.forEach(it=>{ if(it.price[i]===BASE) out.push(it.name); }); return out; }
 
 /* ---------- 문항 공통 그리기 ---------- */
 // 타입에 맞는 의견만 남김
@@ -557,6 +641,7 @@ function stepAc(st){
   const rows=AC[TYPE];
   st.appendChild(el('div','q','천장형 시스템에어컨,<br>어떻게 하실 건가요?'));
   st.appendChild(el('p','d',TYPE+' 기준 · LG전자 Premium UVnano 실내기'));
+  st.appendChild(aboutBox('ac'));
   const optHtml=rows.map(r=>r[0]+'대 '+man(r[2])).join('<br>');
   const selfHtml=rows.filter(r=>AC_SELF[r[0]]).map(r=>r[0]+'대 '+AC_SELF[r[0]]).join('<br>')||'—';
   const miss=rows.filter(r=>!AC_SELF[r[0]]).map(r=>r[0]+'대');
@@ -565,17 +650,20 @@ function stepAc(st){
   const mb=moreBtn('천장형 시스템에어컨', AC_OP, 'LG 시스템에어컨을 사제로 설치하면(제품·설치 포함) 2대 약 440만원, 3대 약 490만원, 4대 약 620만~690만원, 5대 약 770만원<sup>11</sup>. 입주 후 설치는 천장 타공·배관 공사가 따르고, 업체·현장 조건에 따라 금액이 달라짐.'); st.appendChild(mb);
   const ops=el('div','ops'); const cur=A.ac||{};
   const sub=el('div','inline hidden');
-  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ A.ac={c:v,n:(A.ac&&A.ac.n)||''}; pick(ops,b); placeSub(b,v); refreshNav(); save(); }); b.dataset.v=v; ops.appendChild(b); return b; };
+  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ const keep=(A.ac&&A.ac.rooms)||[]; A.ac={c:v,rooms:(v==='other'||v==='self')?keep:[]}; pick(ops,b); placeSub(b,v); refreshNav(); save(); }); b.dataset.v=v; ops.appendChild(b); return b; };
   rows.forEach(([n,where,price,memo])=>add('cfg:'+n,'옵션 '+n+'대',where+(memo?' · '+memo:''),won(price)));
-  add('other','다른 대수로 옵션 희망','예: 옵션표에 없는 4대 구성이 생기면 계약');
+  add('other','옵션표에 없는 구성 희망','예: 주방을 뺀 4대처럼 설치할 방을 직접 고름');
   add('self','사제·공동구매','입주 후 개별 설치 또는 공동구매');
   add('none','하지 않음','스탠드·벽걸이 등');
   function placeSub(btn,v){
     if(v!=='other'&&v!=='self'){ sub.classList.add('hidden'); return; }
-    sub.innerHTML='<label>'+(v==='other'?'옵션으로 원하는 대수':'사제로 달 대수(예상)')+'</label>';
-    const c=el('div','cnt'); [1,2,3,4,5,6,7,8].forEach(n=>{ const x=el('button'); x.type='button'; x.textContent=n+'대'; if(+A.ac.n===n) x.classList.add('on');
-      x.onclick=()=>{ A.ac.n=n; c.querySelectorAll('button').forEach(y=>y.classList.toggle('on',y===x)); refreshNav(); save(); }; c.appendChild(x); });
-    sub.appendChild(c); sub.classList.remove('hidden'); btn.after(sub);
+    sub.innerHTML='<label>'+(v==='other'?'옵션으로 설치하고 싶은 방을 모두 골라 주세요':'사제로 설치할 방을 모두 골라 주세요(예상)')+'</label>';
+    const c=el('div','rooms'), info=el('div','cntv'), warn=el('div','warn');
+    const show=()=>{ const r=A.ac.rooms||[]; info.textContent=r.length?'고른 방 '+r.length+'곳 → '+r.length+'대':'';
+      const same=v==='other'&&r.length&&cfgOf(r); warn.textContent=same?'옵션표의 \'옵션 '+same[0]+'대\'와 같은 구성입니다. 위의 \'옵션 '+same[0]+'대\'를 골라 주세요.':''; };
+    roomsFor(TYPE).forEach(rm=>{ const x=el('button'); x.type='button'; x.textContent=rm; if((A.ac.rooms||[]).includes(rm)) x.classList.add('on');
+      x.onclick=()=>{ const r=A.ac.rooms||[]; A.ac.rooms=r.includes(rm)?r.filter(y=>y!==rm):ROOM_ORDER.filter(y=>r.includes(y)||y===rm); x.classList.toggle('on'); show(); refreshNav(); save(); }; c.appendChild(x); });
+    sub.appendChild(c); sub.appendChild(info); sub.appendChild(warn); show(); sub.classList.remove('hidden'); btn.after(sub);
   }
   st.appendChild(ops);
   if(cur.c==='other'||cur.c==='self') placeSub(ops.querySelector('[data-v="'+cur.c+'"]'),cur.c);
@@ -585,6 +673,7 @@ function stepAc(st){
 function stepAp(st){
   st.appendChild(el('div','q','시스템 공기청정기,<br>어떻게 하실 건가요?'));
   st.appendChild(el('p','d',TYPE+' 기준 · LG전자. 프리미엄환기PLUS(1대)를 함께 고르면 금액이 올라갑니다.'));
+  st.appendChild(aboutBox('ap'));
   const rows=AP[TYPE];
   st.appendChild(cmpBox(man(rows[0][3])+'부터<small>선택안·대수에 따라 '+man(rows[0][3])+'~'+man(rows[rows.length-1][3])+'</small>', '시세 확인 못 함<small>사제는 일반 공기청정기 구입으로 보고 응답</small>', null));
   const ops=el('div','ops'); const cur=A.ap||{};
@@ -612,6 +701,7 @@ function pkgPriceText(key){ const i=ti(TYPE); if(key==='kit') return won(KIT.pri
 function stepParts(st,s){
   const key=s.id;
   st.appendChild(el('div','q',pkgName(key)+',<br>나눠서 판다면?'));
+  st.appendChild(aboutBox(key+'Parts'));
   st.appendChild(el('p','d','지금은 아래 품목을 묶음으로만 팝니다. 품목별로 따로 고를 수 있다면 옵션으로 할 품목을 모두 골라 주세요.'+(key==='int'&&TYPE==='75'?' (75는 침실1 우물천장·건축화 조명·시트패널 천장이 빠지고, 전체 침실에 매입특화 조명이 들어감)':'')));
   const box=el('div'); const sel=A[key+'P']=A[key+'P']||[];
   partsFor(key).concat([{id:'none',name:'옵션으로 고를 품목 없음'}]).forEach(p=>{
@@ -629,6 +719,7 @@ function stepPkg(st,s){
   const key=s.id, P0=key==='kit'?KIT:INT, P=Object.assign({},P0,{op:opFor(P0.op)});
   st.appendChild(el('div','q',pkgName(key)+',<br>지금처럼 묶음이라면?'));
   st.appendChild(el('p','d',TYPE+' 기준 · 앞 문항에서 본 품목을 모두 포함한 묶음 옵션입니다.'));
+  st.appendChild(aboutBox(key));
   st.appendChild(cmpBox(pkgPriceText(key), P.self, P.op));
   if(P.op.etc&&P.op.etc.length) st.appendChild(el('div','etc',P.op.etc[0]));
   const mb=moreBtn(pkgName(key), P.op, null); if(mb) st.appendChild(mb);
@@ -646,6 +737,7 @@ function stepItem(st,s){
   st.appendChild(el('div','q',esc(it.name)+',<br>어떻게 하실 건가요?'));
   const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc;
   st.appendChild(el('p','d',TYPE+' 기준'+(ds?' · '+esc(ds):'')));
+  st.appendChild(aboutBox(it.id));
   st.appendChild(cmpBox(p==='free'?'무상 선택<small>166P는 무상으로 고를 수 있음</small>':won(p), it.self, it.op));
   if(it.op.etc&&it.op.etc.length) st.appendChild(el('div','etc',it.op.etc[0]));
   const mb=moreBtn(it.name, it.op, it.selfNote); if(mb) st.appendChild(mb);
@@ -669,7 +761,7 @@ function stepMemo(st){
 function answerText(s){
   const i=ti(TYPE);
   if(s.k==='ac'){ const a=A.ac; if(/^cfg:/.test(a.c)){ const r=AC[TYPE].find(x=>'cfg:'+x[0]===a.c); return '<b>옵션 '+r[0]+'대</b><em>'+won(r[2])+'</em>'; }
-    return {other:'다른 대수로 옵션 희망 · '+a.n+'대',self:'사제·공구 · '+a.n+'대',none:'하지 않음'}[a.c]; }
+    if(a.c==='none') return '하지 않음'; return (a.c==='other'?'옵션표에 없는 구성 희망':'사제·공구')+' · '+a.rooms.length+'대<em>'+esc(a.rooms.join(', '))+'</em>'; }
   if(s.k==='ap'){ const a=A.ap; if(/^opt/.test(a.c)){ const r=AP[TYPE].find(x=>'opt'+x[0]===a.c); return '<b>옵션 선택'+r[0]+(a.plus?' + 환기PLUS':'')+'</b><em>'+won(a.plus?r[4]:r[3])+'</em>'; } return CHL[a.c]; }
   if(s.k==='pkgParts'){ const arr=A[s.id+'P']||[]; if(arr.includes('none')) return '고를 품목 없음'; return arr.length+'개 품목<em>'+partsFor(s.id).filter(p=>arr.includes(p.id)).map(p=>esc(p.name)).join(', ')+'</em>'; }
   if(s.k==='pkg'){ const v=A[s.id]; return v==='opt'?'<b>옵션</b><em>'+won(s.id==='kit'?KIT.price[i]:intPrice())+'</em>':CHL[v]; }
@@ -684,7 +776,7 @@ function stepReview(st){
   const tot=el('div','total','<span>옵션으로 고른 금액 합계</span><b>'+won(total())+'</b>'); st.appendChild(tot);
   const rv=el('div','rv');
   const home=el('button',null,'<span class="n">우리 집</span><span class="a">'+esc(DONG+'동 '+HO+'호 · '+TYPE)+'</span>'); home.type='button'; home.onclick=()=>go(0); rv.appendChild(home);
-  STEPS.forEach((s,n)=>{ if(s.k==='home'||s.k==='review') return;
+  STEPS.forEach((s,n)=>{ if(s.k==='home'||s.k==='overview'||s.k==='review') return;
     const b=el('button',null,'<span class="n">'+esc(stepName(s))+'</span><span class="a">'+answerText(s)+'</span>'); b.type='button';
     b.onclick=()=>{ BACK_TO_REVIEW=true; go(n); }; rv.appendChild(b); });
   st.appendChild(rv);
@@ -704,7 +796,7 @@ function total(){
 
 /* ---------- 이 기기에서 쓰던 응답 기억 (다른 사람에게는 보이지 않음) ---------- */
 function save(){ try{ localStorage.setItem('optDraft2',JSON.stringify({dong:DONG,ho:HO,type:TYPE,A})); }catch(e){} }
-function restore(){ try{ const d=JSON.parse(localStorage.getItem('optDraft2')||'null'); if(!d) return; DONG=d.dong||''; HO=d.ho||''; if(TYPES.includes(d.type)){ TYPE=d.type; A=d.A||{}; } }catch(e){} }
+function restore(){ try{ const d=JSON.parse(localStorage.getItem('optDraft2')||'null'); if(!d) return; DONG=d.dong||''; HO=d.ho||''; TYPE=typeOf(DONG,HO); if(TYPE&&TYPE===d.type) A=d.A||{}; }catch(e){} }
 function doneInfo(){ try{ return JSON.parse(localStorage.getItem('optDone')||'null'); }catch(e){ return null; } }
 
 /* ---------- 아래에서 올라오는 창 ---------- */
@@ -722,15 +814,44 @@ function alertSheet(title,msg){ const d=el('div'); d.innerHTML='<h3></h3><p clas
 
 /* ---------- 제출 ---------- */
 function payload(){
-  const out={type:TYPE, items:{}, memo:(A.memo||'').trim().slice(0,1000)};
+  const out={v:2, type:TYPE, items:{}, memo:(A.memo||'').trim().slice(0,1000)};
   STEPS.forEach(s=>{
-    if(s.k==='ac') out.ac={c:A.ac.c, n:(A.ac.c==='other'||A.ac.c==='self')?+A.ac.n:0};
-    else if(s.k==='ap') out.ap={c:A.ap.c, plus:!!(A.ap.plus&&/^opt/.test(A.ap.c))};
+    if(s.k==='ac'){ const c=A.ac.c, cfg=/^cfg:/.test(c)?AC[TYPE].find(r=>'cfg:'+r[0]===c):null;
+      const rooms=cfg?cfg[1].split(', '):(c==='none'?[]:A.ac.rooms.slice()); out.ac={c, n:rooms.length, rooms}; }
+    else if(s.k==='ap'){ const c=A.ap.c, r=/^opt/.test(c)?AP[TYPE].find(x=>'opt'+x[0]===c):null;
+      out.ap={c, n:r?r[1]:0, rooms:r?r[2].split(', '):[], plus:!!(A.ap.plus&&r)}; }
     else if(s.k==='pkg') out.items[s.id]=A[s.id];
     else if(s.k==='pkgParts') out[s.id+'Parts']=(A[s.id+'P']||[]).slice();
     else if(s.k==='item') out.items[s.it.id]=A[s.it.id];
   });
-  out.total=total(); return out;
+  out.total=total(); out.detail=detail(out); return out;
+}
+/* 분석용 상세 : 모든 타입에서 같은 문항코드로, 해당 없음·기본제공까지 빠짐없이 기록 */
+function detail(o){
+  const i=ti(TYPE), D=[], L={opt:'옵션',self:'사제',none:'안 함'};
+  const add=(code,name,choice,info,price,sub)=>D.push({code,name,sub:sub||'',choice,info:info||'',price:price||0});
+  // 에어컨
+  if(/^cfg:/.test(o.ac.c)){ const r=AC[TYPE].find(x=>'cfg:'+x[0]===o.ac.c); add('AC','시스템에어컨','옵션',r[0]+'대: '+r[1],r[2]); }
+  else if(o.ac.c==='other') add('AC','시스템에어컨','옵션(구성 변경 희망)',o.ac.n+'대: '+o.ac.rooms.join(', '));
+  else if(o.ac.c==='self') add('AC','시스템에어컨','사제',o.ac.n+'대: '+o.ac.rooms.join(', '));
+  else add('AC','시스템에어컨','안 함');
+  // 공기청정기
+  if(/^opt/.test(o.ap.c)){ const r=AP[TYPE].find(x=>'opt'+x[0]===o.ap.c); add('AP','시스템 공기청정기','옵션','선택'+r[0]+' '+r[1]+'대: '+r[2]+(o.ap.plus?' + 프리미엄환기PLUS':''),o.ap.plus?r[4]:r[3]); }
+  else add('AP','시스템 공기청정기',L[o.ap.c]);
+  // 묶음 옵션과 품목
+  [['kit','KIT',KIT,KIT.price[i]],['int','INT',INT,INT.price[i][1]]].forEach(([k,code,P,pv])=>{
+    const nm=pkgName(k);
+    if(pv===BASE){ add(code,nm,'기본제공'); P.parts.forEach(p=>add(code+'_PART',nm+' 품목','해당 없음','기본제공',0,p.id)); return; }
+    const v=o.items[k]; add(code,nm,L[v],'',v==='opt'?(k==='kit'?KIT.price[i]:intPrice()):0);
+    const app=partsFor(k).map(p=>p.id), sel=o[k+'Parts']||[];
+    P.parts.forEach(p=>{ const name=(TYPE==='75'&&p.label75)?p.label75:p.name;
+      add(code+'_PART',nm+' 품목',!app.includes(p.id)?'해당 없음':(sel.includes(p.id)?'고름':'안 고름'),name,0,p.id); });
+  });
+  // 개별 옵션·주방가전
+  ITEMS.forEach(it=>{ const p=it.price[i], code=it.id.toUpperCase();
+    if(p===null) add(code,it.name,'해당 없음'); else if(p===BASE) add(code,it.name,'기본제공');
+    else { const v=o.items[it.id]; add(code,it.name,L[v],p==='free'?'무상':'',v==='opt'&&typeof p==='number'?p:0); } });
+  return D;
 }
 async function submit(){
   const miss=STEPS.findIndex(s=>!answered(s)); if(miss>=0){ go(miss); return; }
@@ -781,7 +902,8 @@ function renderResults(){
     if(extra) r.appendChild(extra); box.appendChild(r); };
   if(d.ac){ const c={opt:(d.ac.other||0),self:d.ac.self||0,none:d.ac.none||0}; Object.keys(d.ac).forEach(k=>{ if(/^cfg:/.test(k)) c.opt+=d.ac[k]; });
     const parts=Object.keys(d.ac).filter(k=>/^cfg:/.test(k)).sort((a,b)=>+a.slice(4)-+b.slice(4)).map(k=>'옵션 '+k.slice(4)+'대 '+d.ac[k]+'세대');
-    if(d.ac.other) parts.push('다른 대수로 옵션 희망 '+d.ac.other+'세대'+(d.acOtherN&&Object.keys(d.acOtherN).length?' ('+Object.keys(d.acOtherN).sort().map(n=>n+'대 '+d.acOtherN[n]).join(', ')+')':''));
+    if(d.ac.other){ const cb=d.acCombo||{}; const top=Object.keys(cb).sort((a,b)=>cb[b]-cb[a]).slice(0,3).map(k=>k.split('·').length+'대('+k.replace(/·/g,', ')+') '+cb[k]+'세대');
+      parts.push('옵션표에 없는 구성 희망 '+d.ac.other+'세대'+(top.length?' — '+top.join(' / '):'')); }
     row('천장형 시스템에어컨',c,parts.length?el('div','nums',parts.join(' · ')):null); }
   if(d.ap){ const c={opt:0,self:d.ap.self||0,none:d.ap.none||0}; Object.keys(d.ap).forEach(k=>{ if(/^opt/.test(k)) c.opt+=d.ap[k]; });
     row('시스템 공기청정기',c,d.apPlus?el('div','nums','프리미엄환기PLUS 함께 '+d.apPlus+'세대'):null); }
