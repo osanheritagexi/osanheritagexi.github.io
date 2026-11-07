@@ -60,6 +60,21 @@ sup{font-size:10.5px;color:var(--mute);margin-left:1px;line-height:0}
 .opb small{display:block;font-size:12.5px;font-weight:400;color:var(--mute);margin-top:1px}
 .opb .p{font-size:14.5px;font-weight:700;color:var(--navy);white-space:nowrap}
 .opb.on{border:2px solid var(--navy);background:var(--sel);padding:11px 15px}
+.opb:disabled{opacity:.45;cursor:default}
+.ph{margin:0 0 14px}
+.ph .lb{font-size:12.5px;color:var(--mute);font-weight:700;margin-bottom:6px}
+.ph .phr{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.ph button{flex:0 0 auto;width:150px;padding:0;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden;cursor:zoom-in;font:inherit;text-align:left}
+.ph .phr button:only-child{width:100%}
+.ph img{display:block;width:100%;height:104px;object-fit:cover;object-position:top;background:var(--soft)}
+.ph .phr button:only-child img{height:auto;max-height:260px}
+.ph span{display:block;padding:6px 8px;font-size:12px;color:#333;line-height:1.4}
+.ph .nt{margin-top:6px;font-size:12px;color:var(--mute);line-height:1.5}
+.lbx{position:fixed;inset:0;z-index:30;background:#000;overflow:auto;-webkit-overflow-scrolling:touch}
+.lbx img{display:block;width:100%;max-width:900px;margin:56px auto 0}
+.lbx p{max-width:900px;margin:10px auto;padding:0 16px;color:#d1d1d6;font-size:13px;line-height:1.5}
+.lbx button{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;height:36px;padding:0 14px;border:0;border-radius:18px;background:rgba(255,255,255,.18);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.prev-card .sub{background:transparent;color:var(--mute);border-color:transparent;font-weight:600;height:38px;margin-top:4px}
 .inline{margin:2px 0 4px;padding:12px 14px;border-radius:12px;background:var(--sel)}
 .inline label{display:block;font-size:13.5px;font-weight:600;margin-bottom:8px}
 .cnt{display:flex;gap:6px;flex-wrap:wrap}
@@ -165,7 +180,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--navy)}
 .sheet .btns button{flex:1;height:52px;border-radius:14px;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
 .sheet .no{border:1px solid var(--line);background:#fff;color:var(--ink)}
 .sheet .yes{border:0;background:var(--navy);color:#fff;flex:2!important}
-.sheet .warn{margin:14px 0 0;padding:12px 14px;border-radius:10px;background:var(--sel);color:var(--navy);font-size:13.5px;font-weight:600;line-height:1.55}
+.sheet .warn{margin:14px 0 0;padding:12px 14px;border-radius:10px;background:var(--sel);color:var(--navy);font-size:13.5px;font-weight:600;line-height:1.55;word-break:keep-all}
 .sheet .warn.red{background:#fdf3f3;color:var(--red)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 footer{padding:0 22px 140px;font-size:12px;color:#a1a1a6;text-align:center}
@@ -228,10 +243,11 @@ footer{padding:0 22px 140px;font-size:12px;color:#a1a1a6;text-align:center}
    <li><span>1</span><div>동·호수를 넣으면 타입이 자동으로 정해지고, 먼저 우리 집 옵션을 한눈에 보여 드린 뒤 한 문항씩 여쭙니다.</div></li>
    <li><span>2</span><div>사제 시세는 공개 자료를 모은 대략적인 참고값입니다. 같은 모델·같은 시공 범위가 아닌 경우가 많아 실제 견적과 다를 수 있습니다.</div></li>
    <li><span>3</span><div>'입주예정자 의견'은 단톡방에 올라온 일부 의견을 정리한 것으로, 확인된 사실이나 다수 의견이 아닙니다.</div></li>
-   <li><span>4</span><div>동·호수만 받으며, 같은 세대가 다시 내면 마지막 응답으로 바뀝니다. 제출하면 전체 집계를 볼 수 있습니다.</div></li>
+   <li><span>4</span><div>동·호수만 받으며, 같은 세대가 다시 내면 마지막 응답으로 바뀝니다. 처음과 다른 기기에서 같은 동·호수로 내면 한 번 더 확인합니다. 제출하면 전체 집계를 볼 수 있습니다.</div></li>
   </ul>
-  <div class="prev-card hidden" id="prev-card"><b>이 기기에서 응답한 기록이 있습니다</b><div class="small" id="prev-meta" style="margin-top:2px"></div>
-   <button type="button" id="prev-go">응답 결과 보기</button><div class="err" id="prev-err"></div></div>
+  <div class="prev-card hidden" id="prev-card"><b id="prev-title">이 기기에서 응답한 기록이 있습니다</b><div class="small" id="prev-meta" style="margin-top:2px"></div>
+   <button type="button" id="prev-go">응답 결과 보기</button><div class="err" id="prev-err"></div>
+   <button type="button" id="new-go" class="sub">다른 세대로 새로 응답하기</button></div>
  </div>
 </section>
 
@@ -324,7 +340,7 @@ const ITEMS = [
  {id:'storage', group:'개별 옵션', name:'특화 수납장', desc:'가전 소물장 + 로봇청소기장 (주방 Style Up 계약 시 냉장고장 선택5로 선택 가능)',
   price:[759000,759000,759000,759000,759000,946000,946000,'free'],
   self:'시세 확인 못 함<small>맞춤 가구라 업체 실측 견적 필요</small>', selfNote:'',
-  op:{opt:[], self:[], etc:['로봇청소기장은 비싼 오브제 냉장고를 골라야만 선택할 수 있어 아쉽다는 의견이 있음']}},
+  op:{opt:[], self:[], etc:[]}},
  {id:'fan', group:'개별 옵션', name:'욕실 복합 환풍기', desc:'힘펠 기본형 (부부욕실·가족욕실)',
   price:[1200000,1200000,1200000,1200000,1200000,1200000,1200000,BASE],
   self:'2곳 약 50만~120만원<sup>6</sup><small>1대 약 25만~60만원, 설치 포함</small>', selfNote:'힘펠 휴젠뜨 등 복합 환풍기 기준임.',
@@ -432,7 +448,7 @@ const ABOUT = {
  closet3:'침실3에 맞춤으로 짜 넣는 붙박이 옷장임.',
  master:'124 타입 전용 옵션임. 침실1·침실4 문 위치를 바꾸고 복도 장식장, 침실4 슬라이딩 도어, 시트패널 벽을 넣음.',
  storage:'주방의 가전 소물장과 로봇청소기장임. 주방 Style Up을 계약한 세대(166P는 주방 Style Up 기본 제공)가 냉장고장을 선택5(오브제형 냉장고 설치공간 + 특화 수납장)로 고를 때 들어감(견본주택 안내판 기준). 열이나 증기가 나는 가전은 문을 연 채 써야 하고, 내부 크기에 따라 일부 가전은 넣을 수 없음.',
- fan:'환기 외 기능을 더한 복합형 욕실 환풍기(힘펠 기본형)임. 부부욕실·가족욕실에 들어감. 세부 기능은 모집공고 확인 필요.',
+ fan:'환기 외 기능을 더한 복합형 욕실 환풍기(힘펠 기본형)임. 부부욕실·가족욕실에 들어감.',
  induction:'주방 상판에 묻어 설치하는 LG 3구 인덕션(전기레인지)임.',
  fridge:'주방 가구에 맞춰 넣는 LG 오브제컬렉션 4도어 냉장고와 3도어 김치냉장고 세트임.',
  oven:'LG 광파오븐(드로워 포함)임.',
@@ -505,9 +521,12 @@ function showIntro(){
   if(INFO.deadlineISO){ const d=dday(INFO.deadlineISO), md=(+INFO.deadlineISO.slice(5,7))+'/'+(+INFO.deadlineISO.slice(8,10));
     add(d===0?'오늘 마감 · '+md:(d>0?'D-'+d+' · '+md+' 마감':md+' 마감')); }
   add('약 3~5분');
-  const d=doneInfo(); $('prev-card').classList.toggle('hidden',!d);
+  const d=doneInfo(), draft=!d&&DONG&&HO; $('prev-card').classList.toggle('hidden',!(d||draft));
+  $('prev-go').classList.toggle('hidden',!d);
+  $('prev-title').textContent=d?'이 기기에서 응답한 기록이 있습니다':'이 기기에 작성 중인 응답이 있습니다';
   if(d) $('prev-meta').textContent=d.dong+'동 '+d.ho+'호 · '+d.type+' · '+d.time+' 제출. 다시 응답하면 이전 응답이 바뀝니다.';
-  view('intro'); setNav('intro', d?'다시 응답하기':'시작하기', true);
+  else if(draft) $('prev-meta').textContent=DONG+'동 '+HO+'호'+(TYPE?' · '+TYPE:'')+'. 아래 \'이어서 하기\'를 누르면 이어서 작성합니다.';
+  view('intro'); setNav('intro', d?'다시 응답하기':(draft?'이어서 하기':'시작하기'), true); loadPhotos();
 }
 function start(){ buildSteps(); go(0); }
 
@@ -550,7 +569,7 @@ function answered(s){
   if(s.k==='ap') return !!(A.ap&&A.ap.c);
   if(s.k==='pkgParts') return !!(A[s.id+'P']&&A[s.id+'P'].length);
   if(s.k==='pkg') return !!A[s.id];
-  if(s.k==='item') return !!A[s.it.id];
+  if(s.k==='item') return !!A[s.it.id] && !(s.it.id==='storage'&&A.storage==='opt'&&!storageOk());
   return true;
 }
 
@@ -728,7 +747,7 @@ function pkgPriceText(key){ const i=ti(TYPE); if(key==='kit') return won(KIT.pri
 function stepParts(st,s){
   const key=s.id;
   st.appendChild(el('div','q',pkgName(key)+',<br>나눠서 판다면?'));
-  st.appendChild(aboutBox(key+'Parts'));
+  st.appendChild(aboutBox(key+'Parts')); addPhotos(st,key);
   st.appendChild(el('p','d','지금은 아래 품목을 묶음으로만 팝니다. 품목별로 따로 고를 수 있다면 옵션으로 할 품목을 모두 골라 주세요.'+(key==='int'&&TYPE==='75'?' (75는 침실1 우물천장·건축화 조명·시트패널 천장이 빠지고, 전체 침실에 매입특화 조명이 들어감)':'')));
   const box=el('div'); const sel=A[key+'P']=A[key+'P']||[];
   partsFor(key).concat([{id:'none',name:'옵션으로 고를 품목 없음'}]).forEach(p=>{
@@ -746,7 +765,7 @@ function stepPkg(st,s){
   const key=s.id, P0=key==='kit'?KIT:INT, P=Object.assign({},P0,{op:opFor(P0.op)});
   st.appendChild(el('div','q',pkgName(key)+',<br>지금처럼 묶음이라면?'));
   st.appendChild(el('p','d',TYPE+' 기준 · 앞 문항에서 본 품목을 모두 포함한 묶음 옵션입니다.'));
-  st.appendChild(aboutBox(key));
+  st.appendChild(aboutBox(key)); addPhotos(st,key);
   st.appendChild(cmpBox(pkgPriceText(key), P.self, P.op));
   if(P.op.etc&&P.op.etc.length) st.appendChild(el('div','etc',P.op.etc[0]));
   const mb=moreBtn(pkgName(key), P.op, null); if(mb) st.appendChild(mb);
@@ -764,16 +783,63 @@ function stepItem(st,s){
   st.appendChild(el('div','q',esc(it.name)+',<br>어떻게 하실 건가요?'));
   const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc;
   st.appendChild(el('p','d',TYPE+' 기준'+(ds?' · '+esc(ds):'')));
-  st.appendChild(aboutBox(it.id));
+  st.appendChild(aboutBox(it.id)); addPhotos(st,it.id);
   st.appendChild(cmpBox(p==='free'?'무상 선택<small>166P는 무상으로 고를 수 있음</small>':won(p), it.self, it.op));
   if(it.op.etc&&it.op.etc.length) st.appendChild(el('div','etc',it.op.etc[0]));
   const mb=moreBtn(it.name, it.op, it.selfNote); if(mb) st.appendChild(mb);
   const ops=el('div','ops'); const cur=A[it.id];
   const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur===v,()=>{ A[it.id]=v; pick(ops,b); refreshNav(); save(); }); ops.appendChild(b); };
-  add('opt','옵션으로 계약',null,p==='free'?'무상':won(p));
+  const lockOpt=it.id==='storage'&&!storageOk();
+  if(lockOpt&&A.storage==='opt'){ delete A.storage; save(); }
+  add('opt','옵션으로 계약',lockOpt?'주방 Style Up을 \'옵션으로 계약\'으로 고른 경우에만 고를 수 있음':null,p==='free'?'무상':won(p));
+  if(lockOpt) ops.lastChild.disabled=true;
   add('self','사제·공동구매');
   add('none','하지 않음');
   st.appendChild(ops);
+}
+// 특화 수납장은 주방 Style Up을 옵션으로 계약할 때만 (166P는 주방 Style Up 기본 제공)
+function storageOk(){ return KIT.price[ti(TYPE)]===BASE || A.kit==='opt'; }
+
+/* ---------- 견본주택 안내판 사진 ---------- */
+const PHOTO_SET={
+  bath:[['bath_family','가족욕실 안내판'],['bath_master','부부욕실 안내판'],['bidet','비데 리모컨 (유상)']],
+  kit:[['kit_plan','주방 Style Up 안내판','빨간 동그라미는 입주예정자가 사진에 그려 넣은 표시임.']],
+  int:[['int_plan','인테리어 Style Up 안내판']],
+  storage:[['fridge','냉장고장 안내판 (선택5가 특화 수납장)']]
+};
+let PH_DATA=null, PH_WAIT=[];
+async function loadPhotos(){   // 사진은 참여 코드 확인 뒤 서버에서 한 번 받아 둠
+  if(PH_DATA||loadPhotos.busy) return; loadPhotos.busy=true;
+  try{ const r=await api({action:'photos',code:CODE}); PH_DATA=(r&&r.ok&&r.photos)||{}; }catch(e){ PH_DATA={}; }
+  const w=PH_WAIT; PH_WAIT=[]; w.forEach(f=>f());
+}
+function addPhotos(st,key){
+  if(!PHOTO_SET[key]) return;
+  if(!PH_DATA){ const holder=el('div'); st.appendChild(holder); PH_WAIT.push(()=>photoBox(holder,key)); loadPhotos(); return; }
+  photoBox(st,key);
+}
+function photoBox(st,key){
+  const P=PH_DATA||{}, set=PHOTO_SET[key];
+  const list=set.filter(x=>P[x[0]]); if(!list.length) return;
+  const box=el('div','ph'); box.appendChild(el('div','lb','견본주택 안내판 사진'));
+  const row=el('div','phr');
+  list.forEach(([id,cap,note])=>{ const b=el('button'); b.type='button';
+    const im=el('img'); im.src=P[id]; im.alt=cap; im.loading='lazy'; b.appendChild(im);
+    const c=el('span'); c.textContent=cap; b.appendChild(c);
+    b.onclick=()=>openPhoto(P[id],cap+(note?' · '+note:'')); row.appendChild(b); });
+  box.appendChild(row);
+  const notes=['84A·84B 견본주택에서 찍은 사진으로, 타입마다 구성과 위치가 다를 수 있음. 사진을 누르면 크게 보임.'];
+  list.forEach(x=>{ if(x[2]) notes.push(x[2]); });
+  box.appendChild(el('div','nt',notes.join(' ')));
+  st.appendChild(box);
+}
+function openPhoto(src,cap){
+  const o=el('div','lbx'); const im=el('img'); im.src=src; im.alt=cap; o.appendChild(im);
+  const p=el('p'); p.textContent=cap; o.appendChild(p);
+  const x=el('button'); x.type='button'; x.textContent='닫기'; o.appendChild(x);
+  const close=()=>{ o.remove(); document.removeEventListener('keydown',esc1); };
+  const esc1=e=>{ if(e.key==='Escape') close(); };
+  o.onclick=close; document.addEventListener('keydown',esc1); document.body.appendChild(o);
 }
 
 /* ---------- 의견 ---------- */
@@ -824,6 +890,7 @@ function total(){
 /* ---------- 이 기기에서 쓰던 응답 기억 (다른 사람에게는 보이지 않음) ---------- */
 function save(){ try{ localStorage.setItem('optDraft2',JSON.stringify({dong:DONG,ho:HO,type:TYPE,A})); }catch(e){} }
 function restore(){ try{ const d=JSON.parse(localStorage.getItem('optDraft2')||'null'); if(!d) return; DONG=d.dong||''; HO=d.ho||''; TYPE=typeOf(DONG,HO); if(TYPE&&TYPE===d.type) A=d.A||{}; }catch(e){} }
+function devId(){ try{ let d=localStorage.getItem('optDev'); if(!/^[a-z0-9]{8,40}$/.test(d||'')){ d=(Math.random().toString(36).slice(2)+Date.now().toString(36)).replace(/[^a-z0-9]/g,'').slice(0,30); localStorage.setItem('optDev',d); } return d; }catch(e){ return window.__dev||(window.__dev=(Math.random().toString(36).slice(2)+Date.now().toString(36)).replace(/[^a-z0-9]/g,'').slice(0,30)); } }
 function doneInfo(){ try{ return JSON.parse(localStorage.getItem('optDone')||'null'); }catch(e){ return null; } }
 
 /* ---------- 아래에서 올라오는 창 ---------- */
@@ -886,11 +953,21 @@ async function submit(){
   const cf=el('div'); cf.innerHTML='<h3>이대로 제출할까요?</h3><dl><dt>동·호수</dt><dd></dd><dt>타입</dt><dd></dd><dt>옵션 합계</dt><dd></dd></dl><p class="warn">같은 동·호수로 이미 응답했다면, 이전 응답이 이번 응답으로 바뀝니다.</p>';
   const dds=cf.querySelectorAll('dd'); [DONG+'동 '+HO+'호', TYPE, won(p.total)].forEach((v,k)=>dds[k].textContent=v);
   const ok=await new Promise(r=>sheet(cf,r,'제출합니다','다시 보기')); if(!ok) return;
+  send(p,false);
+}
+async function send(p,confirm){
   setNav('submit','제출하는 중…',false,'이전');
   try{
-    const body={action:'submit',code:CODE,dong:DONG,ho:HO,website:$('website').value,ua:navigator.userAgent.slice(0,160),answer:p};
+    const body={action:'submit',code:CODE,dong:DONG,ho:HO,website:$('website').value,ua:navigator.userAgent.slice(0,160),dev:devId(),confirm:confirm,answer:p};
     const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
     const res=await r.json();
+    if(!res.ok&&res.needConfirm){ setNav('submit','제출하기',true,'이전');
+      const d=el('div'); d.innerHTML='<h3>이미 응답이 있는 세대입니다</h3><dl><dt>동·호수</dt><dd></dd><dt>이전 제출</dt><dd></dd></dl><p class="warn red">다른 기기에서 이 동·호수로 낸 응답이 있습니다. 같은 세대 가족이 낸 것이라면 이번 응답으로 바뀝니다. 다른 세대라면 동·호수를 다시 확인해 주세요.</p>';
+      const dds=d.querySelectorAll('dd'); dds[0].textContent=DONG+'동 '+HO+'호'; dds[1].textContent=res.last||'';
+      const yes=await new Promise(r=>sheet(d,r,'우리 세대 맞음, 바꾸기','다시 확인'));
+      if(yes) return send(p,true);
+      return go(0);
+    }
     if(!res.ok){ setNav('submit','제출하기',true,'이전'); alertSheet('제출되지 않았습니다',res.message||'제출하지 못했습니다. 다시 시도해 주세요.'); return; }
     try{ localStorage.setItem('optDone',JSON.stringify({dong:DONG,ho:HO,type:TYPE,time:res.time})); }catch(x){}
     $('done-title').textContent=res.updated?'응답이 수정되었습니다':'응답이 저장되었습니다';
@@ -900,6 +977,7 @@ async function submit(){
   }catch(x){ setNav('submit','제출하기',true,'이전'); alertSheet('제출되지 않았습니다','연결이 불안정합니다. 잠시 뒤 다시 눌러 주세요.'); }
 }
 function restart(){ buildSteps(); go(STEPS.length-1); }
+$('new-go').onclick=()=>{ try{ localStorage.removeItem('optDraft2'); localStorage.removeItem('optDone'); }catch(e){} DONG='';HO='';TYPE='';A={}; BACK_TO_REVIEW=false; start(); };
 $('prev-go').onclick=async()=>{ const d=doneInfo(); if(!d) return; const b=$('prev-go'); b.disabled=true; b.textContent='불러오는 중…'; $('prev-err').style.display='none';
   try{ const res=await api({action:'results',code:CODE,dong:d.dong,ho:d.ho}); b.disabled=false; b.textContent='응답 결과 보기';
     if(!res.ok){ $('prev-err').textContent=res.message||'결과를 불러오지 못했습니다.'; $('prev-err').style.display='block'; return; }
