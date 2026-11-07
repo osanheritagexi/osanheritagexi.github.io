@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:title" content="유상옵션 수요조사 · 오산헤리티지자이 입주예정자협의회">
+<meta property="og:description" content="옵션 공급금액과 대략적인 사제 시세를 비교하고, 옵션으로 할지 사제로 할지 골라 주세요.">
+<meta property="og:image" content="https://osanheritagexi.github.io/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>유상옵션 수요조사 · 오산헤리티지자이 입주예정자협의회</title>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<style>
+:root{--navy:#0f2747;--ink:#1d1d1f;--mute:#6e6e73;--line:#e5e5ea;--soft:#f5f5f7;--sel:#f3f6fa;--red:#c00000}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#fff;color:var(--ink);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;font-size:16px;line-height:1.55;word-break:keep-all}
+body.lock{overflow:hidden}
+.app{max-width:560px;margin:0 auto;min-height:100vh;min-height:100dvh;position:relative}
+.hidden{display:none!important}
+.mute{color:var(--mute)}
+.small{font-size:13px;color:var(--mute)}
+sup{font-size:10.5px;color:var(--mute);margin-left:1px;line-height:0}
+
+/* 상단 진행 */
+.top{position:sticky;top:0;z-index:4;background:rgba(255,255,255,.96);backdrop-filter:saturate(1.8) blur(10px);-webkit-backdrop-filter:saturate(1.8) blur(10px);padding:14px 22px 10px}
+.prog{height:4px;background:#eef0f3;border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--navy);border-radius:2px;transition:width .25s}
+.step{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);margin-top:9px}
+
+/* 본문 */
+.body{padding:6px 22px 140px}
+.q{font-size:24px;font-weight:700;line-height:1.36;letter-spacing:-.01em;margin:10px 0 6px}
+.d{font-size:14px;color:#444;margin:0 0 16px}
+
+/* 옵션 vs 사제 비교 */
+.cmp{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.cmp>div{padding:13px 13px 12px;min-width:0}
+.cmp>div+div{border-left:1px solid var(--line)}
+.cmp h4{margin:0 0 4px;font-size:12.5px;color:var(--mute);font-weight:600}
+.cmp .v{font-size:15px;font-weight:700;color:var(--navy);line-height:1.45}
+.cmp .v small{display:block;font-size:12px;font-weight:500;color:var(--mute);margin-top:2px;line-height:1.45}
+.cmp .op{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-size:12.5px;color:#3a3a3c;line-height:1.5}
+.cmp .op b{display:block;font-size:11.5px;color:var(--mute);font-weight:600;margin-bottom:3px}
+.cmp ul{margin:0;padding-left:14px;font-size:12.5px;color:#3a3a3c;line-height:1.5}
+.cmp li+li{margin-top:3px}
+.more{display:block;width:100%;margin-top:8px;padding:10px 0 2px;border:0;background:none;text-align:left;font:inherit;font-size:13.5px;color:var(--mute);cursor:pointer}
+.more b{color:var(--navy);font-weight:600}
+.etc{margin-top:12px;padding:11px 13px;border-radius:12px;background:var(--soft);font-size:13px;color:#3a3a3c;line-height:1.55}
+.etc b{color:var(--ink)}
+
+/* 고르기 버튼 */
+.ops{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.opb{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:54px;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;font:inherit;font-size:16px;font-weight:600;color:var(--ink);text-align:left;cursor:pointer}
+.opb small{display:block;font-size:12.5px;font-weight:400;color:var(--mute);margin-top:1px}
+.opb .p{font-size:14.5px;font-weight:700;color:var(--navy);white-space:nowrap}
+.opb.on{border:2px solid var(--navy);background:var(--sel);padding:11px 15px}
+.inline{margin:2px 0 4px;padding:12px 14px;border-radius:12px;background:var(--sel)}
+.inline label{display:block;font-size:13.5px;font-weight:600;margin-bottom:8px}
+.cnt{display:flex;gap:6px;flex-wrap:wrap}
+.cnt button{min-width:52px;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer}
+.cnt button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chk{display:flex;align-items:flex-start;gap:12px;padding:13px 2px;border-bottom:1px solid #f0f0f3;cursor:pointer;font-size:15.5px}
+.chk .t{flex:1}
+.chk small{display:block;font-size:12.5px;color:var(--mute);margin-top:2px;line-height:1.5}
+input[type=checkbox]{width:22px;height:22px;margin:1px 0 0;accent-color:var(--navy);flex:0 0 22px}
+.togg{display:flex;align-items:flex-start;gap:12px;margin-top:10px;padding:13px 14px;border:1px solid var(--line);border-radius:14px;cursor:pointer;font-size:15px}
+.togg small{display:block;font-size:12.5px;color:var(--mute)}
+
+/* 입력 */
+label.f{display:block;font-size:14px;font-weight:600;margin:18px 0 6px}
+input[type=text],input[type=tel],textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:0 14px;font:inherit;font-size:16px;background:#fff;color:var(--ink);appearance:none;-webkit-appearance:none}
+input[type=text],input[type=tel]{height:50px}
+textarea{padding:12px 14px;min-height:140px;resize:vertical;line-height:1.5}
+input:focus,textarea:focus{outline:none;border-color:var(--navy)}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.unit{position:relative}.unit input{padding-right:40px}
+.unit span{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--mute);font-size:15px;pointer-events:none}
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.types button{height:48px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-size:16px;font-weight:600;color:var(--ink);cursor:pointer}
+.types button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.err{font-size:13px;color:var(--red);margin-top:8px;display:none}
+.hint{font-size:12.5px;color:var(--mute);margin-top:8px}
+
+/* 아래 고정 이동 */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:#fff;border-top:1px solid var(--line)}
+.nav .in{max-width:560px;margin:0 auto;padding:12px 22px calc(12px + env(safe-area-inset-bottom));display:flex;gap:10px}
+.nav button{height:54px;border-radius:14px;font:inherit;font-size:17px;font-weight:700;cursor:pointer}
+.nav .prev{flex:0 0 32%;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.nav .next{flex:1;border:0;background:var(--navy);color:#fff}
+.nav .next:disabled{background:#c5cbd3}
+
+/* 첫 화면 */
+.hero{background:var(--navy)}
+.hero img{display:block;width:100%;height:auto;aspect-ratio:1120/329}
+.intro{padding:22px 22px 140px}
+.intro h1{font-size:26px;margin:0 0 12px;letter-spacing:-.01em}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.badge{display:inline-flex;align-items:center;height:28px;padding:0 11px;border-radius:14px;font-size:13px;font-weight:600;background:#f0f2f6;color:var(--navy)}
+.badge.on{background:var(--navy);color:#fff}
+.lead{font-size:15.5px;color:#333;margin:0 0 14px}
+.lead b{color:var(--red)}
+.facts{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.facts li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;color:#3a3a3c}
+.facts li span{flex:0 0 22px;height:22px;border-radius:11px;background:var(--soft);color:var(--navy);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.prev-card{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--sel);font-size:14px}
+.prev-card button{margin-top:10px;height:44px;width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--navy);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+
+/* 확인 */
+.rv{border-top:1px solid var(--line);margin-top:8px}
+.rv button{display:flex;width:100%;gap:10px;justify-content:space-between;align-items:flex-start;padding:13px 2px;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+.rv .n{font-size:14.5px;font-weight:600;flex:0 0 42%}
+.rv .a{font-size:14px;color:#3a3a3c;text-align:right;flex:1}
+.rv .a b{color:var(--navy)}
+.rv .a em{font-style:normal;color:var(--mute);font-size:12.5px;display:block}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin:18px 0 6px;padding:16px;border-radius:14px;background:var(--soft)}
+.total b{font-size:21px;color:var(--navy)}
+.notice{font-size:12.5px;color:var(--mute);margin-top:14px;line-height:1.6}
+.srcs{margin:6px 0 0;padding-left:18px;font-size:12px;color:var(--mute);line-height:1.6}
+.srcs a{color:var(--mute)}
+.sec{font-size:12.5px;font-weight:700;color:var(--mute);margin:24px 0 6px}
+
+/* 완료·결과 */
+.center{text-align:center;padding:36px 22px 8px}
+.big{font-size:21px;font-weight:700;margin:14px 0 6px}
+.check{width:72px;height:72px;display:block;margin:0 auto}
+.count{display:inline-block;margin-top:14px;padding:10px 16px;border-radius:12px;background:var(--soft);font-size:15px}
+.count b{color:var(--navy);font-size:18px}
+#done-meta{white-space:pre-line}
+.res{padding:0 22px 150px}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:26px 0 8px}
+.rhead h2{font-size:18px;margin:0}
+.chips{display:flex;gap:6px}
+.chips button{height:32px;padding:0 12px;border:1px solid var(--line);border-radius:16px;background:#fff;font:inherit;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}
+.chips button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--mute);margin:8px 0 4px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.ritem{padding:14px 0;border-bottom:1px solid var(--line)}
+.ritem .nm{display:flex;justify-content:space-between;gap:8px;font-size:15px;font-weight:600}
+.ritem .nm span{font-weight:400;color:var(--mute);font-size:12.5px;white-space:nowrap}
+.stack{display:flex;height:10px;border-radius:5px;overflow:hidden;background:#eef1f5;margin-top:8px}
+.stack i{display:block;height:100%}
+.nums{font-size:12.5px;color:var(--mute);margin-top:6px}
+.nums b{color:var(--navy)}
+.prow{display:grid;grid-template-columns:1fr 46px;gap:10px;align-items:center;font-size:13.5px;margin-top:8px}
+.pbar{height:7px;border-radius:4px;background:#eef1f5;overflow:hidden;margin-top:4px}
+.pbar i{display:block;height:100%;background:var(--navy)}
+.prow .pc{text-align:right;color:var(--navy);font-weight:700}
+
+/* 아래에서 올라오는 창 */
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.sheet{width:100%;max-width:560px;max-height:85vh;overflow-y:auto;background:#fff;border-radius:18px 18px 0 0;padding:22px 22px calc(18px + env(safe-area-inset-bottom))}
+.sheet h3{font-size:18px;margin:0 0 4px;font-weight:700}
+.sheet h5{font-size:13px;color:var(--mute);margin:18px 0 6px;font-weight:700}
+.sheet ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.6;color:#333}
+.sheet li+li{margin-top:4px}
+.sheet dl{margin:12px 0 0;display:grid;grid-template-columns:76px 1fr;gap:10px;font-size:14.5px}
+.sheet dt{color:var(--mute)}.sheet dd{margin:0}
+.sheet .btns{display:flex;gap:10px;margin-top:22px}
+.sheet .btns button{flex:1;height:52px;border-radius:14px;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.sheet .no{border:1px solid var(--line);background:#fff;color:var(--ink)}
+.sheet .yes{border:0;background:var(--navy);color:#fff;flex:2!important}
+.sheet .warn{margin:14px 0 0;padding:12px 14px;border-radius:10px;background:var(--sel);color:var(--navy);font-size:13.5px;font-weight:600;line-height:1.55}
+.sheet .warn.red{background:#fdf3f3;color:var(--red)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+footer{padding:0 22px 140px;font-size:12px;color:#a1a1a6;text-align:center}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- 불러오는 중 -->
+<section id="v-loading" class="center"><div class="small" style="padding-top:60px">불러오는 중입니다…</div></section>
+
+<!-- 참여 코드 -->
+<section id="v-code" class="hidden">
+ <div class="hero"><img src="../banner.webp" alt="오산헤리티지자이 1단지·2단지 공식 입주예정자협의회" width="1120" height="329"></div>
+ <div class="intro">
+  <h1>유상옵션 수요조사</h1>
+  <p style="margin:0 0 4px;font-weight:700;font-size:17px">참여 코드를 입력해 주세요</p>
+  <p class="small" style="margin:0">입주예정자 카페·단톡방 공지에 안내된 코드입니다.</p>
+  <input id="code" type="text" autocomplete="off" style="margin-top:14px" placeholder="참여 코드" autocapitalize="off" spellcheck="false" enterkeyhint="go">
+  <div class="err" id="code-err">코드가 맞지 않습니다.</div>
+ </div>
+</section>
+
+<!-- 첫 화면 -->
+<section id="v-intro" class="hidden">
+ <div class="hero"><img src="../banner.webp" alt="오산헤리티지자이 1단지·2단지 공식 입주예정자협의회" width="1120" height="329"></div>
+ <div class="intro">
+  <h1>유상옵션 수요조사</h1>
+  <div class="badges" id="badges"></div>
+  <p class="lead">유상옵션 계약 전에 우리 단지의 실제 수요를 모아, 시행사에 <b>품목별 선택과 가격 조정</b>을 요청하는 근거로 씁니다. 품목마다 옵션 공급금액과 대략적인 사제 시세를 비교해 보시고 <b>옵션으로 할지, 입주 후 사제(공동구매 포함)로 할지</b> 골라 주세요.</p>
+  <ul class="facts">
+   <li><span>1</span><div>동·호수와 타입을 넣으면 그 타입의 옵션만 한 문항씩 나옵니다.</div></li>
+   <li><span>2</span><div>사제 시세는 공개 자료를 모은 대략적인 참고값입니다. 같은 모델·같은 시공 범위가 아닌 경우가 많아 실제 견적과 다를 수 있습니다.</div></li>
+   <li><span>3</span><div>'입주예정자 의견'은 단톡방에 올라온 일부 의견을 정리한 것으로, 확인된 사실이나 다수 의견이 아닙니다.</div></li>
+   <li><span>4</span><div>동·호수만 받으며, 같은 세대가 다시 내면 마지막 응답으로 바뀝니다. 제출하면 전체 집계를 볼 수 있습니다.</div></li>
+  </ul>
+  <div class="prev-card hidden" id="prev-card"><b>이 기기에서 응답한 기록이 있습니다</b><div class="small" id="prev-meta" style="margin-top:2px"></div>
+   <button type="button" id="prev-go">응답 결과 보기</button><div class="err" id="prev-err"></div></div>
+ </div>
+</section>
+
+<!-- 문항 -->
+<section id="v-step" class="hidden">
+ <div class="top"><div class="prog"><i id="prog"></i></div><div class="step"><span id="sec"></span><span id="pos"></span></div></div>
+ <div class="body" id="stage"></div>
+</section>
+
+<!-- 완료 + 결과 -->
+<section id="v-done" class="hidden">
+ <div class="center">
+  <svg class="check" viewBox="0 0 72 72" aria-hidden="true"><rect x="10" y="8" width="44" height="54" rx="6" fill="#fff" stroke="#0f2747" stroke-width="3"/><path d="M20 24h24M20 33h24M20 42h14" stroke="#0f2747" stroke-width="3" stroke-linecap="round"/><circle cx="54" cy="52" r="15" fill="#22a35a" stroke="#fff" stroke-width="3"/><path d="M47.5 52.5l4.5 4.5 8.5-9" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <div class="big" id="done-title">응답이 저장되었습니다</div>
+  <div class="small" id="done-meta"></div>
+  <div class="count" id="done-count"></div>
+ </div>
+ <div class="res" id="results"></div>
+</section>
+
+<!-- 오류 -->
+<section id="v-error" class="hidden center">
+ <div class="big" style="margin-top:60px">지금은 응답을 받을 수 없습니다</div>
+ <div class="small" id="error-msg">잠시 뒤 다시 열어 주세요.</div>
+</section>
+
+<div class="nav hidden" id="nav"><div class="in"><button type="button" class="prev" id="btn-prev">이전</button><button type="button" class="next" id="btn-next">다음</button></div></div>
+<input class="hp" type="text" id="website" tabindex="-1" autocomplete="off">
+</div>
+
+<script>
+/* ===== 설정 : 구글 앱스 스크립트 배포 주소를 넣으세요 ===== */
+const API_URL = 'https://script.google.com/macros/s/AKfycbylpkyA23Mk6WJHa0T2oZVqi8wB3Cy2aH0xN3Uwh3AyRdjMgGbOBLVAseH6uwTW6J0Q/exec';
+/* ========================================================== */
+
+/* ---------- 옵션표 (모집공고 옵션표, 단위 원, 부가세 포함) ---------- */
+const TYPES = ['75','84A','84B','84C','84D','102','124','166P'];
+const BASE = 'base';   // 166P '확장 시 기본제공'
+
+// 사제 시세 출처 (번호는 화면의 작은 숫자와 같음)
+const SRC = [
+ ['3연동 중문 가격(폭·유리·프레임별 시세)', '글래스월렛, 2026년 9월 추정치', 'https://glasswallet.com/calculate/middle-door-cost/three-slide-price'],
+ ['자동중문 설치 비용과 전기공사 추가비', '글래스월렛, 2026년 9월 추정치', 'https://glasswallet.com/calculate/middle-door-cost/auto-door-cost'],
+ ['양변기 교체 비용', '글래스월렛, 2026년 6월 기준', 'https://glasswallet.com/blog/toilet-replacement-cost-guide'],
+ ['수전 교체 비용', '글래스월렛, 2026년 기준', 'https://glasswallet.com/blog/faucet-replacement-cost-guide'],
+ ['붙박이장 가격(한샘몰 공개가 환산)', '글래스월렛, 2026년 10월 조회', 'https://glasswallet.com/blog/built-in-wardrobe-price-guide'],
+ ['힘펠 욕실 환풍기 교체 비용', '글래스월렛, 2026년 8월 조회', 'https://glasswallet.com/blog/himpel-fan-replacement-cost-guide'],
+ ['LG 빌트인 인덕션 기획전', '다나와, 게시 시점 미확인', 'https://plan.danawa.com/info/?nPlanSeq=10746'],
+ ['LG 핏앤맥스 냉장고 조합별 가격', '다나와 DPG, 2026년 6월 11일', 'https://dpg.danawa.com/news/view?boardSeq=63&listSeq=6020173'],
+ ['LG 광파오븐 MZ385EBTAD 최저가', '다나와, 2026년 11월 6일 조회', 'https://prod.danawa.com/info/?pcode=15737252'],
+ ['LG 14인용 빌트인 식기세척기 DUE6BGL1E 최저가', '에누리, 2026년 11월 6일 조회', 'https://www.enuri.com/p/131145590'],
+ ['LG 시스템에어컨 대수별 가격(설치 포함)', '2026년 9월 19일 수정 게시물', 'https://xn--9t4b1dz4ggd091curd.com/aircon-info/lg-system-aircon-price/'],
+ ['반셀프 인테리어 조명 공사 비용(전용 59㎡)', '한국경제, 2026년 9월 27일', 'https://www.hankyung.com/article/202609277361i'],
+ ['포세린 타일 시공 비용', '고강타일 블로그, 가격 기준 시점 미확인', 'https://inblog.ai/gogangtile/how-much-is-porcelain-tile-install-work'],
+ ['인테리어 조명 비용', '글래스월렛, 2026년 9월', 'https://glasswallet.com/blog/interior-lighting-cost-guide']
+];
+
+/* 개별 옵션·주방가전
+   price : TYPES 순서 [75,84A,84B,84C,84D,102,124,166P], null = 해당 없음
+   self  : 사제 칸에 보일 대략 시세, selfNote : 시세 설명
+   op    : 입주예정자 의견(단톡방) — opt 옵션 쪽, self 사제 쪽, etc 그 밖 */
+const ITEMS = [
+ {id:'jungmun', group:'개별 옵션', name:'현관 중문', desc:{'84D':'수동 여닫이 도어','*':'3연동 자동'},
+  price:[2090000,2090000,2090000,2090000,1350000,2113000,2136000,BASE],
+  self:'수동 3연동<br>약 77만~110만원<sup>1</sup><small>자동중문 약 220만~320만원<sup>2</sup></small>',
+  selfNote:'모두 폭 120cm 기준 추정치임. 자동중문은 전원공사 포함 금액임.',
+  op:{optS:'가벽 철거 포함, 사제 고장 잦았다는 경험담',selfS:'수동 중문은 사제만 가능, 개별 시공 만족도 높았다는 경험담',opt:['옵션으로 하면 가벽도 터 준다는 의견','사제 중문이 고장이 잦아 이번엔 옵션으로 하겠다는 경험담'],
+      self:['옵션은 자동만 있어 수동을 원하면 사제밖에 없다는 의견','박람회에서 개별로 한 세대의 만족도가 옵션보다 높았다는 경험담']}},
+ {id:'bath', group:'개별 옵션', name:'욕실 특화', desc:'특화 세면대·양변기·수전, 브론즈 무광 샤워부스 및 액세서리 (부부욕실·가족욕실)',
+  price:[2355000,2145000,2098000,2145000,2145000,2268000,2491000,BASE],
+  self:'약 110만~210만원<sup>3,4</sup><small>양변기·세면대 수전·샤워 수전 교체비 합산</small>',
+  selfNote:'욕실 2곳의 양변기(원피스)·세면대 수전·샤워 수전을 사제로 바꾸는 비용을 더한 값임. 샤워부스·세면대 본체는 빠졌고, 기본 제품을 떼어 내는 비용이 더 들 수 있음.',
+  op:{optS:'가격 대비 괜찮다는 의견',selfS:'',opt:['가격 대비 괜찮은 옵션이라는 의견'], self:[]}},
+ {id:'closet2', group:'개별 옵션', name:'침실2 붙박이장', desc:'',
+  price:[1320000,1320000,1320000,1320000,1320000,1320000,1455000,BASE],
+  self:'방 1곳 약 70만~110만원<sup>5</sup><small>고급형 약 140만~210만원</small>',
+  selfNote:'방 1곳(8~10자) 기준 한샘몰 공개가 환산값임. 철거·설치 마감비는 별도일 수 있음.',
+  op:{optS:'품질 괜찮고, 사제 공구도 비싸다는 의견',selfS:'벽지·바닥재 없이 붙여 교체 때 일이 커질 수 있음',opt:['모델하우스에서 본 품질이 괜찮았다는 의견','사제 공동구매도 자재값이 올라 꽤 비싸다는 의견'],
+      self:['옵션은 장 뒤·아래에 벽지·바닥재 없이 붙여 나중에 바꿀 때 일이 커질 수 있다는 의견','내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견']}},
+ {id:'closet3', group:'개별 옵션', name:'침실3 붙박이장', desc:'',
+  price:[1320000,1320000,1320000,1320000,1320000,1455000,1455000,BASE],
+  self:'방 1곳 약 70만~110만원<sup>5</sup><small>고급형 약 140만~210만원</small>',
+  selfNote:'방 1곳(8~10자) 기준 한샘몰 공개가 환산값임. 철거·설치 마감비는 별도일 수 있음.',
+  op:{optS:'품질 괜찮고, 사제 공구도 비싸다는 의견',selfS:'벽지·바닥재 없이 붙여 교체 때 일이 커질 수 있음',opt:['모델하우스에서 본 품질이 괜찮았다는 의견','사제 공동구매도 자재값이 올라 꽤 비싸다는 의견'],
+      self:['옵션은 장 뒤·아래에 벽지·바닥재 없이 붙여 나중에 바꿀 때 일이 커질 수 있다는 의견','내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견']}},
+ {id:'master', group:'개별 옵션', name:'마스터룸 특화 (침실4)', desc:'침실1·침실4 도어 위치 변경 + 복도 장식장 + 침실4 슬라이딩 도어 변경 + 시트패널 벽',
+  price:[null,null,null,null,null,null,4557000,null],
+  self:'비교 어려움<small>도어 위치를 바꾸는 구조 변경 포함</small>',
+  selfNote:'입주 후에는 벽·문 공사가 필요해 사제 시세와 바로 비교하기 어려움.', op:{opt:[],self:[]}},
+ {id:'storage', group:'개별 옵션', name:'특화 수납장', desc:'가전 소물장 + 로봇청소기장 (주방 Style Up과 오브제 냉장고장을 계약해야 선택 가능)',
+  price:[759000,759000,759000,759000,759000,946000,946000,'free'],
+  self:'시세 확인 못 함<small>맞춤 가구라 업체 실측 견적 필요</small>', selfNote:'',
+  op:{opt:[], self:[], etc:['로봇청소기장은 비싼 오브제 냉장고를 골라야만 선택할 수 있어 아쉽다는 의견이 있음']}},
+ {id:'fan', group:'개별 옵션', name:'욕실 복합 환풍기', desc:'힘펠 기본형 (부부욕실·가족욕실)',
+  price:[1200000,1200000,1200000,1200000,1200000,1200000,1200000,BASE],
+  self:'2곳 약 50만~120만원<sup>6</sup><small>1대 약 25만~60만원, 설치 포함</small>', selfNote:'힘펠 휴젠뜨 등 복합 환풍기 기준임.',
+  op:{optS:'기존 스위치로 켤 수 있어 편함',selfS:'사제도 스위치 연동 가능',opt:['옵션은 기존 환풍기 스위치로 켤 수 있어 편하다는 의견'], self:['사제로 달아도 스위치 연동이 된다는 의견']}},
+ {id:'induction', group:'개별 옵션', name:'3구 인덕션', desc:'LG BEI3ASB4BI',
+  price:[1100000,1100000,1100000,1100000,1100000,1100000,1100000,BASE],
+  self:'약 81만~107만원<sup>7</sup><small>시판 LG 3구 빌트인, 같은 모델 아님</small>', selfNote:'기본 쿡탑을 떼어 내고 설치하는 비용은 빠짐.', op:{opt:[],self:[]}},
+ {id:'fridge', group:'주방가전', name:'오브제컬렉션 냉장고', desc:'FIT & MAX 4도어 냉장고 + 3도어 김치냉장고, M62BAAA332 + Z334AAA151 (스테인리스)',
+  price:[6200000,6200000,6200000,6200000,6200000,6200000,6200000,6200000],
+  self:'세트 약 564만원<sup>8</sup><small>시판 4도어 613L + 김치 324L, 같은 모델 아님</small>', selfNote:'4도어 504L 세트는 약 437만원임.',
+  op:{optS:'',selfS:'냉장고장은 기본으로 두고 따로 맞추겠다는 의견',opt:[], self:['냉장고장은 기본으로 두고 따로 맞추겠다는 의견'], etc:['특화 수납장(로봇청소기장)은 이 냉장고를 골라야만 선택할 수 있음(옵션표 기준)']}},
+ {id:'oven', group:'주방가전', name:'광파오븐', desc:'LG MZ385EBTAD (드로워 포함)',
+  price:[540000,540000,540000,540000,540000,540000,540000,540000],
+  self:'약 52만원<sup>9</sup><small>같은 모델 시판 최저가</small>', selfNote:'드로워 포함 여부와 빌트인 설치비는 확인하지 못함.', op:{opt:[],self:[]}},
+ {id:'dish', group:'주방가전', name:'식기세척기', desc:'LG DIE6PT (가구 부착형, 14인용)',
+  price:[1450000,1450000,1450000,1450000,1450000,1450000,1450000,1450000],
+  self:'약 97만원<sup>10</sup><small>시판 LG 14인용 빌트인, 같은 모델 아님</small>', selfNote:'가구 문 부착 설치비는 빠짐.',
+  op:{optS:'가구 맞춤으로 마감이 깔끔',selfS:'작업자에 따라 마감이 허술할 수 있음',opt:['옵션은 가구에 맞춰 상·하부 마감이 깔끔하다는 의견','가구를 뜯어야 하는 품목은 옵션이 낫다는 의견'],
+      self:['사제는 작업자에 따라 상·하부 마감이 허술할 수 있다는 의견'],
+      etc:['식기세척기를 잘 안 쓰게 된다는 의견과 생활이 편해졌다는 의견이 함께 있음']}}
+];
+
+// 시스템에어컨 [대수, 설치 장소, 공급금액, 비고]
+const AC = {
+ '75':  [[2,'거실, 침실1',4300000],[4,'거실, 침실1, 침실2, 침실3',7370000]],
+ '84A': [[2,'거실, 침실1',4340000],[3,'거실, 주방, 침실1',5960000],[4,'거실, 침실1, 침실2, 침실3',7890000],[5,'거실, 주방, 침실1, 침실2, 침실3',9340000],[6,'거실, 주방, 침실1, 침실2, 침실3, 알파룸',11070000,'주방 Style Up 선택 시 해당 없음']],
+ '84B': [[3,'거실, 주방, 침실1',5960000],[5,'거실, 주방, 침실1, 침실2, 침실3',9340000]],
+ '84C': [[3,'거실, 주방, 침실1',5970000],[5,'거실, 주방, 침실1, 침실2, 침실3',9350000]],
+ '84D': [[3,'거실, 주방, 침실1',5960000],[5,'거실, 주방, 침실1, 침실2, 침실3',9340000]],
+ '102': [[3,'거실, 주방, 침실1',6450000],[5,'거실, 주방, 침실1, 침실2, 침실3',9630000]],
+ '124': [[3,'거실, 주방, 침실1',6470000],[5,'거실, 주방, 침실1, 침실2, 침실3',9650000],[6,'거실, 주방, 침실1, 침실2, 침실3, 침실4',11100000]],
+ '166P':[[4,'거실, 주방, 가족실, 침실1',8230000],[7,'거실, 주방, 가족실, 침실1, 침실2, 침실3, 침실4',13320000],[8,'거실, 주방, 가족실, 침실1, 침실2, 침실3, 침실4, 침실5',15020000]]
+};
+const AC_SELF = {2:'약 440만원',3:'약 490만원',4:'약 620만~690만원',5:'약 770만원'};   // LG 사제(설치 포함)
+const AC_OP = {
+ optS:'배관·배수관 마감이 깔끔해 누수 하자가 적고, 고장은 하자보수로 처리',
+ selfS:'저렴하고 브랜드·대수 선택 가능, 천장 타공 후 배수관 마감·누수 보증이 약함',
+ opt:['입주 전 천장이 열린 상태에서 시공해 배관·응축수 배수관 마감이 깔끔하고, 누수 하자 가능성이 낮다는 의견','고장 나면 하자보수로 처리된다는 의견(보수 기간은 단지마다 다르다고 함)','입주 전에 설치되어 따로 공사할 일이 없다는 의견'],
+ self:['비용이 낮고 브랜드·모델·대수를 고를 수 있다는 의견','입주 후 천장을 뚫어 설치하므로 배선·배수관 마감이 완벽하기 어렵고, 누수 등 보증은 설치업체에 달려 있다는 의견','잔금을 치른 뒤에야 공사할 수 있어 입주 일정과 맞춰야 한다는 의견','사제로 달아 문제없이 쓰고 있다는 경험담'],
+ etc:['<b>주방 에어컨</b> — 요리할 때 음식 냄새·기름이 배어 관리가 어렵고 거실 에어컨으로 주방까지 시원하다는 의견과, 여름에 요리할 때 필요하다는 의견이 함께 있음',
+      '옵션은 정해진 대수 구성만 있어 주방을 빼고 고르기 어렵다는 의견이 있음',
+      '옵션 모델은 입주 때 구형이 된다는 의견과, 시스템에어컨은 몇 년 차이로 성능이 크게 다르지 않다는 의견이 함께 있음',
+      '옵션을 하지 않으면 거실·안방에 스탠드·벽걸이용 매립배관이 기본으로 들어간다는 이야기가 있음(모집공고에서 확인 필요)']
+};
+
+// 시스템공기청정기 [선택안, 대수, 설치 장소, 공급금액, 프리미엄환기PLUS 포함 금액]
+const AP_A = [[1,2,'거실, 주방',2150000,3750000],[2,2,'거실, 침실1',2150000,3750000],[3,3,'거실, 주방, 침실1',3200000,4800000],[4,5,'거실, 주방, 침실1, 침실2, 침실3',5300000,6900000]];
+const AP = {'75':AP_A,'84A':AP_A,'84B':AP_A,'84C':AP_A,'84D':AP_A,'102':AP_A,
+ '124':[[1,2,'거실, 주방',2150000,3850000],[2,2,'거실, 침실1',2150000,3850000],[3,3,'거실, 주방, 침실1',3200000,4900000],[4,6,'거실, 주방, 침실1, 침실2, 침실3, 침실4',6350000,8050000]],
+ '166P':[[1,2,'거실, 주방',2150000,3950000],[2,2,'거실, 침실1',2150000,3950000],[3,3,'거실, 주방, 침실1',3200000,5000000],[4,7,'거실, 주방, 침실1, 침실2, 침실3, 침실4, 침실5',7400000,9200000],[5,8,'거실, 주방, 침실1, 침실2, 침실3, 침실4, 침실5, 가족실',8450000,10250000]]};
+
+// 주방 Style Up
+const KIT = {price:[12085000,15701000,9551000,11707000,13720000,15252000,15340000,BASE],
+ parts:[
+  {id:'k1', name:'주방 특화가구', small:'유럽산 하드웨어 적용, 수동 플랩 상부장'},
+  {id:'k2', name:'독립형 렌지후드, 특화 수전'},
+  {id:'k3', name:'세라믹 패널 상판'},
+  {id:'k4', name:'우물천장 및 간접조명, 특화조명(식탁등)', mkt:'참고: 거실 우물천장 목공·필름 마감 약 70만원(전용 59㎡ 반셀프 사례)<sup>12</sup>'},
+  {id:'k5', name:'루버천장', only:['84A','84C','84D','102','124']},
+  {id:'k6', name:'주방 레이아웃 변경', only:['75','84A'], small:{'75':'11자 주방 + 홈바 + 현관창고 축소','84A':'알파룸 삭제 + T자 주방 + 팬트리 + 홈바'}},
+  {id:'k7', name:'주방 하부장 일부 유리장 변경', only:['84B']},
+  {id:'k8', name:'주방 수납장을 홈바로 변경', only:['84C','84D','102','124']}
+ ],
+ self:'비교 어려움<small>새 주방가구를 떼어 내고 다시 시공해야 함</small>',
+ op:{optS:'',selfS:'상판 교체 등은 사제로 하겠다는 의견',opt:[], self:['주방 상판 교체 등은 사제로 하겠다는 의견'],
+  etc:['우물천장만 따로 하고 싶은데 묶음이라 어렵다는 의견이 있음',{only:['84A'],x:'84A는 주방 Style Up을 하면 알파룸이 없어져 망설여진다는 의견이 있음'}]}};
+
+// 인테리어 Style Up [주방 Style Up 미선택 시, 선택 시]
+const INT = {price:[[8999000,8904000],[12784000,12246000],[13156000,13093000],[13939000,13475000],[14616000,14004000],[15824000,15409000],[16368000,15924000],[null,BASE]],
+ parts:[
+  {id:'i1', name:'현관·복도·거실 벽 이탈리아산 포셀린타일 + 시트패널', mkt:'참고: 포세린 타일 시공 평당 약 30만~70만원(자재 포함)<sup>13</sup>'},
+  {id:'i2', name:'단천장 및 리니어조명', small:{'84B':'84B는 옵션표에 \'거실 1면 커튼박스 조명\'으로 따로 적혀 있음'}},
+  {id:'i3', name:'거실 우물천장 건축화 조명 및 시트패널 천장 + 실링팬', mkt:'참고: 거실 우물천장 목공 약 70만원, 실링팬 설치 약 36만원(전용 59㎡ 반셀프 사례)<sup>12</sup>'},
+  {id:'i4', name:'침실1 우물천장 및 건축화 조명 + 시트패널 천장', except:['75']},
+  {id:'i5', name:'기타 침실 매입특화 조명', label75:'전체 침실 매입특화 조명', mkt:'참고: 매입등을 기존 자리에서 바꾸면 1개당 약 1만~3만원<sup>14</sup>'}
+ ],
+ self:'품목별 참고값만 있음<small>벽 타일·천장 목공·조명이 섞인 묶음</small>',
+ op:{optS:'하자보수 때문에 옵션으로 하겠다는 의견',selfS:'실링팬·조명만 따로 하겠다는 의견',opt:['하자보수 때문에 인테리어는 옵션으로 하겠다는 의견'], self:['실링팬·조명만 사제로 따로 하겠다는 의견']}};
+
+const CHL = {opt:'옵션',self:'사제·공구',none:'안 함'};
+
+// 동별 [라인, 시작층, 끝층] : 동호수 배치도 기준 1,783세대 (1단지 1,069 · 2단지 714)
+const UNITS = {"101":[[1,2,25],[2,2,25],[3,2,27],[4,2,25]],"102":[[1,2,22],[2,2,22],[3,2,20],[4,2,22]],"103":[[1,3,19],[2,1,19],[3,1,20],[4,3,20]],"104":[[1,2,17],[2,2,17],[3,2,16],[4,2,16],[3,17,17]],"105":[[1,2,11],[2,2,11],[3,2,14],[4,2,14],[3,15,15]],"106":[[1,2,24],[2,2,24],[3,2,27],[4,2,27]],"107":[[1,1,25],[2,3,26],[3,3,26],[4,1,26]],"108":[[1,2,27],[2,2,27],[3,2,27],[4,2,25]],"109":[[1,3,27],[2,1,27],[3,3,27],[4,1,27]],"110":[[1,3,27],[2,1,27]],"111":[[1,2,27],[2,2,27],[3,2,27],[4,2,27]],"112":[[1,1,27],[2,1,27],[3,3,27]],"113":[[1,2,17],[2,2,17],[3,2,18],[4,2,18],[1,18,18]],"201":[[1,2,26],[2,2,26],[3,2,26],[4,2,26]],"202":[[1,2,19],[2,2,22]],"203":[[1,2,22],[2,2,25]],"204":[[1,3,26],[2,1,26],[3,1,26],[4,3,26]],"205":[[1,3,27],[2,1,27],[3,1,25],[4,3,25]],"206":[[1,3,25],[2,1,25],[3,1,24],[4,3,24],[3,25,25]],"207":[[1,2,23],[2,2,23],[3,2,22],[4,2,22],[3,23,23]],"208":[[1,3,23],[2,1,23]],"209":[[1,2,27],[2,2,27],[3,2,27],[4,2,27]]};
+function validUnit(dong,ho){ const f=+ho.slice(0,-2), l=+ho.slice(-2); return !!(UNITS[dong]||[]).find(x=>x[0]===l&&f>=x[1]&&f<=x[2]); }
+
+/* ---------- 공통 ---------- */
+const $ = id => document.getElementById(id);
+const won = n => Number(n).toLocaleString('ko-KR')+'원';
+const man = n => { const m=n/10000; return (Number.isInteger(m)?m.toLocaleString('ko-KR'):m.toLocaleString('ko-KR',{maximumFractionDigits:1}))+'만원'; };
+const ti = t => TYPES.indexOf(t);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
+const views = ['loading','code','intro','step','done','error'];
+function view(v){ views.forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v)); $('nav').classList.toggle('hidden',!['code','intro','step','done'].includes(v)); window.scrollTo(0,0); }
+let CODE='', INFO=null, TYPE='', DONG='', HO='', A={}, STEPS=[], CUR=0, BACK_TO_REVIEW=false;
+
+async function api(params){
+  const q=new URLSearchParams(params).toString();
+  const r=await fetch(API_URL+(API_URL.includes('?')?'&':'?')+q,{method:'GET'});
+  return r.json();
+}
+
+/* ---------- 아래 버튼 ---------- */
+let navMode='';
+function setNav(mode, nextLabel, enabled, prevLabel){
+  navMode=mode; $('btn-next').textContent=nextLabel; $('btn-next').disabled=!enabled;
+  $('btn-prev').classList.toggle('hidden',!prevLabel); if(prevLabel) $('btn-prev').textContent=prevLabel;
+}
+$('btn-next').onclick=()=>{
+  if(navMode==='code') return goCode();
+  if(navMode==='intro') return start();
+  if(navMode==='step') return next();
+  if(navMode==='submit') return submit();
+  if(navMode==='done'){ restart(); }
+};
+$('btn-prev').onclick=()=>{ if(navMode==='done') return; if(CUR>0) go(CUR-1); else showIntro(); };
+
+/* ---------- 참여 코드 ---------- */
+let REQ=0;
+async function load(bg){
+  const my=++REQ;
+  try{
+    const res=await api({action:'info',code:CODE});
+    if(my!==REQ) return;
+    if(res.needCode){ if(!bg) showCode(); if(CODE) failCode(); return; }
+    if(!res.ok){ $('error-msg').textContent=res.message||'잠시 뒤 다시 열어 주세요.'; view('error'); return; }
+    INFO=res; restore(); showIntro();
+  }catch(e){ if(my!==REQ||bg) return; $('error-msg').textContent='연결에 실패했습니다. 잠시 뒤 다시 열어 주세요.'; view('error'); }
+}
+function showCode(){ view('code'); setNav('code','확인',true); }
+function lockInfo(){ try{ return JSON.parse(localStorage.getItem('codeFail')||'{}'); }catch(e){ return {}; } }
+function saveLock(o){ try{ localStorage.setItem('codeFail',JSON.stringify(o)); }catch(e){} }
+function lockedMin(){ const o=lockInfo(); return o.until&&o.until>Date.now()?Math.ceil((o.until-Date.now())/60000):0; }
+function failCode(){ const o=lockInfo(); if(o.until&&o.until<=Date.now()){ o.n=0; o.until=0; }
+  o.n=(o.n||0)+1; if(o.n>=5){ o.until=Date.now()+10*60000; o.n=0; } saveLock(o);
+  const m=lockedMin(); $('code-err').textContent=m?'코드를 5번 잘못 입력했습니다. '+m+'분 뒤에 다시 입력해 주세요.':'코드가 맞지 않습니다.'; $('code-err').style.display='block'; setNav('code','확인',true); }
+function goCode(){ const m=lockedMin(); if(m){ $('code-err').textContent='코드를 5번 잘못 입력했습니다. '+m+'분 뒤에 다시 입력해 주세요.'; $('code-err').style.display='block'; return; }
+  CODE=$('code').value.trim(); $('code-err').style.display='none'; setNav('code','확인하는 중…',false); load(); }
+$('code').addEventListener('keydown',e=>{ if(e.key==='Enter') goCode(); });
+
+/* ---------- 첫 화면 ---------- */
+function dday(iso){ if(!iso) return null; const t=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Seoul'})); t.setHours(0,0,0,0);
+  return Math.round((new Date(iso+'T00:00:00')-t)/86400000); }
+function showIntro(){
+  const b=$('badges'); b.innerHTML='';
+  const add=(t,on)=>{ const s=el('span','badge'+(on?' on':'')); s.textContent=t; b.appendChild(s); };
+  add((INFO.count||0).toLocaleString()+'세대 응답',true);
+  if(INFO.deadlineISO){ const d=dday(INFO.deadlineISO), md=(+INFO.deadlineISO.slice(5,7))+'/'+(+INFO.deadlineISO.slice(8,10));
+    add(d===0?'오늘 마감 · '+md:(d>0?'D-'+d+' · '+md+' 마감':md+' 마감')); }
+  add('약 3~5분');
+  const d=doneInfo(); $('prev-card').classList.toggle('hidden',!d);
+  if(d) $('prev-meta').textContent=d.dong+'동 '+d.ho+'호 · '+d.type+' · '+d.time+' 제출. 다시 응답하면 이전 응답이 바뀝니다.';
+  view('intro'); setNav('intro', d?'다시 응답하기':'시작하기', true);
+}
+function start(){ buildSteps(); go(0); }
+
+/* ---------- 문항 목록 ---------- */
+function buildSteps(){
+  STEPS=[{k:'home',sec:'우리 집'}];
+  if(TYPE){ const i=ti(TYPE);
+    STEPS.push({k:'ac',sec:'냉난방·공기'},{k:'ap',sec:'냉난방·공기'});
+    if(KIT.price[i]!==BASE) STEPS.push({k:'pkgParts',id:'kit',sec:'묶음 옵션'},{k:'pkg',id:'kit',sec:'묶음 옵션'});
+    if(INT.price[i][1]!==BASE) STEPS.push({k:'pkgParts',id:'int',sec:'묶음 옵션'},{k:'pkg',id:'int',sec:'묶음 옵션'});
+    ITEMS.forEach(it=>{ const p=it.price[i]; if(p!==null&&p!==BASE) STEPS.push({k:'item',it,sec:it.group}); });
+    STEPS.push({k:'memo',sec:'의견'},{k:'review',sec:'확인'});
+  }
+}
+function go(n){
+  CUR=n; const s=STEPS[n]; const st=$('stage'); st.innerHTML='';
+  const total=TYPE?STEPS.length:19;
+  $('prog').style.width=Math.round((n+1)/total*100)+'%';
+  $('sec').textContent=s.sec; $('pos').textContent=TYPE?(n+1)+' / '+total:'';
+  ({home:stepHome, ac:stepAc, ap:stepAp, pkgParts:stepParts, pkg:stepPkg, item:stepItem, memo:stepMemo, review:stepReview})[s.k](st,s);
+  view('step'); refreshNav(); save();
+  try{ history.replaceState({s:n},''); }catch(e){}
+}
+function refreshNav(){
+  const s=STEPS[CUR]; if(!s) return;
+  if(s.k==='review'){ setNav('submit','제출하기',true,'이전'); return; }
+  const ok=answered(s);
+  setNav('step', BACK_TO_REVIEW&&s.k!=='home'?'확인 화면으로':(s.k==='memo'?'다음 (건너뛰어도 됨)':'다음'), ok, '이전');
+}
+function next(){
+  const s=STEPS[CUR];
+  if(s.k==='home'){ if(!checkHome()) return; const old=STEPS.length; buildSteps(); }
+  if(BACK_TO_REVIEW && s.k!=='home'){ BACK_TO_REVIEW=false; return go(STEPS.length-1); }
+  go(Math.min(CUR+1,STEPS.length-1));
+}
+function answered(s){
+  if(s.k==='home') return true;
+  if(s.k==='ac'){ const a=A.ac; return !!(a&&a.c&&((a.c!=='other'&&a.c!=='self')||a.n)); }
+  if(s.k==='ap') return !!(A.ap&&A.ap.c);
+  if(s.k==='pkgParts') return !!(A[s.id+'P']&&A[s.id+'P'].length);
+  if(s.k==='pkg') return !!A[s.id];
+  if(s.k==='item') return !!A[s.it.id];
+  return true;
+}
+
+/* ---------- 1. 우리 집 ---------- */
+function stepHome(st){
+  st.appendChild(el('div','q','우리 집 정보를 알려 주세요'));
+  st.appendChild(el('p','d','타입에 따라 옵션 구성과 금액이 다릅니다. 이 조사의 옵션은 모두 발코니 확장 세대만 고를 수 있습니다(옵션표 기준).'));
+  st.insertAdjacentHTML('beforeend','<div class="row"><div><label class="f" for="dong">동</label><div class="unit"><input id="dong" type="tel" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="예: 101"><span>동</span></div></div>'+
+   '<div><label class="f" for="ho">호수</label><div class="unit"><input id="ho" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="예: 1202, 302"><span>호</span></div></div></div>'+
+   '<div class="err" id="dongho-err">동과 호수를 확인해 주세요.</div><label class="f">타입</label><div class="types" id="types"></div><div class="err" id="type-err">타입을 골라 주세요.</div>'+
+   '<p class="hint">동·호수는 같은 세대 중복을 막는 데만 씁니다.</p>');
+  $('dong').value=DONG; $('ho').value=HO;
+  $('dong').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,3); DONG=e.target.value; $('dongho-err').style.display='none'; if(DONG.length===3) $('ho').focus({preventScroll:true}); save(); });
+  $('ho').addEventListener('input',e=>{ const v=e.target.value=e.target.value.replace(/\D/g,'').slice(0,4); HO=v; $('dongho-err').style.display='none';
+    if(v.length===4||(v.length===3&&validUnit(DONG,v))) e.target.blur(); save(); });
+  TYPES.forEach(t=>{ const b=el('button'); b.type='button'; b.textContent=t; if(TYPE===t) b.classList.add('on');
+    b.onclick=()=>{ if(TYPE!==t){ const keep=A; A={}; ITEMS.forEach(it=>{ if(keep[it.id]) A[it.id]=keep[it.id]; }); ['kit','int','memo'].forEach(k=>{ if(keep[k]) A[k]=keep[k]; }); TYPE=t; }
+      $('types').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); $('type-err').style.display='none'; save(); };
+    $('types').appendChild(b); });
+}
+function checkHome(){
+  let bad=false;
+  const dhBad=!UNITS[DONG]||!/^\d{3,4}$/.test(HO)||!validUnit(DONG,HO);
+  $('dongho-err').textContent=(/^\d{3}$/.test(DONG)&&!UNITS[DONG])?DONG+'동은 우리 단지에 없는 동입니다. 동을 확인해 주세요.'
+    :(UNITS[DONG]&&/^\d{3,4}$/.test(HO))?DONG+'동에는 '+HO+'호가 없습니다. 호수를 확인해 주세요.':'동과 호수를 확인해 주세요.';
+  if(dhBad){ $('dongho-err').style.display='block'; bad=true; }
+  if(!TYPE){ $('type-err').style.display='block'; bad=true; }
+  return !bad;
+}
+
+/* ---------- 문항 공통 그리기 ---------- */
+// 타입에 맞는 의견만 남김
+function opFor(op){ return Object.assign({},op,{etc:(op.etc||[]).filter(e=>typeof e==='string'||e.only.includes(TYPE)).map(e=>typeof e==='string'?e:e.x)}); }
+function cmpBox(optHtml, selfHtml, op){
+  const c=el('div','cmp');
+  const L=el('div',null,'<h4>옵션</h4><div class="v">'+optHtml+'</div>'+(op&&op.optS?'<div class="op"><b>의견</b>'+op.optS+'</div>':''));
+  const R=el('div',null,'<h4>사제 (대략)</h4><div class="v">'+selfHtml+'</div>'+(op&&op.selfS?'<div class="op"><b>의견</b>'+op.selfS+'</div>':''));
+  c.appendChild(L); c.appendChild(R); return c;
+}
+function moreBtn(title, op, notes){
+  const all=(op.opt||[]).length+(op.self||[]).length+(op.etc||[]).length;
+  if(!all && !notes) return null;
+  const b=el('button','more'); b.type='button';
+  b.innerHTML=(all?'입주예정자 의견 '+all+'건':'시세 설명')+' · <b>자세히 보기 ›</b>';
+  b.onclick=()=>{ const d=el('div'); d.appendChild(el('h3',null,esc(title)));
+    d.appendChild(el('p','small','단톡방에 올라온 일부 의견을 정리한 것으로, 확인된 사실이나 다수 의견이 아닙니다.'));
+    const sec=(h,arr)=>{ if(!arr||!arr.length) return; d.appendChild(el('h5',null,h)); d.appendChild(el('ul',null,arr.map(x=>'<li>'+x+'</li>').join(''))); };
+    sec('옵션 쪽 의견',op.opt); sec('사제 쪽 의견',op.self); sec('그 밖의 의견',op.etc);
+    if(notes){ d.appendChild(el('h5',null,'사제 시세 설명')); d.appendChild(el('p',null,notes)).style.cssText='margin:0;font-size:14px;color:#333';
+      d.appendChild(el('p','small','작은 숫자는 확인 화면 아래 출처 번호입니다.')).style.marginTop='8px'; }
+    sheet(d,null,'닫기',null); };
+  return b;
+}
+function opb(title, small, price, on, onClick){
+  const b=el('button','opb'+(on?' on':'')); b.type='button';
+  b.innerHTML='<span>'+esc(title)+(small?'<small>'+esc(small)+'</small>':'')+'</span>'+(price?'<span class="p">'+price+'</span>':'');
+  b.onclick=onClick; return b;
+}
+function pick(container, btn){ container.querySelectorAll('.opb').forEach(x=>x.classList.toggle('on',x===btn)); }
+
+/* ---------- 에어컨 ---------- */
+function stepAc(st){
+  const rows=AC[TYPE];
+  st.appendChild(el('div','q','천장형 시스템에어컨,<br>어떻게 하실 건가요?'));
+  st.appendChild(el('p','d',TYPE+' 기준 · LG전자 Premium UVnano 실내기'));
+  const optHtml=rows.map(r=>r[0]+'대 '+man(r[2])).join('<br>');
+  const selfHtml=rows.filter(r=>AC_SELF[r[0]]).map(r=>r[0]+'대 '+AC_SELF[r[0]]).join('<br>')||'—';
+  const miss=rows.filter(r=>!AC_SELF[r[0]]).map(r=>r[0]+'대');
+  st.appendChild(cmpBox(optHtml, selfHtml+'<sup>11</sup><small>LG, 제품·설치 포함'+(miss.length?'<br>'+miss.join('·')+' 시세는 확인 못 함':'')+'</small>', AC_OP));
+  st.appendChild(el('div','etc',AC_OP.etc[0]));
+  const mb=moreBtn('천장형 시스템에어컨', AC_OP, 'LG 시스템에어컨을 사제로 설치하면(제품·설치 포함) 2대 약 440만원, 3대 약 490만원, 4대 약 620만~690만원, 5대 약 770만원<sup>11</sup>. 입주 후 설치는 천장 타공·배관 공사가 따르고, 업체·현장 조건에 따라 금액이 달라짐.'); st.appendChild(mb);
+  const ops=el('div','ops'); const cur=A.ac||{};
+  const sub=el('div','inline hidden');
+  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ A.ac={c:v,n:(A.ac&&A.ac.n)||''}; pick(ops,b); placeSub(b,v); refreshNav(); save(); }); b.dataset.v=v; ops.appendChild(b); return b; };
+  rows.forEach(([n,where,price,memo])=>add('cfg:'+n,'옵션 '+n+'대',where+(memo?' · '+memo:''),won(price)));
+  add('other','다른 대수로 옵션 희망','예: 옵션표에 없는 4대 구성이 생기면 계약');
+  add('self','사제·공동구매','입주 후 개별 설치 또는 공동구매');
+  add('none','하지 않음','스탠드·벽걸이 등');
+  function placeSub(btn,v){
+    if(v!=='other'&&v!=='self'){ sub.classList.add('hidden'); return; }
+    sub.innerHTML='<label>'+(v==='other'?'옵션으로 원하는 대수':'사제로 달 대수(예상)')+'</label>';
+    const c=el('div','cnt'); [1,2,3,4,5,6,7,8].forEach(n=>{ const x=el('button'); x.type='button'; x.textContent=n+'대'; if(+A.ac.n===n) x.classList.add('on');
+      x.onclick=()=>{ A.ac.n=n; c.querySelectorAll('button').forEach(y=>y.classList.toggle('on',y===x)); refreshNav(); save(); }; c.appendChild(x); });
+    sub.appendChild(c); sub.classList.remove('hidden'); btn.after(sub);
+  }
+  st.appendChild(ops);
+  if(cur.c==='other'||cur.c==='self') placeSub(ops.querySelector('[data-v="'+cur.c+'"]'),cur.c);
+}
+
+/* ---------- 공기청정기 ---------- */
+function stepAp(st){
+  st.appendChild(el('div','q','시스템 공기청정기,<br>어떻게 하실 건가요?'));
+  st.appendChild(el('p','d',TYPE+' 기준 · LG전자. 프리미엄환기PLUS(1대)를 함께 고르면 금액이 올라갑니다.'));
+  const rows=AP[TYPE];
+  st.appendChild(cmpBox(man(rows[0][3])+'부터<small>선택안·대수에 따라 '+man(rows[0][3])+'~'+man(rows[rows.length-1][3])+'</small>', '시세 확인 못 함<small>사제는 일반 공기청정기 구입으로 보고 응답</small>', null));
+  const ops=el('div','ops'); const cur=A.ap||{};
+  const tg=el('label','togg hidden'); const cb=el('input'); cb.type='checkbox'; cb.checked=!!cur.plus;
+  cb.onchange=()=>{ A.ap.plus=cb.checked; save(); };
+  tg.appendChild(cb); tg.appendChild(el('span',null,'프리미엄환기PLUS도 함께 하겠음<small>고른 선택안의 \'환기PLUS 함께\' 금액으로 계산</small>'));
+  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ A.ap={c:v,plus:!!(A.ap&&A.ap.plus)}; pick(ops,b); tg.classList.toggle('hidden',!/^opt/.test(v)); refreshNav(); save(); }); ops.appendChild(b); };
+  rows.forEach(([k,n,where,p,pp])=>add('opt'+k,'옵션 선택'+k+' · '+n+'대',where+' · 환기PLUS 함께 '+won(pp),won(p)));
+  add('self','사제로 하겠음','일반 공기청정기 등을 따로 구입');
+  add('none','하지 않음');
+  st.appendChild(ops); tg.classList.toggle('hidden',!/^opt/.test(cur.c||'')); st.appendChild(tg);
+}
+
+/* ---------- 묶음 옵션 ---------- */
+function partsFor(key){
+  const P=key==='kit'?KIT.parts:INT.parts;
+  return P.filter(p=>(!p.only||p.only.includes(TYPE))&&(!p.except||!p.except.includes(TYPE))).map(p=>{
+    const small=typeof p.small==='object'&&p.small?(p.small[TYPE]||''):(p.small||'');
+    return {id:p.id, name:(TYPE==='75'&&p.label75)?p.label75:p.name, small, mkt:p.mkt}; });
+}
+function intPrice(){ const r=INT.price[ti(TYPE)]; return A.kit==='opt'||KIT.price[ti(TYPE)]===BASE ? r[1] : r[0]; }
+function pkgName(key){ return key==='kit'?'주방 Style Up':'인테리어 Style Up'; }
+function pkgPriceText(key){ const i=ti(TYPE); if(key==='kit') return won(KIT.price[i]);
+  const r=INT.price[i]; return won(r[0])+'<small>주방 Style Up과 함께 계약하면 '+won(r[1])+'</small>'; }
+function stepParts(st,s){
+  const key=s.id;
+  st.appendChild(el('div','q',pkgName(key)+',<br>나눠서 판다면?'));
+  st.appendChild(el('p','d','지금은 아래 품목을 묶음으로만 팝니다. 품목별로 따로 고를 수 있다면 옵션으로 할 품목을 모두 골라 주세요.'+(key==='int'&&TYPE==='75'?' (75는 침실1 우물천장·건축화 조명·시트패널 천장이 빠지고, 전체 침실에 매입특화 조명이 들어감)':'')));
+  const box=el('div'); const sel=A[key+'P']=A[key+'P']||[];
+  partsFor(key).concat([{id:'none',name:'옵션으로 고를 품목 없음'}]).forEach(p=>{
+    const l=el('label','chk'); const cb=el('input'); cb.type='checkbox'; cb.value=p.id; cb.checked=sel.includes(p.id);
+    const t=el('span','t'); t.textContent=p.name; if(p.small||p.mkt){ const sm=el('small'); sm.innerHTML=(p.small?esc(p.small):'')+(p.small&&p.mkt?'<br>':'')+(p.mkt||''); t.appendChild(sm); }
+    cb.onchange=()=>{ let arr=A[key+'P'];
+      if(p.id==='none'&&cb.checked){ arr=['none']; box.querySelectorAll('input').forEach(x=>{ if(x!==cb) x.checked=false; }); }
+      else if(cb.checked){ arr=arr.filter(x=>x!=='none').concat(p.id); const n=box.querySelector('input[value=none]'); if(n) n.checked=false; }
+      else arr=arr.filter(x=>x!==p.id);
+      A[key+'P']=arr; refreshNav(); save(); };
+    l.appendChild(cb); l.appendChild(t); box.appendChild(l); });
+  st.appendChild(box);
+}
+function stepPkg(st,s){
+  const key=s.id, P0=key==='kit'?KIT:INT, P=Object.assign({},P0,{op:opFor(P0.op)});
+  st.appendChild(el('div','q',pkgName(key)+',<br>지금처럼 묶음이라면?'));
+  st.appendChild(el('p','d',TYPE+' 기준 · 앞 문항에서 본 품목을 모두 포함한 묶음 옵션입니다.'));
+  st.appendChild(cmpBox(pkgPriceText(key), P.self, P.op));
+  if(P.op.etc&&P.op.etc.length) st.appendChild(el('div','etc',P.op.etc[0]));
+  const mb=moreBtn(pkgName(key), P.op, null); if(mb) st.appendChild(mb);
+  const ops=el('div','ops'); const cur=A[key];
+  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur===v,()=>{ A[key]=v; pick(ops,b); refreshNav(); save(); }); ops.appendChild(b); };
+  add('opt','옵션으로 계약',null,key==='kit'?won(KIT.price[ti(TYPE)]):null);
+  add('self','사제로 하겠음','필요한 품목만 입주 후 개별 시공');
+  add('none','하지 않음');
+  st.appendChild(ops);
+}
+
+/* ---------- 개별 품목 ---------- */
+function stepItem(st,s){
+  const it=Object.assign({},s.it,{op:opFor(s.it.op)}), p=it.price[ti(TYPE)];
+  st.appendChild(el('div','q',esc(it.name)+',<br>어떻게 하실 건가요?'));
+  const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc;
+  st.appendChild(el('p','d',TYPE+' 기준'+(ds?' · '+esc(ds):'')));
+  st.appendChild(cmpBox(p==='free'?'무상 선택<small>166P는 무상으로 고를 수 있음</small>':won(p), it.self, it.op));
+  if(it.op.etc&&it.op.etc.length) st.appendChild(el('div','etc',it.op.etc[0]));
+  const mb=moreBtn(it.name, it.op, it.selfNote); if(mb) st.appendChild(mb);
+  const ops=el('div','ops'); const cur=A[it.id];
+  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur===v,()=>{ A[it.id]=v; pick(ops,b); refreshNav(); save(); }); ops.appendChild(b); };
+  add('opt','옵션으로 계약',null,p==='free'?'무상':won(p));
+  add('self','사제·공동구매');
+  add('none','하지 않음');
+  st.appendChild(ops);
+}
+
+/* ---------- 의견 ---------- */
+function stepMemo(st){
+  st.appendChild(el('div','q','시행사에 전할 의견이<br>있으신가요?'));
+  st.appendChild(el('p','d','옵션 구성·가격에 바라는 점을 적어 주세요. 비워 두어도 됩니다. 이름·연락처는 적지 말아 주세요.'));
+  const t=el('textarea'); t.id='memo'; t.maxLength=1000; t.placeholder='예: 에어컨 4대 구성을 만들어 주면 좋겠습니다.'; t.value=A.memo||'';
+  t.oninput=()=>{ A.memo=t.value; save(); }; st.appendChild(t);
+}
+
+/* ---------- 확인 ---------- */
+function answerText(s){
+  const i=ti(TYPE);
+  if(s.k==='ac'){ const a=A.ac; if(/^cfg:/.test(a.c)){ const r=AC[TYPE].find(x=>'cfg:'+x[0]===a.c); return '<b>옵션 '+r[0]+'대</b><em>'+won(r[2])+'</em>'; }
+    return {other:'다른 대수로 옵션 희망 · '+a.n+'대',self:'사제·공구 · '+a.n+'대',none:'하지 않음'}[a.c]; }
+  if(s.k==='ap'){ const a=A.ap; if(/^opt/.test(a.c)){ const r=AP[TYPE].find(x=>'opt'+x[0]===a.c); return '<b>옵션 선택'+r[0]+(a.plus?' + 환기PLUS':'')+'</b><em>'+won(a.plus?r[4]:r[3])+'</em>'; } return CHL[a.c]; }
+  if(s.k==='pkgParts'){ const arr=A[s.id+'P']||[]; if(arr.includes('none')) return '고를 품목 없음'; return arr.length+'개 품목<em>'+partsFor(s.id).filter(p=>arr.includes(p.id)).map(p=>esc(p.name)).join(', ')+'</em>'; }
+  if(s.k==='pkg'){ const v=A[s.id]; return v==='opt'?'<b>옵션</b><em>'+won(s.id==='kit'?KIT.price[i]:intPrice())+'</em>':CHL[v]; }
+  if(s.k==='item'){ const v=A[s.it.id], p=s.it.price[i]; return v==='opt'?'<b>옵션</b><em>'+(p==='free'?'무상':won(p))+'</em>':CHL[v]; }
+  if(s.k==='memo') return A.memo?'<em>'+esc(A.memo.slice(0,40))+(A.memo.length>40?'…':'')+'</em>':'<em>없음</em>';
+  return '';
+}
+function stepName(s){ return {home:'우리 집',ac:'시스템에어컨',ap:'공기청정기',memo:'시행사에 전할 의견'}[s.k]||(s.k==='pkgParts'?pkgName(s.id)+' (나눠 팔면)':s.k==='pkg'?pkgName(s.id)+' (묶음)':s.it.name); }
+function stepReview(st){
+  st.appendChild(el('div','q','응답을 확인해 주세요'));
+  st.appendChild(el('p','d','고칠 문항을 누르면 그 문항으로 이동합니다.'));
+  const tot=el('div','total','<span>옵션으로 고른 금액 합계</span><b>'+won(total())+'</b>'); st.appendChild(tot);
+  const rv=el('div','rv');
+  const home=el('button',null,'<span class="n">우리 집</span><span class="a">'+esc(DONG+'동 '+HO+'호 · '+TYPE)+'</span>'); home.type='button'; home.onclick=()=>go(0); rv.appendChild(home);
+  STEPS.forEach((s,n)=>{ if(s.k==='home'||s.k==='review') return;
+    const b=el('button',null,'<span class="n">'+esc(stepName(s))+'</span><span class="a">'+answerText(s)+'</span>'); b.type='button';
+    b.onclick=()=>{ BACK_TO_REVIEW=true; go(n); }; rv.appendChild(b); });
+  st.appendChild(rv);
+  st.appendChild(el('p','notice','같은 동·호수로 이미 응답했다면 이전 응답이 이번 응답으로 바뀝니다. 조사 결과는 세대별 응답이 드러나지 않게 집계해 협의회 활동에만 씁니다.'));
+  st.appendChild(el('div','sec','사제 시세 출처'));
+  const ol=el('ol','srcs'); SRC.forEach(s=>{ const li=el('li'); const a=el('a'); a.href=s[2]; a.target='_blank'; a.rel='noopener'; a.textContent=s[0]; li.appendChild(a); li.appendChild(document.createTextNode(' — '+s[1])); ol.appendChild(li); }); st.appendChild(ol);
+}
+function total(){
+  if(!TYPE) return 0; const i=ti(TYPE); let s=0;
+  if(A.ac&&/^cfg:/.test(A.ac.c)){ const r=AC[TYPE].find(x=>'cfg:'+x[0]===A.ac.c); if(r) s+=r[2]; }
+  if(A.ap&&/^opt/.test(A.ap.c)){ const r=AP[TYPE].find(x=>'opt'+x[0]===A.ap.c); if(r) s+=A.ap.plus?r[4]:r[3]; }
+  if(A.kit==='opt'&&KIT.price[i]!==BASE) s+=KIT.price[i];
+  if(A.int==='opt'&&INT.price[i][1]!==BASE) s+=intPrice();
+  ITEMS.forEach(it=>{ const p=it.price[i]; if(A[it.id]==='opt'&&typeof p==='number') s+=p; });
+  return s;
+}
+
+/* ---------- 이 기기에서 쓰던 응답 기억 (다른 사람에게는 보이지 않음) ---------- */
+function save(){ try{ localStorage.setItem('optDraft2',JSON.stringify({dong:DONG,ho:HO,type:TYPE,A})); }catch(e){} }
+function restore(){ try{ const d=JSON.parse(localStorage.getItem('optDraft2')||'null'); if(!d) return; DONG=d.dong||''; HO=d.ho||''; if(TYPES.includes(d.type)){ TYPE=d.type; A=d.A||{}; } }catch(e){} }
+function doneInfo(){ try{ return JSON.parse(localStorage.getItem('optDone')||'null'); }catch(e){ return null; } }
+
+/* ---------- 아래에서 올라오는 창 ---------- */
+function sheet(node, done, yes, no){
+  const bg=el('div','sheet-bg'); const s=el('div','sheet'); s.setAttribute('role','dialog'); s.setAttribute('aria-modal','true'); s.appendChild(node); bg.appendChild(s);
+  const b=el('div','btns'); b.innerHTML='<button type="button" class="no"></button><button type="button" class="yes"></button>'; s.appendChild(b);
+  b.querySelector('.no').textContent=no||'닫기'; b.querySelector('.yes').textContent=yes||'확인';
+  const close=ok=>{ bg.remove(); document.body.classList.remove('lock'); done&&done(ok); };
+  b.querySelector('.no').onclick=()=>close(false); b.querySelector('.yes').onclick=()=>close(true);
+  if(no===null) b.querySelector('.no').remove();
+  bg.addEventListener('click',e=>{ if(e.target===bg) close(false); });
+  document.body.appendChild(bg); document.body.classList.add('lock');
+}
+function alertSheet(title,msg){ const d=el('div'); d.innerHTML='<h3></h3><p class="warn red" style="margin-top:8px"></p>'; d.querySelector('h3').textContent=title; d.querySelector('p').textContent=msg; sheet(d,null,'확인',null); }
+
+/* ---------- 제출 ---------- */
+function payload(){
+  const out={type:TYPE, items:{}, memo:(A.memo||'').trim().slice(0,1000)};
+  STEPS.forEach(s=>{
+    if(s.k==='ac') out.ac={c:A.ac.c, n:(A.ac.c==='other'||A.ac.c==='self')?+A.ac.n:0};
+    else if(s.k==='ap') out.ap={c:A.ap.c, plus:!!(A.ap.plus&&/^opt/.test(A.ap.c))};
+    else if(s.k==='pkg') out.items[s.id]=A[s.id];
+    else if(s.k==='pkgParts') out[s.id+'Parts']=(A[s.id+'P']||[]).slice();
+    else if(s.k==='item') out.items[s.it.id]=A[s.it.id];
+  });
+  out.total=total(); return out;
+}
+async function submit(){
+  const miss=STEPS.findIndex(s=>!answered(s)); if(miss>=0){ go(miss); return; }
+  const p=payload();
+  const cf=el('div'); cf.innerHTML='<h3>이대로 제출할까요?</h3><dl><dt>동·호수</dt><dd></dd><dt>타입</dt><dd></dd><dt>옵션 합계</dt><dd></dd></dl><p class="warn">같은 동·호수로 이미 응답했다면, 이전 응답이 이번 응답으로 바뀝니다.</p>';
+  const dds=cf.querySelectorAll('dd'); [DONG+'동 '+HO+'호', TYPE, won(p.total)].forEach((v,k)=>dds[k].textContent=v);
+  const ok=await new Promise(r=>sheet(cf,r,'제출합니다','다시 보기')); if(!ok) return;
+  setNav('submit','제출하는 중…',false,'이전');
+  try{
+    const body={action:'submit',code:CODE,dong:DONG,ho:HO,website:$('website').value,ua:navigator.userAgent.slice(0,160),answer:p};
+    const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
+    const res=await r.json();
+    if(!res.ok){ setNav('submit','제출하기',true,'이전'); alertSheet('제출되지 않았습니다',res.message||'제출하지 못했습니다. 다시 시도해 주세요.'); return; }
+    try{ localStorage.setItem('optDone',JSON.stringify({dong:DONG,ho:HO,type:TYPE,time:res.time})); }catch(x){}
+    $('done-title').textContent=res.updated?'응답이 수정되었습니다':'응답이 저장되었습니다';
+    $('done-meta').textContent=DONG+'동 '+HO+'호 · '+TYPE+'\n'+res.time;
+    $('done-count').innerHTML='지금까지 <b>'+Number(res.count).toLocaleString()+'</b>세대가 응답했습니다';
+    RTYPE=TYPE; RES=res.results; RF='all'; renderResults(); view('done'); setNav('done','응답 고치기',true);
+  }catch(x){ setNav('submit','제출하기',true,'이전'); alertSheet('제출되지 않았습니다','연결이 불안정합니다. 잠시 뒤 다시 눌러 주세요.'); }
+}
+function restart(){ buildSteps(); go(STEPS.length-1); }
+$('prev-go').onclick=async()=>{ const d=doneInfo(); if(!d) return; const b=$('prev-go'); b.disabled=true; b.textContent='불러오는 중…'; $('prev-err').style.display='none';
+  try{ const res=await api({action:'results',code:CODE,dong:d.dong,ho:d.ho}); b.disabled=false; b.textContent='응답 결과 보기';
+    if(!res.ok){ $('prev-err').textContent=res.message||'결과를 불러오지 못했습니다.'; $('prev-err').style.display='block'; return; }
+    $('done-title').textContent='응답 결과'; $('done-meta').textContent=d.dong+'동 '+d.ho+'호 · '+d.type+'\n'+d.time+' 제출';
+    $('done-count').innerHTML='지금까지 <b>'+Number(res.count).toLocaleString()+'</b>세대가 응답했습니다';
+    RTYPE=d.type; RES=res.results; RF='all'; renderResults(); view('done'); setNav('done',TYPE?'응답 고치기':'응답하기',true);
+  }catch(e){ b.disabled=false; b.textContent='응답 결과 보기'; $('prev-err').textContent='연결이 불안정합니다. 잠시 뒤 다시 눌러 주세요.'; $('prev-err').style.display='block'; } };
+
+/* ---------- 결과 ---------- */
+let RES=null, RF='all', RTYPE='';
+const COL={opt:'#0f2747',self:'#8bbfe9',none:'#c7c7cc'};
+function partName(key,id){ const P=(key==='kit'?KIT:INT).parts.find(p=>p.id===id); return P?P.name:id; }
+function renderResults(){
+  const box=$('results'); box.innerHTML=''; if(!RES) return;
+  const d=RF==='all'?RES.all:(RES.types||{})[RF]; const T=RTYPE;
+  const h=el('div','rhead'); h.appendChild(el('h2',null,'지금까지의 응답 결과'));
+  const ch=el('div','chips'); [['all','전체'],[T,T+' 타입']].forEach(([k,l])=>{ const b=el('button'); b.type='button'; b.textContent=l; if(RF===k) b.classList.add('on'); b.onclick=()=>{ RF=k; renderResults(); }; ch.appendChild(b); });
+  h.appendChild(ch); box.appendChild(h);
+  if(!d||!d.n){ box.appendChild(el('p','small','아직 응답이 없습니다.')); return; }
+  box.appendChild(el('p','small',(RF==='all'?'전체 ':T+' 타입 ')+d.n.toLocaleString()+'세대 응답 기준. 세대별 응답은 공개하지 않습니다.'));
+  const lg=el('div','legend'); ['opt','self','none'].forEach(k=>lg.appendChild(el('span',null,'<i style="background:'+COL[k]+'"></i>'+CHL[k]))); box.appendChild(lg);
+  const row=(name,c,extra)=>{ const tot=['opt','self','none'].reduce((a,k)=>a+(c[k]||0),0); if(!tot) return;
+    const r=el('div','ritem'); r.innerHTML='<div class="nm"><b style="font-weight:600"></b><span>'+tot+'세대</span></div>'; r.querySelector('b').textContent=name;
+    const st=el('div','stack'); ['opt','self','none'].forEach(k=>{ if(c[k]){ const i=el('i'); i.style.width=(c[k]/tot*100)+'%'; i.style.background=COL[k]; st.appendChild(i);} }); r.appendChild(st);
+    const pc=k=>Math.round((c[k]||0)/tot*100);
+    r.appendChild(el('div','nums','옵션 <b>'+pc('opt')+'%</b> · 사제·공구 '+pc('self')+'% · 안 함 '+pc('none')+'%'));
+    if(extra) r.appendChild(extra); box.appendChild(r); };
+  if(d.ac){ const c={opt:(d.ac.other||0),self:d.ac.self||0,none:d.ac.none||0}; Object.keys(d.ac).forEach(k=>{ if(/^cfg:/.test(k)) c.opt+=d.ac[k]; });
+    const parts=Object.keys(d.ac).filter(k=>/^cfg:/.test(k)).sort((a,b)=>+a.slice(4)-+b.slice(4)).map(k=>'옵션 '+k.slice(4)+'대 '+d.ac[k]+'세대');
+    if(d.ac.other) parts.push('다른 대수로 옵션 희망 '+d.ac.other+'세대'+(d.acOtherN&&Object.keys(d.acOtherN).length?' ('+Object.keys(d.acOtherN).sort().map(n=>n+'대 '+d.acOtherN[n]).join(', ')+')':''));
+    row('천장형 시스템에어컨',c,parts.length?el('div','nums',parts.join(' · ')):null); }
+  if(d.ap){ const c={opt:0,self:d.ap.self||0,none:d.ap.none||0}; Object.keys(d.ap).forEach(k=>{ if(/^opt/.test(k)) c.opt+=d.ap[k]; });
+    row('시스템 공기청정기',c,d.apPlus?el('div','nums','프리미엄환기PLUS 함께 '+d.apPlus+'세대'):null); }
+  ['kit','int'].forEach(key=>{ const c=(d.items||{})[key]; if(!c) return; const ex=el('div');
+    const pp=(d.parts||{})[key], base=(d.partsBase||{})[key]||0;
+    if(pp&&base){ ex.appendChild(el('div','nums','나눠 판다면 옵션으로 고르겠다는 비율'));
+      Object.keys(pp).filter(k=>k!=='none').sort().forEach(k=>{ const pr=el('div','prow'); const pct=Math.round(pp[k]/base*100);
+        pr.innerHTML='<div><span></span><div class="pbar"><i style="width:'+pct+'%"></i></div></div><div class="pc">'+pct+'%</div>'; pr.querySelector('span').textContent=partName(key,k); ex.appendChild(pr); });
+      if(pp.none) ex.appendChild(el('div','nums','고를 품목 없음 '+Math.round(pp.none/base*100)+'%')); }
+    row(pkgName(key)+' (묶음)',c,ex); });
+  ITEMS.forEach(it=>{ const c=(d.items||{})[it.id]; if(c) row(it.name,c); });
+}
+
+/* 휴대폰 뒤로 가기 : 이전 문항으로 */
+window.addEventListener('popstate',()=>{ if(!$('v-step').classList.contains('hidden') && CUR>0){ go(CUR-1); try{ history.pushState({s:CUR},''); }catch(e){} } });
+try{ history.pushState({s:0},''); }catch(e){}
+
+// 처음에는 서버 응답을 기다리지 않고 참여 코드 화면을 바로 보여 줌
+if(!API_URL){ $('error-msg').textContent='설문 서버 주소가 아직 설정되지 않았습니다.'; view('error'); }
+else { showCode(); load(true); }
+</script>
+</body>
+</html>
