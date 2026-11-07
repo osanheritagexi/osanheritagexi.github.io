@@ -299,7 +299,7 @@ const SRC = [
  ['LG 핏앤맥스 냉장고 조합별 가격', '다나와 DPG, 2026년 6월 11일', 'https://dpg.danawa.com/news/view?boardSeq=63&listSeq=6020173'],
  ['LG 광파오븐 MZ385EBTAD 최저가', '다나와, 2026년 11월 6일 조회', 'https://prod.danawa.com/info/?pcode=15737252'],
  ['LG 14인용 빌트인 식기세척기 DUE6BGL1E 최저가', '에누리, 2026년 11월 6일 조회', 'https://www.enuri.com/p/131145590'],
- ['LG 시스템에어컨 대수별 가격(설치 포함)', '2026년 9월 19일 수정 게시물', 'https://xn--9t4b1dz4ggd091curd.com/aircon-info/lg-system-aircon-price/'],
+ ['삼성·LG 시스템에어컨 대수별 단가표(신규 아파트 공실, 설치 포함)', '시공업체 게시물, 2026년 10월 11일 수정', 'https://xn--9t4b1dz4ggd091curd.com/estimate/'],
  ['반셀프 인테리어 조명 공사 비용(전용 59㎡)', '한국경제, 2026년 9월 27일', 'https://www.hankyung.com/article/202609277361i'],
  ['포세린 타일 시공 비용', '고강타일 블로그, 가격 기준 시점 미확인', 'https://inblog.ai/gogangtile/how-much-is-porcelain-tile-install-work'],
  ['인테리어 조명 비용', '글래스월렛, 2026년 9월', 'https://glasswallet.com/blog/interior-lighting-cost-guide']
@@ -325,14 +325,14 @@ const ITEMS = [
   price:[1320000,1320000,1320000,1320000,1320000,1320000,1455000,BASE],
   self:'방 1곳 약 70만~110만원<sup>5</sup><small>고급형 약 140만~210만원</small>',
   selfNote:'방 1곳(8~10자) 기준 한샘몰 공개가 환산값임. 철거·설치 마감비는 별도일 수 있음.',
-  op:{optS:'품질 괜찮고, 사제 공구도 비싸다는 의견',selfS:'벽지·바닥재 없이 붙여 교체 때 일이 커질 수 있음',opt:['모델하우스에서 본 품질이 괜찮았다는 의견','사제 공동구매도 자재값이 올라 꽤 비싸다는 의견'],
-      self:['옵션은 장 뒤·아래에 벽지·바닥재 없이 붙여 나중에 바꿀 때 일이 커질 수 있다는 의견','내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견']}},
+  op:{optS:'품질 괜찮고 사제 공구도 비싸다는 의견, 다만 장 <span style="white-space:nowrap">뒤·아래</span>에 <span style="white-space:nowrap">벽지·바닥재</span> 없이 붙여 교체 때 일이 커질 수 있음',selfS:'내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견',opt:['모델하우스에서 본 품질이 괜찮았다는 의견','사제 공동구매도 자재값이 올라 꽤 비싸다는 의견','옵션은 장 뒤·아래에 벽지·바닥재 없이 붙여 나중에 바꿀 때 일이 커질 수 있다는 의견'],
+      self:['내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견']}},
  {id:'closet3', group:'개별 옵션', name:'침실3 붙박이장', desc:'',
   price:[1320000,1320000,1320000,1320000,1320000,1455000,1455000,BASE],
   self:'방 1곳 약 70만~110만원<sup>5</sup><small>고급형 약 140만~210만원</small>',
   selfNote:'방 1곳(8~10자) 기준 한샘몰 공개가 환산값임. 철거·설치 마감비는 별도일 수 있음.',
-  op:{optS:'품질 괜찮고, 사제 공구도 비싸다는 의견',selfS:'벽지·바닥재 없이 붙여 교체 때 일이 커질 수 있음',opt:['모델하우스에서 본 품질이 괜찮았다는 의견','사제 공동구매도 자재값이 올라 꽤 비싸다는 의견'],
-      self:['옵션은 장 뒤·아래에 벽지·바닥재 없이 붙여 나중에 바꿀 때 일이 커질 수 있다는 의견','내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견']}},
+  op:{optS:'품질 괜찮고 사제 공구도 비싸다는 의견, 다만 장 <span style="white-space:nowrap">뒤·아래</span>에 <span style="white-space:nowrap">벽지·바닥재</span> 없이 붙여 교체 때 일이 커질 수 있음',selfS:'내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견',opt:['모델하우스에서 본 품질이 괜찮았다는 의견','사제 공동구매도 자재값이 올라 꽤 비싸다는 의견','옵션은 장 뒤·아래에 벽지·바닥재 없이 붙여 나중에 바꿀 때 일이 커질 수 있다는 의견'],
+      self:['내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견']}},
  {id:'master', group:'개별 옵션', name:'마스터룸 특화 (침실4)', desc:'침실1·침실4 도어 위치 변경 + 복도 장식장 + 침실4 슬라이딩 도어 변경 + 시트패널 벽',
   price:[null,null,null,null,null,null,4557000,null],
   self:'비교 어려움<small>도어 위치를 바꾸는 구조 변경 포함</small>',
@@ -374,12 +374,12 @@ const AC = {
  '124': [[3,'거실, 주방, 침실1',6470000],[5,'거실, 주방, 침실1, 침실2, 침실3',9650000],[6,'거실, 주방, 침실1, 침실2, 침실3, 침실4',11100000]],
  '166P':[[4,'거실, 주방, 가족실, 침실1',8230000],[7,'거실, 주방, 가족실, 침실1, 침실2, 침실3, 침실4',13320000],[8,'거실, 주방, 가족실, 침실1, 침실2, 침실3, 침실4, 침실5',15020000]]
 };
-const AC_SELF = {2:'약 440만원',3:'약 490만원',4:'약 620만~690만원',5:'약 770만원'};   // LG 사제(설치 포함)
+const AC_SELF = {2:'370~440만원',3:'450~490만원',4:'530~690만원',5:'650~770만원'};   // 사제(설치 포함), 낮은 값 삼성·높은 값 LG
 const AC_OP = {
  optS:'배관·배수관 마감이 깔끔해 누수 하자가 적고, 고장은 하자보수로 처리',
- selfS:'저렴하고 브랜드·대수 선택 가능, 천장 타공 후 배수관 마감·누수 보증이 약함',
+ selfS:'저렴하고 설치 시점의 최신 모델·브랜드·대수 선택 가능, 천장 타공 후 배수관 마감·누수 보증이 약함',
  opt:['입주 전 천장이 열린 상태에서 시공해 배관·응축수 배수관 마감이 깔끔하고, 누수 하자 가능성이 낮다는 의견','고장 나면 하자보수로 처리된다는 의견(보수 기간은 단지마다 다르다고 함)','입주 전에 설치되어 따로 공사할 일이 없다는 의견'],
- self:['비용이 낮고 브랜드·모델·대수를 고를 수 있다는 의견','입주 후 천장을 뚫어 설치하므로 배선·배수관 마감이 완벽하기 어렵고, 누수 등 보증은 설치업체에 달려 있다는 의견','잔금을 치른 뒤에야 공사할 수 있어 입주 일정과 맞춰야 한다는 의견','사제로 달아 문제없이 쓰고 있다는 경험담'],
+ self:['비용이 낮고, 설치 시점의 최신 모델과 브랜드·대수를 고를 수 있다는 의견','입주 후 천장을 뚫어 설치하므로 배선·배수관 마감이 완벽하기 어렵고, 누수 등 보증은 설치업체에 달려 있다는 의견','잔금을 치른 뒤에야 공사할 수 있어 입주 일정과 맞춰야 한다는 의견','사제로 달아 문제없이 쓰고 있다는 경험담'],
  etc:['<b>주방 에어컨</b> — 요리할 때 음식 냄새·기름이 배어 관리가 어렵고 거실 에어컨으로 주방까지 시원하다는 의견과, 여름에 요리할 때 필요하다는 의견이 함께 있음',
       '옵션은 정해진 대수 구성만 있어 주방을 빼고 고르기 어렵다는 의견이 있음',
       '옵션 모델은 입주 때 구형이 된다는 의견과, 시스템에어컨은 몇 년 차이로 성능이 크게 다르지 않다는 의견이 함께 있음',
@@ -536,8 +536,8 @@ function buildSteps(){
   if(TYPE){ const i=ti(TYPE);
     STEPS.push({k:'overview',sec:'우리 집 옵션'});
     STEPS.push({k:'ac',sec:'냉난방·공기'},{k:'ap',sec:'냉난방·공기'});
-    if(KIT.price[i]!==BASE) STEPS.push({k:'pkgParts',id:'kit',sec:'묶음 옵션'},{k:'pkg',id:'kit',sec:'묶음 옵션'});
-    if(INT.price[i][1]!==BASE) STEPS.push({k:'pkgParts',id:'int',sec:'묶음 옵션'},{k:'pkg',id:'int',sec:'묶음 옵션'});
+    if(KIT.price[i]!==BASE) STEPS.push({k:'pkg',id:'kit',sec:'묶음 옵션'},{k:'pkgParts',id:'kit',sec:'묶음 옵션'});
+    if(INT.price[i][1]!==BASE) STEPS.push({k:'pkg',id:'int',sec:'묶음 옵션'},{k:'pkgParts',id:'int',sec:'묶음 옵션'});
     ITEMS.forEach(it=>{ const p=it.price[i]; if(p!==null&&p!==BASE) STEPS.push({k:'item',it,sec:it.group}); });
     STEPS.push({k:'memo',sec:'의견'},{k:'review',sec:'확인'});
   }
@@ -685,15 +685,15 @@ function pick(container, btn){ container.querySelectorAll('.opb').forEach(x=>x.c
 /* ---------- 에어컨 ---------- */
 function stepAc(st){
   const rows=AC[TYPE];
-  st.appendChild(el('div','q','천장형 시스템에어컨,<br>어떻게 하실 건가요?'));
+  st.appendChild(el('div','q','천장형 시스템에어컨'));
   st.appendChild(el('p','d',TYPE+' 기준 · LG전자 Premium UVnano 실내기'));
   st.appendChild(aboutBox('ac'));
   const optHtml=rows.map(r=>r[0]+'대 '+man(r[2])).join('<br>');
   const selfHtml=rows.filter(r=>AC_SELF[r[0]]).map(r=>r[0]+'대 '+AC_SELF[r[0]]).join('<br>')||'—';
   const miss=rows.filter(r=>!AC_SELF[r[0]]).map(r=>r[0]+'대');
-  st.appendChild(cmpBox(optHtml, selfHtml+'<sup>11</sup><small>LG, 제품·설치 포함'+(miss.length?'<br>'+miss.join('·')+' 시세는 확인 못 함':'')+'</small>', AC_OP));
+  st.appendChild(cmpBox(optHtml, selfHtml+'<sup>11</sup><small>낮은 값은 삼성, 높은 값은 LG · 제품·설치 포함'+(miss.length?'<br>'+miss.join('·')+' 시세는 확인 못 함':'')+'</small>', AC_OP));
   st.appendChild(el('div','etc',AC_OP.etc[0]));
-  const mb=moreBtn('천장형 시스템에어컨', AC_OP, 'LG 시스템에어컨을 사제로 설치하면(제품·설치 포함) 2대 약 440만원, 3대 약 490만원, 4대 약 620만~690만원, 5대 약 770만원<sup>11</sup>. 입주 후 설치는 천장 타공·배관 공사가 따르고, 업체·현장 조건에 따라 금액이 달라짐.'); st.appendChild(mb);
+  const mb=moreBtn('천장형 시스템에어컨', AC_OP, '시스템에어컨을 사제로 설치하면(제품·설치 포함, 입주 전 빈집 기준) 삼성은 2대 약 370만원, 3대 약 450만원, 4대 약 530만~570만원, 5대 약 650만원, LG는 2대 약 440만원, 3대 약 490만원, 4대 약 620만~690만원, 5대 약 770만원<sup>11</sup>. 한 시공업체의 단가표이며 방 구성은 우리 옵션표와 조금 다름. 입주 후 설치는 천장 타공·배관 공사가 따르고, 업체·현장 조건에 따라 금액이 달라짐.'); st.appendChild(mb);
   const ops=el('div','ops'); const cur=A.ac||{};
   const sub=el('div','inline hidden');
   const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ const keep=(A.ac&&A.ac.rooms)||[]; A.ac={c:v,rooms:(v==='other'||v==='self')?keep:[]}; pick(ops,b); placeSub(b,v); refreshNav(); save(); }); b.dataset.v=v; ops.appendChild(b); return b; };
@@ -717,7 +717,7 @@ function stepAc(st){
 
 /* ---------- 공기청정기 ---------- */
 function stepAp(st){
-  st.appendChild(el('div','q','시스템 공기청정기,<br>어떻게 하실 건가요?'));
+  st.appendChild(el('div','q','시스템 공기청정기'));
   st.appendChild(el('p','d',TYPE+' 기준 · LG전자. 프리미엄환기PLUS(1대)를 함께 고르면 금액이 올라갑니다.'));
   st.appendChild(aboutBox('ap'));
   const rows=AP[TYPE];
@@ -748,7 +748,7 @@ function stepParts(st,s){
   const key=s.id;
   st.appendChild(el('div','q',pkgName(key)+',<br>나눠서 판다면?'));
   st.appendChild(aboutBox(key+'Parts')); addPhotos(st,key);
-  st.appendChild(el('p','d','지금은 아래 품목을 묶음으로만 팝니다. 품목별로 따로 고를 수 있다면 옵션으로 할 품목을 모두 골라 주세요.'+(key==='int'&&TYPE==='75'?' (75는 침실1 우물천장·건축화 조명·시트패널 천장이 빠지고, 전체 침실에 매입특화 조명이 들어감)':'')));
+  st.appendChild(el('p','d','지금은 아래 품목을 묶음으로만 팝니다. 품목별로 나눠 판다면 옵션으로 할 품목을 모두 골라 주세요(여러 개 선택 가능).'+(key==='int'&&TYPE==='75'?' (75는 침실1 우물천장·건축화 조명·시트패널 천장이 빠지고, 전체 침실에 매입특화 조명이 들어감)':'')));
   const box=el('div'); const sel=A[key+'P']=A[key+'P']||[];
   partsFor(key).concat([{id:'none',name:'옵션으로 고를 품목 없음'}]).forEach(p=>{
     const l=el('label','chk'); const cb=el('input'); cb.type='checkbox'; cb.value=p.id; cb.checked=sel.includes(p.id);
@@ -764,7 +764,7 @@ function stepParts(st,s){
 function stepPkg(st,s){
   const key=s.id, P0=key==='kit'?KIT:INT, P=Object.assign({},P0,{op:opFor(P0.op)});
   st.appendChild(el('div','q',pkgName(key)+',<br>지금처럼 묶음이라면?'));
-  st.appendChild(el('p','d',TYPE+' 기준 · 앞 문항에서 본 품목을 모두 포함한 묶음 옵션입니다.'));
+  st.appendChild(el('p','d',TYPE+' 기준 · 포함 품목: '+partsFor(key).map(p=>esc(p.name)).join(', ')));
   st.appendChild(aboutBox(key)); addPhotos(st,key);
   st.appendChild(cmpBox(pkgPriceText(key), P.self, P.op));
   if(P.op.etc&&P.op.etc.length) st.appendChild(el('div','etc',P.op.etc[0]));
@@ -780,7 +780,7 @@ function stepPkg(st,s){
 /* ---------- 개별 품목 ---------- */
 function stepItem(st,s){
   const it=Object.assign({},s.it,{op:opFor(s.it.op)}), p=it.price[ti(TYPE)];
-  st.appendChild(el('div','q',esc(it.name)+',<br>어떻게 하실 건가요?'));
+  st.appendChild(el('div','q',esc(it.name)));
   const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc;
   st.appendChild(el('p','d',TYPE+' 기준'+(ds?' · '+esc(ds):'')));
   st.appendChild(aboutBox(it.id)); addPhotos(st,it.id);
