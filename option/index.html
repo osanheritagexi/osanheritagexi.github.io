@@ -681,6 +681,7 @@ function stepOverview(st){
   if(base.length) notes.push(TYPE+'는 발코니 확장 시 다음 품목을 기본으로 줍니다: '+base.join(', '));
   box.appendChild(el('ul','note',notes.map(x=>'<li>'+x+'</li>').join('')));
   st.appendChild(box);
+  addPhotos(st,'ovw','견본주택 방별 안내판 (참고) · 누르면 크게 보임');
 }
 function baseList(){ const i=ti(TYPE), out=[]; if(KIT.price[i]===BASE) out.push('주방 Style Up'); if(INT.price[i][1]===BASE) out.push('인테리어 Style Up');
   ITEMS.forEach(it=>{ if(it.price[i]===BASE) out.push(it.name); }); return out; }
@@ -837,8 +838,8 @@ function storageOk(){ return KIT.price[ti(TYPE)]===BASE || A.kit==='opt'; }
 const PHOTO_SET={
   kit:[['kit_plan','주방 Style Up 안내판 (84A)'],['kit_plan_b','주방 Style Up 안내판 (84B)'],['kit_base','주방 기본 마감 안내판 (84B)']],
   int:[['int_plan','인테리어 Style Up 안내판 (84B)'],['room_living','거실 안내판 (84B)'],['room_bed1','침실1(안방) 안내판 (84A)'],['room_bed3','침실3 안내판 (84A)']],
-  ac:[['room_living','거실 안내판 (84B)'],['room_bed1','침실1(안방) 안내판 (84A)'],['room_bed3','침실3 안내판 (84A)']],
-  ap:[['room_living','거실 안내판 (84B)'],['room_bed1','침실1(안방) 안내판 (84A)'],['room_bed3','침실3 안내판 (84A)'],['vent','실외기실 안내판 (84B)','실외기실 안내판에 유상 개별선택으로 \'전열교환기(LG전자 프리미엄)\'이 적혀 있음. 이 품목이 프리미엄 환기 PLUS와 같은 것인지는 확인되지 않음.']],
+  ovw:[['room_living','거실 (84B)'],['room_bed1','침실1·안방 (84A)'],['room_bed3','침실3 (84A)']],
+  ap:[['vent','실외기실 안내판 (84B)','실외기실 안내판에 유상 개별선택으로 \'전열교환기(LG전자 프리미엄)\'이 적혀 있음. 이 품목이 프리미엄 환기 PLUS와 같은 것인지는 확인되지 않음.']],
   jungmun:[['jungmun','현관중문 안내판 (84A)']],
   bath:[['bath_family_a','가족욕실 안내판 (84A)'],['bath_master','부부욕실 안내판 (84B)'],['bidet','비데 리모컨 (유상)'],['bath_tile','욕실 타일 안내판 (84A)']],
   closet2:[['closet2','침실2 붙박이장 안내판 (84B)','붙박이장(유상)을 고르면 스위치 설치를 위한 측벽이 함께 시공되고, 거울은 제공되지 않는다고 안내되어 있음.']],
@@ -857,15 +858,15 @@ async function loadPhotos(){   // 사진은 참여 코드 확인 뒤 서버에�
   try{ const r=await api({action:'photos',code:CODE}); PH_DATA=(r&&r.ok&&r.photos)||{}; }catch(e){ PH_DATA={}; }
   const w=PH_WAIT; PH_WAIT=[]; w.forEach(f=>f());
 }
-function addPhotos(st,key){
+function addPhotos(st,key,label){
   if(!PHOTO_SET[key]) return;
-  if(!PH_DATA){ const holder=el('div'); st.appendChild(holder); PH_WAIT.push(()=>photoBox(holder,key)); loadPhotos(); return; }
-  photoBox(st,key);
+  if(!PH_DATA){ const holder=el('div'); st.appendChild(holder); PH_WAIT.push(()=>photoBox(holder,key,label)); loadPhotos(); return; }
+  photoBox(st,key,label);
 }
-function photoBox(st,key){
+function photoBox(st,key,label){
   const P=PH_DATA||{}, set=PHOTO_SET[key];
   const list=set.filter(x=>P[x[0]]); if(!list.length) return;
-  const box=el('div','ph'); box.appendChild(el('div','lb','견본주택 안내판 사진 · 누르면 크게 보임'));
+  const box=el('div','ph'); box.appendChild(el('div','lb',label||'견본주택 안내판 사진 · 누르면 크게 보임'));
   const row=el('div','phr');
   list.forEach(([id,cap,note])=>{ const b=el('button'); b.type='button';
     const im=el('img'); im.src=P[id]; im.alt=cap; im.loading='lazy'; b.appendChild(im);
