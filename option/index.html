@@ -906,7 +906,11 @@ function openSlides(items){
     setTimeout(()=>{ if(Math.abs(trk.scrollLeft-x)>2) trk.scrollLeft=x; upd(); },450); };
   L.onclick=()=>to(cur-1); R.onclick=()=>to(cur+1);
   trk.addEventListener('scroll',upd,{passive:true});
-  const close=()=>{ o.remove(); document.removeEventListener('keydown',key); };
+  // 사진 창을 열 때 기록을 하나 쌓아 둠(누른 순간에 쌓아야 휴대폰 뒤로 가기가 이 기록에서 멈춤)
+  let pushed=false; try{ history.pushState({lbx:1},''); pushed=true; }catch(e){}
+  const close=fromPop=>{ if(!o.isConnected) return; o.remove(); document.removeEventListener('keydown',key);
+    if(pushed&&fromPop!==true){ SKIP_POP=true; history.back(); } };   // 닫기 버튼으로 닫으면 쌓아 둔 기록을 지움
+  o.closeBox=close;
   const key=e=>{ if(e.key==='Escape') close(); else if(e.key==='ArrowRight') to(cur+1); else if(e.key==='ArrowLeft') to(cur-1); };
   o.onclick=e=>{ if(e.target===o) close(); }; x.onclick=close;
   document.addEventListener('keydown',key); document.body.appendChild(o); upd();
@@ -1104,9 +1108,13 @@ function renderResults(){
 let GUARD=false;
 function arm(){ if(GUARD) return; try{ history.pushState({g:1},''); GUARD=true; }catch(e){} }
 document.addEventListener('pointerdown',()=>{ if(!$('v-step').classList.contains('hidden')||!$('v-done').classList.contains('hidden')) arm(); },true);
+let SKIP_POP=false;
 window.addEventListener('popstate',()=>{
+  if(SKIP_POP){ SKIP_POP=false; return; }                            // 닫기 버튼으로 사진 창 기록을 지운 경우
+  const lb=document.querySelector('.lbx');
+  if(lb&&lb.closeBox){ lb.closeBox(true); return; }                   // 사진 창만 닫고 문항은 그대로
   GUARD=false;
-  const lb=document.querySelector('.lbx'), sb=document.querySelector('.sheet-bg');
+  const sb=document.querySelector('.sheet-bg');
   if(lb) lb.click();                                                  // 크게 본 사진 닫기
   else if(sb){ const b=sb.querySelector('.no')||sb.querySelector('.yes'); b.click(); }   // 아래 창 닫기
   else if(!$('v-step').classList.contains('hidden')){ if(CUR>0) go(CUR-1); else showIntro(); return; }
