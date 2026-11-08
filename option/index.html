@@ -713,6 +713,7 @@ function pick(container, btn){ container.querySelectorAll('.opb').forEach(x=>x.c
 function stepAc(st){
   const rows=AC[TYPE];
   head(st,'천장형 시스템에어컨',[TYPE,{t:'LG Premium UVnano',m:true}],ABOUT.ac);
+  addPhotos(st,'ac');
   const selfTxt=rows.filter(r=>AC_SELF[r[0]]).map(r=>r[0]+'대 '+AC_SELF[r[0]]).join(' · ');
   const miss=rows.filter(r=>!AC_SELF[r[0]]).map(r=>r[0]+'대');
   st.appendChild(el('div','ask','하나를 골라 주세요'));
@@ -742,6 +743,7 @@ function stepAc(st){
 /* ---------- 공기청정기 ---------- */
 function stepAp(st){
   head(st,'시스템 공기청정기',[TYPE,{t:'LG전자',m:true}],ABOUT.ap);
+  addPhotos(st,'ap');
   const rows=AP[TYPE], cur=A.ap||{};
   const plusAdd=rows[0][4]-rows[0][3];   // 프리미엄 환기 PLUS 추가 금액(세대당, 선택안·대수와 관계없이 같음)
   // 1) 함께 고르는 옵션: 프리미엄 환기 PLUS
@@ -820,7 +822,7 @@ function stepItem(st,s){
   const add=(v,title,small,price,lite)=>{ const b=opb(title,small,price,cur===v,()=>{ A[it.id]=v; pick(ops,b); refreshNav(); save(); },lite); ops.appendChild(b); };
   const lockOpt=it.id==='storage'&&!storageOk();
   if(lockOpt&&A.storage==='opt'){ delete A.storage; save(); }
-  add('opt',CHL.opt,lockOpt?'주방 Style Up을 \'옵션으로 계약\'으로 고른 경우에만 고를 수 있음':(ds?esc(ds):null)+(p==='free'?(ds?' · ':'')+'166P는 무상으로 고를 수 있음':''),p==='free'?'무상':won(p));
+  add('opt',CHL.opt,lockOpt?'주방 Style Up을 \'옵션으로 계약\'으로 고른 경우에만 고를 수 있음':((ds?esc(ds):'')+(p==='free'?(ds?' · ':'')+'166P는 무상으로 고를 수 있음':''))||null,p==='free'?'무상':won(p));
   if(lockOpt) ops.lastChild.disabled=true;
   add('self',CHL.self,sp.n||null,sp.v||null);
   add('none',CHL.none,null,null,true);
@@ -833,10 +835,19 @@ function storageOk(){ return KIT.price[ti(TYPE)]===BASE || A.kit==='opt'; }
 
 /* ---------- 견본주택 안내판 사진 ---------- */
 const PHOTO_SET={
-  bath:[['bath_family','가족욕실 안내판'],['bath_master','부부욕실 안내판'],['bidet','비데 리모컨 (유상)']],
-  kit:[['kit_plan','주방 Style Up 안내판','빨간 동그라미는 입주예정자가 사진에 그려 넣은 표시임.']],
-  int:[['int_plan','인테리어 Style Up 안내판']],
-  storage:[['fridge','냉장고장 안내판 (선택5가 특화 수납장)']]
+  kit:[['kit_plan','주방 Style Up 안내판 (84A)'],['kit_base','주방 기본 마감 안내판 (84B)']],
+  int:[['int_plan','인테리어 Style Up 안내판 (84B)'],['room_living','거실 안내판 (84B)'],['room_bed1','침실1(안방) 안내판 (84A)'],['room_bed3','침실3 안내판 (84A)']],
+  ac:[['room_living','거실 안내판 (84B)'],['room_bed1','침실1(안방) 안내판 (84A)'],['room_bed3','침실3 안내판 (84A)']],
+  ap:[['room_living','거실 안내판 (84B)'],['room_bed1','침실1(안방) 안내판 (84A)'],['room_bed3','침실3 안내판 (84A)']],
+  jungmun:[['jungmun','현관중문 안내판 (84A)']],
+  bath:[['bath_family_a','가족욕실 안내판 (84A)'],['bath_master','부부욕실 안내판 (84B)'],['bidet','비데 리모컨 (유상)'],['bath_tile','욕실 타일 안내판 (84A)']],
+  closet3:[['closet3','침실3 붙박이장 안내판 (84A)','붙박이 가구로 가려지는 벽면·천장·바닥 마감재는 시공되지 않는다고 견본주택에 안내되어 있음.'],['room_bed3','침실3 안내판 (84A)']],
+  storage:[['fridge','냉장고·김치냉장고장 안내판 (84B, 선택5가 특화 수납장)']],
+  fan:[['fan','복합 환풍기 안내판'],['bath_sign','가족욕실 유상 품목 안내판 (84A)']],
+  induction:[['cooktop','쿡탑 안내판 (84B)']],
+  fridge:[['fridge_obj','냉장고 안내판 (84B)','오브제 냉장고는 냉장고장 선택2·4·5를 계약할 때만 고를 수 있다고 안내되어 있음.'],['fridge','냉장고·김치냉장고장 안내판 (84B)']],
+  oven:[['oven','광파오븐 안내판 (124)']],
+  dish:[['dish','식기세척기 안내판 (84A)']]
 };
 let PH_DATA=null, PH_WAIT=[];
 async function loadPhotos(){   // 사진은 참여 코드 확인 뒤 서버에서 한 번 받아 둠
@@ -859,7 +870,7 @@ function photoBox(st,key){
     const c=el('span'); c.textContent=cap; b.appendChild(c);
     b.onclick=()=>openPhoto(P[id],cap+(note?' · '+note:'')); row.appendChild(b); });
   box.appendChild(row);
-  const notes=['84A·84B 견본주택 사진으로, 타입마다 구성과 위치가 다를 수 있음.'];
+  const notes=['견본주택 사진이며 괄호 안은 사진 속 타입임. 우리 집 타입과 구성·위치가 다를 수 있음.'];
   list.forEach(x=>{ if(x[2]) notes.push(x[2]); });
   box.appendChild(el('div','nt',notes.join(' ')));
   st.appendChild(box);
