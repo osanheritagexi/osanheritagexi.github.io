@@ -36,33 +36,36 @@ sup{font-size:10.5px;color:var(--mute);margin-left:1px;line-height:0}
 /* 본문 */
 .body{padding:6px 22px 140px}
 .q{font-size:24px;font-weight:700;line-height:1.36;letter-spacing:-.01em;margin:10px 0 6px}
-.d{font-size:14px;color:#444;margin:0 0 16px}
+.d{font-size:14.5px;color:#3a3a3c;margin:0 0 18px;line-height:1.6}
+.chips2{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.chip{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:7px;background:var(--soft);color:var(--mute);font-size:12px;font-weight:600;letter-spacing:0}
+.chip.m{color:var(--navy);background:#eef3f9}
+.inc{margin:-8px 0 18px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:13.5px;color:#3a3a3c;line-height:1.6}
+.inc b{display:block;font-size:12px;color:var(--mute);font-weight:600;margin-bottom:4px}
+.ask{font-size:12.5px;font-weight:600;color:var(--mute);margin:0 0 8px}
+.opn{margin:14px 0 0;padding:0;font-size:13px;color:#3a3a3c;line-height:1.55}
+.opn>div{display:flex;gap:10px;padding:7px 0;border-top:1px solid var(--line)}
+.opn>div:last-child{border-bottom:1px solid var(--line)}
+.opn>div>span{flex:0 0 52px;color:var(--mute);font-size:12px;font-weight:600;padding-top:1px}
+.opn>div>div{flex:1;min-width:0}
 
-/* 옵션 vs 사제 비교 */
-.cmp{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.cmp>div{padding:13px 13px 12px;min-width:0}
-.cmp>div+div{border-left:1px solid var(--line)}
-.cmp h4{margin:0 0 4px;font-size:12.5px;color:var(--mute);font-weight:600}
-.cmp .v{font-size:15px;font-weight:700;color:var(--navy);line-height:1.45}
-.cmp .v small{display:block;font-size:12px;font-weight:500;color:var(--mute);margin-top:2px;line-height:1.45}
-.cmp .op{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-size:12.5px;color:#3a3a3c;line-height:1.5}
-.cmp .op b{display:block;font-size:11.5px;color:var(--mute);font-weight:600;margin-bottom:3px}
-.cmp ul{margin:0;padding-left:14px;font-size:12.5px;color:#3a3a3c;line-height:1.5}
-.cmp li+li{margin-top:3px}
-.more{display:block;width:100%;margin-top:8px;padding:10px 0 2px;border:0;background:none;text-align:left;font:inherit;font-size:13.5px;color:var(--mute);cursor:pointer}
-.more b{color:var(--navy);font-weight:600}
-.etc{margin-top:12px;padding:11px 13px;border-radius:12px;background:var(--soft);font-size:13px;color:#3a3a3c;line-height:1.55}
-.etc b{color:var(--ink)}
+.more{display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:12px;padding:12px 0;border:0;background:none;text-align:left;font:inherit;font-size:13.5px;color:var(--mute);cursor:pointer}
+.more b{color:var(--navy);font-weight:600;white-space:nowrap}
 
 /* 고르기 버튼 */
-.ops{margin-top:16px;display:flex;flex-direction:column;gap:8px}
-.opb{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:54px;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;font:inherit;font-size:16px;font-weight:600;color:var(--ink);text-align:left;cursor:pointer}
-.opb small{display:block;font-size:12.5px;font-weight:400;color:var(--mute);margin-top:1px}
-.opb .p{font-size:14.5px;font-weight:700;color:var(--navy);white-space:nowrap}
-.opb.on{border:2px solid var(--navy);background:var(--sel);padding:11px 15px}
+.ops{margin-top:0;display:flex;flex-direction:column;gap:10px}
+.opb{display:grid;grid-template-columns:1fr auto;column-gap:12px;row-gap:3px;align-items:start;min-height:54px;padding:14px 16px;border:1.5px solid var(--line);border-radius:16px;background:#fff;font:inherit;font-size:16px;font-weight:700;color:var(--ink);text-align:left;cursor:pointer;letter-spacing:-.01em}
+.opb .t{min-width:0}
+.opb small{grid-column:1/3;display:block;font-size:12.5px;font-weight:400;color:var(--mute);margin-top:2px;line-height:1.5;letter-spacing:0}
+.opb .p{font-size:16px;font-weight:700;color:var(--navy);white-space:nowrap;text-align:right}
+.opb .p sup{font-size:9.5px;margin-left:1px}
+.opb.lite{padding:12px 16px;font-weight:600;font-size:15px;color:#3a3a3c}
+.opb.on{border-color:var(--navy);background:var(--sel)}
+.opb.on .t,.opb.on .p{color:var(--navy)}
 .opb:disabled{opacity:.45;cursor:default}
-.ph{margin:0 0 14px}
-.ph .lb{font-size:12.5px;color:var(--mute);font-weight:700;margin-bottom:6px}
+@media (max-width:339px){.opb{grid-template-columns:1fr}.opb .p{text-align:left}.opb small{grid-column:1}}
+.ph{margin:0 0 18px}
+.ph .lb{font-size:12.5px;color:var(--mute);font-weight:600;margin-bottom:8px}
 .ph .phr{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
 .ph button{flex:0 0 auto;width:150px;padding:0;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden;cursor:zoom-in;font:inherit;text-align:left}
 .ph .phr button:only-child{width:100%}
@@ -75,7 +78,7 @@ sup{font-size:10.5px;color:var(--mute);margin-left:1px;line-height:0}
 .lbx p{max-width:900px;margin:10px auto;padding:0 16px;color:#d1d1d6;font-size:13px;line-height:1.5}
 .lbx button{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;height:36px;padding:0 14px;border:0;border-radius:18px;background:rgba(255,255,255,.18);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .prev-card .sub{background:transparent;color:var(--mute);border-color:transparent;font-weight:600;height:38px;margin-top:4px}
-.inline{margin:2px 0 4px;padding:12px 14px;border-radius:12px;background:var(--sel)}
+.inline{margin:0;padding:12px 14px;border-radius:14px;background:var(--sel)}
 .inline label{display:block;font-size:13.5px;font-weight:600;margin-bottom:8px}
 .cnt{display:flex;gap:6px;flex-wrap:wrap}
 .cnt button{min-width:52px;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer}
@@ -84,7 +87,7 @@ sup{font-size:10.5px;color:var(--mute);margin-left:1px;line-height:0}
 .chk .t{flex:1}
 .chk small{display:block;font-size:12.5px;color:var(--mute);margin-top:2px;line-height:1.5}
 input[type=checkbox]{width:22px;height:22px;margin:1px 0 0;accent-color:var(--navy);flex:0 0 22px}
-.togg{display:flex;align-items:flex-start;gap:12px;margin-top:10px;padding:13px 14px;border:1px solid var(--line);border-radius:14px;cursor:pointer;font-size:15px}
+.togg{display:flex;align-items:flex-start;gap:12px;margin-top:10px;padding:13px 16px;border:1.5px solid var(--line);border-radius:16px;cursor:pointer;font-size:15px;font-weight:600}
 .togg small{display:block;font-size:12.5px;color:var(--mute)}
 
 /* 입력 */
@@ -121,7 +124,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--navy)}
 .lead{font-size:15.5px;color:#333;margin:0 0 14px}
 .lead b{color:var(--red)}
 .facts{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
-.facts li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;color:#3a3a3c}
+.facts li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;color:#3a3a3c;line-height:1.5}
 .facts li span{flex:0 0 22px;height:22px;border-radius:11px;background:var(--soft);color:var(--navy);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
 .prev-card{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--sel);font-size:14px}
 .prev-card button{margin-top:10px;height:44px;width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--navy);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
@@ -129,12 +132,15 @@ input:focus,textarea:focus{outline:none;border-color:var(--navy)}
 /* 확인 */
 .rv{border-top:1px solid var(--line);margin-top:8px}
 .rv button{display:flex;width:100%;gap:10px;justify-content:space-between;align-items:flex-start;padding:13px 2px;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
-.rv .n{font-size:14.5px;font-weight:600;flex:0 0 42%}
-.rv .a{font-size:14px;color:#3a3a3c;text-align:right;flex:1}
+.rv .n{font-size:14.5px;font-weight:600;flex:0 0 46%;line-height:1.4}
+.rv .a{font-size:14px;color:#3a3a3c;text-align:right;flex:1;line-height:1.4}
 .rv .a b{color:var(--navy)}
 .rv .a em{font-style:normal;color:var(--mute);font-size:12.5px;display:block}
-.total{display:flex;justify-content:space-between;align-items:baseline;margin:18px 0 6px;padding:16px;border-radius:14px;background:var(--soft)}
-.total b{font-size:21px;color:var(--navy)}
+.total{display:block;margin:18px 0 0;padding:14px 16px 4px;border-radius:14px 14px 0 0;background:var(--soft)}
+.total span{display:block;font-size:13px;color:var(--mute);font-weight:600}
+.total b{display:block;font-size:24px;color:var(--navy);letter-spacing:-.01em;margin-top:2px}
+.tsum{display:flex;gap:14px;padding:6px 16px 14px;border-radius:0 0 14px 14px;background:var(--soft);font-size:12.5px;color:var(--mute);margin-bottom:6px}
+.tsum b{color:var(--ink);font-weight:600}
 .notice{font-size:12.5px;color:var(--mute);margin-top:14px;line-height:1.6}
 .srcs{margin:6px 0 0;padding-left:18px;font-size:12px;color:var(--mute);line-height:1.6}
 .srcs a{color:var(--mute)}
@@ -184,8 +190,6 @@ input:focus,textarea:focus{outline:none;border-color:var(--navy)}
 .sheet .warn.red{background:#fdf3f3;color:var(--red)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 footer{padding:0 22px 140px;font-size:12px;color:#a1a1a6;text-align:center}
-.about{margin:0 0 14px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);font-size:14px;color:#333;line-height:1.6}
-.about b{display:block;font-size:12.5px;color:var(--navy);margin-bottom:2px}
 .typeout{margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--sel);font-size:15px}
 .typeout b{font-size:20px;color:var(--navy);margin-right:6px}
 .ov h4{font-size:13px;color:var(--mute);margin:20px 0 4px;font-weight:700}
@@ -238,12 +242,12 @@ footer{padding:0 22px 140px;font-size:12px;color:#a1a1a6;text-align:center}
  <div class="intro">
   <h1>유상옵션 수요조사</h1>
   <div class="badges" id="badges"></div>
-  <p class="lead">유상옵션 계약 전에 우리 단지의 실제 수요를 모아, 시행사에 <b>품목별 선택과 가격 조정</b>을 요청하는 근거로 씁니다. 품목마다 옵션 공급금액과 대략적인 사제 시세를 비교해 보시고 <b>옵션으로 할지, 입주 후 사제(공동구매 포함)로 할지</b> 골라 주세요.</p>
+  <p class="lead">유상옵션 계약 전에 우리 단지의 실제 수요를 모아, 시행사에 <b>품목별 선택과 가격 조정</b>을 요청하는 근거로 씁니다. 품목마다 옵션 금액과 사제 시세를 보고 <b>옵션으로 할지, 입주 후 사제로 할지</b> 골라 주세요.</p>
   <ul class="facts">
-   <li><span>1</span><div>동·호수를 넣으면 타입이 자동으로 정해지고, 먼저 우리 집 옵션을 한눈에 보여 드린 뒤 한 문항씩 여쭙니다.</div></li>
-   <li><span>2</span><div>사제 시세는 공개 자료를 모은 대략적인 참고값입니다. 같은 모델·같은 시공 범위가 아닌 경우가 많아 실제 견적과 다를 수 있습니다.</div></li>
-   <li><span>3</span><div>'입주예정자 의견'은 단톡방에 올라온 일부 의견을 정리한 것으로, 확인된 사실이나 다수 의견이 아닙니다.</div></li>
-   <li><span>4</span><div>동·호수만 받으며, 같은 세대가 다시 내면 마지막 응답으로 바뀝니다. 처음과 다른 기기에서 같은 동·호수로 내면 한 번 더 확인합니다. 제출하면 전체 집계를 볼 수 있습니다.</div></li>
+   <li><span>1</span><div>동·호수만 넣으면 우리 집 타입의 옵션만 나옵니다.</div></li>
+   <li><span>2</span><div>사제 시세는 공개 자료의 참고값이라 실제 견적과 다를 수 있습니다.</div></li>
+   <li><span>3</span><div>'입주예정자 의견'은 단톡방의 일부 의견이며, 확인된 사실이나 다수 의견이 아닙니다.</div></li>
+   <li><span>4</span><div>같은 세대가 다시 내면 마지막 응답으로 바뀌고, 제출하면 전체 집계를 볼 수 있습니다.</div></li>
   </ul>
   <div class="prev-card hidden" id="prev-card"><b id="prev-title">이 기기에서 응답한 기록이 있습니다</b><div class="small" id="prev-meta" style="margin-top:2px"></div>
    <button type="button" id="prev-go">응답 결과 보기</button><div class="err" id="prev-err"></div>
@@ -315,7 +319,7 @@ const SRC = [
 const ITEMS = [
  {id:'jungmun', group:'개별 옵션', name:'현관 중문', desc:{'84D':'수동 여닫이 도어','*':'3연동 자동'},
   price:[2090000,2090000,2090000,2090000,1350000,2113000,2136000,BASE],
-  self:'수동 3연동<br>약 77만~110만원<sup>1</sup><small>자동중문 약 220만~320만원<sup>2</sup></small>',
+  self:'약 77만~110만원<sup>1</sup><small>수동 3연동 기준 · 자동중문은 약 220만~320만원<sup>2</sup></small>',
   selfNote:'모두 폭 120cm 기준 추정치임. 자동중문은 전원공사 포함 금액임. 다른 자료로, 중문 시공 견적 평균은 약 102만원(79만~140만원, 종류 구분 없음)<sup>15</sup>.',
   op:{optS:'가벽 철거 포함, 사제 고장 잦았다는 경험담',selfS:'수동 중문은 사제만 가능, 개별 시공 만족도 높았다는 경험담',opt:['옵션으로 하면 가벽도 터 준다는 의견','사제 중문이 고장이 잦아 이번엔 옵션으로 하겠다는 경험담'],
       self:['옵션은 자동만 있어 수동을 원하면 사제밖에 없다는 의견','박람회에서 개별로 한 세대의 만족도가 옵션보다 높았다는 경험담']}},
@@ -326,13 +330,13 @@ const ITEMS = [
   op:{optS:'가격 대비 괜찮다는 의견',selfS:'',opt:['가격 대비 괜찮은 옵션이라는 의견'], self:[]}},
  {id:'closet2', group:'개별 옵션', name:'침실2 붙박이장', desc:'',
   price:[1320000,1320000,1320000,1320000,1320000,1320000,1455000,BASE],
-  self:'방 1곳 약 70만~110만원<sup>5</sup><small>고급형 약 140만~210만원</small>',
+  self:'약 70만~110만원<sup>5</sup><small>방 1곳(8~10자) 기준 · 고급형 약 140만~210만원</small>',
   selfNote:'방 1곳(8~10자) 기준 한샘몰 공개가 환산값임. 철거·설치 마감비는 별도일 수 있음.',
   op:{optS:'품질 괜찮고 사제 공구도 비싸다는 의견, 다만 장 <span style="white-space:nowrap">뒤·아래</span>에 <span style="white-space:nowrap">벽지·바닥재</span> 없이 붙여 교체 때 일이 커질 수 있음',selfS:'내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견',opt:['모델하우스에서 본 품질이 괜찮았다는 의견','사제 공동구매도 자재값이 올라 꽤 비싸다는 의견','옵션은 장 뒤·아래에 벽지·바닥재 없이 붙여 나중에 바꿀 때 일이 커질 수 있다는 의견'],
       self:['내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견']}},
  {id:'closet3', group:'개별 옵션', name:'침실3 붙박이장', desc:'',
   price:[1320000,1320000,1320000,1320000,1320000,1455000,1455000,BASE],
-  self:'방 1곳 약 70만~110만원<sup>5</sup><small>고급형 약 140만~210만원</small>',
+  self:'약 70만~110만원<sup>5</sup><small>방 1곳(8~10자) 기준 · 고급형 약 140만~210만원</small>',
   selfNote:'방 1곳(8~10자) 기준 한샘몰 공개가 환산값임. 철거·설치 마감비는 별도일 수 있음.',
   op:{optS:'품질 괜찮고 사제 공구도 비싸다는 의견, 다만 장 <span style="white-space:nowrap">뒤·아래</span>에 <span style="white-space:nowrap">벽지·바닥재</span> 없이 붙여 교체 때 일이 커질 수 있음',selfS:'내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견',opt:['모델하우스에서 본 품질이 괜찮았다는 의견','사제 공동구매도 자재값이 올라 꽤 비싸다는 의견','옵션은 장 뒤·아래에 벽지·바닥재 없이 붙여 나중에 바꿀 때 일이 커질 수 있다는 의견'],
       self:['내부 서랍 구성이 마음에 안 들면 사제가 낫다는 의견']}},
@@ -344,21 +348,21 @@ const ITEMS = [
   price:[759000,759000,759000,759000,759000,946000,946000,'free'],
   self:'시세 확인 못 함<small>맞춤 가구라 업체 실측 견적 필요</small>', selfNote:'',
   op:{opt:[], self:[], etc:[]}},
- {id:'fan', group:'개별 옵션', name:'욕실 복합 환풍기', desc:'힘펠 기본형 (부부욕실·가족욕실)',
+ {id:'fan', group:'개별 옵션', name:'욕실 복합 환풍기', desc:'부부욕실·가족욕실 2대', model:'힘펠 기본형',
   price:[1200000,1200000,1200000,1200000,1200000,1200000,1200000,BASE],
   self:'2곳 약 50만~120만원<sup>6</sup><small>1대 약 25만~60만원, 설치 포함</small>', selfNote:'힘펠 휴젠뜨 등 복합 환풍기 기준임. 일반 환풍기 교체는 1대 평균 약 10만원(5만~26만원)<sup>16</sup>.',
   op:{optS:'기존 스위치로 켤 수 있어 편함',selfS:'사제도 스위치 연동 가능',opt:['옵션은 기존 환풍기 스위치로 켤 수 있어 편하다는 의견'], self:['사제로 달아도 스위치 연동이 된다는 의견']}},
- {id:'induction', group:'개별 옵션', name:'3구 인덕션', desc:'LG BEI3ASB4BI',
+ {id:'induction', group:'개별 옵션', name:'3구 인덕션', desc:'주방 상판 매립형', model:'LG BEI3ASB4BI',
   price:[1100000,1100000,1100000,1100000,1100000,1100000,1100000,BASE],
   self:'약 81만~107만원<sup>7</sup><small>시판 LG 3구 빌트인, 같은 모델 아님</small>', selfNote:'기본 쿡탑을 떼어 내고 설치하는 비용은 빠짐.', op:{opt:[],self:[]}},
- {id:'fridge', group:'주방가전', name:'오브제컬렉션 냉장고', desc:'FIT & MAX 4도어 냉장고 + 3도어 김치냉장고, M62BAAA332 + Z334AAA151 (스테인리스)',
+ {id:'fridge', group:'주방가전', name:'오브제컬렉션 냉장고', desc:'FIT & MAX 4도어 냉장고 + 3도어 김치냉장고 (스테인리스)', model:'LG M62BAAA332 + Z334AAA151',
   price:[6200000,6200000,6200000,6200000,6200000,6200000,6200000,6200000],
   self:'세트 약 564만원<sup>8</sup><small>시판 4도어 613L + 김치 324L, 같은 모델 아님</small>', selfNote:'4도어 504L 세트는 약 437만원임.',
   op:{optS:'',selfS:'냉장고장은 기본으로 두고 따로 맞추겠다는 의견',opt:[], self:['냉장고장은 기본으로 두고 따로 맞추겠다는 의견'], etc:['특화 수납장(로봇청소기장)은 주방 Style Up을 계약하고 냉장고장을 선택5(오브제형 냉장고 설치공간 + 특화 수납장)로 고를 때 들어감(견본주택 안내판 기준)']}},
- {id:'oven', group:'주방가전', name:'광파오븐', desc:'LG MZ385EBTAD (드로워 포함)',
+ {id:'oven', group:'주방가전', name:'광파오븐', desc:'드로워 포함', model:'LG MZ385EBTAD',
   price:[540000,540000,540000,540000,540000,540000,540000,540000],
   self:'약 52만원<sup>9</sup><small>같은 모델 시판 최저가</small>', selfNote:'드로워 포함 여부와 빌트인 설치비는 확인하지 못함.', op:{opt:[],self:[]}},
- {id:'dish', group:'주방가전', name:'식기세척기', desc:'LG DIE6PT (가구 부착형, 14인용)',
+ {id:'dish', group:'주방가전', name:'식기세척기', desc:'가구 문 부착형, 14인용', model:'LG DIE6PT',
   price:[1450000,1450000,1450000,1450000,1450000,1450000,1450000,1450000],
   self:'약 97만원<sup>10</sup><small>시판 LG 14인용 빌트인, 같은 모델 아님</small>', selfNote:'가구 문 부착 설치비는 빠짐.',
   op:{optS:'가구 맞춤으로 마감이 깔끔',selfS:'작업자에 따라 마감이 허술할 수 있음',opt:['옵션은 가구에 맞춰 상·하부 마감이 깔끔하다는 의견','가구를 뜯어야 하는 품목은 옵션이 낫다는 의견'],
@@ -439,25 +443,36 @@ function sameRooms(a,b){ return a.length===b.length && a.every(x=>b.includes(x))
 function cfgOf(rooms){ return AC[TYPE].find(r=>sameRooms(r[1].split(', '),rooms)); }
 // 문항별 설명 ('이 옵션은?') — 옵션표·견본주택 안내판 기준
 const ABOUT = {
- ac:'천장에 실내기를 묻어 설치하는 에어컨임. 옵션표에 정해진 대수 구성 중에서만 고를 수 있고, 구성마다 설치되는 방이 정해져 있음.',
- ap:'천장에 설치하는 LG전자 시스템 공기청정기임. 선택안마다 설치되는 방과 대수가 정해져 있고, 프리미엄환기PLUS(1대)를 더하는 구성도 있음.',
- kitParts:'주방 가구·상판·조명·천장 마감 등을 하나로 묶어 파는 옵션임. 타입에 따라 주방 레이아웃 변경 등 포함 품목이 다름.',
- kit:'주방 가구·상판·조명·천장 마감 등을 하나로 묶어 파는 옵션임.',
- intParts:'현관·복도·거실 벽 타일과 천장·조명 마감을 하나로 묶어 파는 옵션임. 주방 Style Up을 함께 계약하면 금액이 조금 낮아짐.',
- int:'현관·복도·거실 벽 타일과 천장·조명 마감을 하나로 묶어 파는 옵션임. 주방 Style Up을 함께 계약하면 금액이 조금 낮아짐.',
- jungmun:'현관과 거실 사이에 다는 문임. 3연동 자동은 문 세 짝이 함께 움직이는 자동문이고, 84D는 수동 여닫이 도어임.',
- bath:'욕실의 세면대·양변기·수전과 샤워부스·액세서리를 특화 제품(브론즈 무광)으로 넣는 옵션임.',
- closet2:'침실2에 맞춤으로 짜 넣는 붙박이 옷장임.',
- closet3:'침실3에 맞춤으로 짜 넣는 붙박이 옷장임.',
- master:'124 타입 전용 옵션임. 침실1·침실4 문 위치를 바꾸고 복도 장식장, 침실4 슬라이딩 도어, 시트패널 벽을 넣음.',
- storage:'주방의 가전 소물장과 로봇청소기장임. 주방 Style Up을 계약한 세대(166P는 주방 Style Up 기본 제공)가 냉장고장을 선택5(오브제형 냉장고 설치공간 + 특화 수납장)로 고를 때 들어감(견본주택 안내판 기준). 열이나 증기가 나는 가전은 문을 연 채 써야 하고, 내부 크기에 따라 일부 가전은 넣을 수 없음.',
- fan:'환기 외 기능을 더한 복합형 욕실 환풍기(힘펠 기본형)임. 부부욕실·가족욕실에 들어감.',
- induction:'주방 상판에 묻어 설치하는 LG 3구 인덕션(전기레인지)임.',
- fridge:'주방 가구에 맞춰 넣는 LG 오브제컬렉션 4도어 냉장고와 3도어 김치냉장고 세트임.',
- oven:'LG 광파오븐(드로워 포함)임.',
- dish:'가구 문을 붙여 주방 하부장에 넣는 LG 빌트인 식기세척기(14인용)임.'
+ ac:'천장에 실내기를 묻어 설치하는 에어컨입니다. 옵션표에 정해진 대수 구성 중에서만 고를 수 있고, 구성마다 설치되는 방이 정해져 있습니다.',
+ ap:'천장에 설치하는 시스템 공기청정기입니다. 선택안마다 설치되는 방과 대수가 정해져 있고, 프리미엄환기PLUS(1대)를 더하면 금액이 올라갑니다.',
+ kitParts:'지금은 아래 품목을 묶음으로만 팝니다. 품목별로 나눠 판다면 옵션으로 할 품목을 모두 골라 주세요(여러 개 선택 가능).',
+ kit:'주방 가구·상판·조명·천장 마감 등을 하나로 묶어 파는 옵션입니다. 품목별로 따로 계약할 수 없습니다.',
+ intParts:'지금은 아래 품목을 묶음으로만 팝니다. 품목별로 나눠 판다면 옵션으로 할 품목을 모두 골라 주세요(여러 개 선택 가능).',
+ int:'현관·복도·거실 벽 타일과 천장·조명 마감을 하나로 묶어 파는 옵션입니다. 주방 Style Up을 함께 계약하면 금액이 조금 낮아집니다.',
+ jungmun:'현관과 거실 사이에 다는 문입니다. 3연동 자동은 문 세 짝이 함께 움직이는 자동문이고, 84D는 수동 여닫이 도어입니다.',
+ bath:'두 욕실의 세면대·양변기·수전과 샤워부스·액세서리를 특화 제품(브론즈 무광)으로 바꾸는 옵션입니다.',
+ closet2:'침실2에 맞춤으로 짜 넣는 붙박이 옷장입니다.',
+ closet3:'침실3에 맞춤으로 짜 넣는 붙박이 옷장입니다.',
+ master:'124 타입 전용 옵션입니다. 침실1·침실4 문 위치를 바꾸고 복도 장식장, 침실4 슬라이딩 도어, 시트패널 벽을 넣습니다.',
+ storage:'주방의 가전 소물장과 로봇청소기장입니다. 주방 Style Up을 계약한 세대(166P는 기본 제공)가 냉장고장을 선택5(오브제형 냉장고 설치공간 + 특화 수납장)로 고를 때 들어갑니다(견본주택 안내판 기준). 열이나 증기가 나는 가전은 문을 연 채 써야 하고, 내부 크기에 따라 일부 가전은 넣을 수 없습니다.',
+ fan:'환기 외 기능을 더한 복합형 욕실 환풍기입니다. 부부욕실·가족욕실에 1대씩 들어갑니다.',
+ induction:'주방 상판에 묻어 설치하는 3구 인덕션(전기레인지)입니다. 기본은 2구 인덕션 + 1구 하이라이트 쿡탑입니다.',
+ fridge:'주방 가구에 맞춰 넣는 오브제컬렉션 4도어 냉장고와 3도어 김치냉장고 세트입니다.',
+ oven:'빌트인 광파오븐입니다. 드로워가 포함됩니다.',
+ dish:'가구 문을 붙여 주방 하부장에 넣는 빌트인 식기세척기(14인용)입니다.'
 };
-function aboutBox(key){ return el('div','about','<b>이 옵션은?</b>'+ABOUT[key]); }
+/* 문항 머리: 제목 · 타입/모델 표시 · 설명 한 번 */
+function head(st, title, chips, desc){
+  st.appendChild(el('div','q',title));
+  const c=el('div','chips2'); chips.filter(Boolean).forEach(x=>{ const t=typeof x==='string'?{t:x}:x; const e=el('span','chip'+(t.m?' m':'')); e.textContent=t.t; c.appendChild(e); }); st.appendChild(c);
+  if(desc) st.appendChild(el('p','d',desc));
+}
+// 사제 시세 글을 금액 부분과 설명 부분으로 나눔
+function selfParts(h){ const [a,b]=String(h||'').split('<small>'); return {v:a.replace(/<br>/g,' ').trim(), n:(b||'').replace(/<\/small>/,'').trim()}; }
+// 단톡방 의견 요약 두 줄
+function opinionStrip(op){ if(!op||(!op.optS&&!op.selfS)) return null; const d=el('div','opn');
+  if(op.optS) d.appendChild(el('div',null,'<span>옵션 쪽</span><div>'+op.optS+'</div>'));
+  if(op.selfS) d.appendChild(el('div',null,'<span>사제 쪽</span><div>'+op.selfS+'</div>')); return d; }
 
 /* ---------- 공통 ---------- */
 const $ = id => document.getElementById(id);
@@ -639,7 +654,7 @@ function stepOverview(st){
   ITEMS.forEach(it=>{ const p=it.price[i]; if(p===null||p===BASE) return; if(g!==it.group){ g=it.group; box.appendChild(el('h4',null,g)); }
     const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc, pv=p==='free'?'무상':man(p);
     const shortDs=ds&&ds.length<30;
-    row(it.name, shortDs?ds:'', pv, ln('공급금액', ds&&!shortDs?esc(ds):'', pv)+tx(ABOUT[it.id])); });
+    row(it.name, it.model||(shortDs?ds:''), pv, ln('공급금액', ds?esc(ds):'', pv)+tx(ABOUT[it.id])); });
   // 모두 고를 때 최대 금액
   let mx=ac[ac.length-1][2]+Math.max(...ap.map(r=>r[4]));
   if(!kitB) mx+=KIT.price[i]; if(!intB) mx+=INT.price[i][1];
@@ -659,17 +674,11 @@ function baseList(){ const i=ti(TYPE), out=[]; if(KIT.price[i]===BASE) out.push(
 /* ---------- 문항 공통 그리기 ---------- */
 // 타입에 맞는 의견만 남김
 function opFor(op){ return Object.assign({},op,{etc:(op.etc||[]).filter(e=>typeof e==='string'||e.only.includes(TYPE)).map(e=>typeof e==='string'?e:e.x)}); }
-function cmpBox(optHtml, selfHtml, op){
-  const c=el('div','cmp');
-  const L=el('div',null,'<h4>옵션</h4><div class="v">'+optHtml+'</div>'+(op&&op.optS?'<div class="op"><b>의견</b>'+op.optS+'</div>':''));
-  const R=el('div',null,'<h4>사제 (대략)</h4><div class="v">'+selfHtml+'</div>'+(op&&op.selfS?'<div class="op"><b>의견</b>'+op.selfS+'</div>':''));
-  c.appendChild(L); c.appendChild(R); return c;
-}
 function moreBtn(title, op, notes){
   const all=(op.opt||[]).length+(op.self||[]).length+(op.etc||[]).length;
   if(!all && !notes) return null;
   const b=el('button','more'); b.type='button';
-  b.innerHTML=(all?'입주예정자 의견 '+all+'건':'시세 설명')+' · <b>자세히 보기 ›</b>';
+  b.innerHTML='<span>'+(all?'입주예정자 의견 '+all+'건':'')+(all&&notes?' · ':'')+(notes?'사제 시세 설명':'')+'</span><b>자세히 ›</b>';
   b.onclick=()=>{ const d=el('div'); d.appendChild(el('h3',null,esc(title)));
     d.appendChild(el('p','small','단톡방에 올라온 일부 의견을 정리한 것으로, 확인된 사실이나 다수 의견이 아닙니다.'));
     const sec=(h,arr)=>{ if(!arr||!arr.length) return; d.appendChild(el('h5',null,h)); d.appendChild(el('ul',null,arr.map(x=>'<li>'+x+'</li>').join(''))); };
@@ -679,9 +688,9 @@ function moreBtn(title, op, notes){
     sheet(d,null,'닫기',null); };
   return b;
 }
-function opb(title, small, price, on, onClick){
-  const b=el('button','opb'+(on?' on':'')); b.type='button';
-  b.innerHTML='<span>'+esc(title)+(small?'<small>'+esc(small)+'</small>':'')+'</span>'+(price?'<span class="p">'+price+'</span>':'');
+function opb(title, small, price, on, onClick, lite){
+  const b=el('button','opb'+(on?' on':'')+(lite?' lite':'')); b.type='button';
+  b.innerHTML='<span class="t">'+esc(title)+'</span>'+(price?'<span class="p">'+price+'</span>':'')+(small?'<small>'+small+'</small>':'');
   b.onclick=onClick; return b;
 }
 function pick(container, btn){ container.querySelectorAll('.opb').forEach(x=>x.classList.toggle('on',x===btn)); }
@@ -689,21 +698,17 @@ function pick(container, btn){ container.querySelectorAll('.opb').forEach(x=>x.c
 /* ---------- 에어컨 ---------- */
 function stepAc(st){
   const rows=AC[TYPE];
-  st.appendChild(el('div','q','천장형 시스템에어컨'));
-  st.appendChild(el('p','d',TYPE+' 기준 · LG전자 Premium UVnano 실내기'));
-  st.appendChild(aboutBox('ac'));
-  const optHtml=rows.map(r=>r[0]+'대 '+man(r[2])).join('<br>');
-  const selfHtml=rows.filter(r=>AC_SELF[r[0]]).map(r=>r[0]+'대 '+AC_SELF[r[0]]).join('<br>')||'—';
+  head(st,'천장형 시스템에어컨',[TYPE,{t:'LG Premium UVnano',m:true}],ABOUT.ac);
+  const selfTxt=rows.filter(r=>AC_SELF[r[0]]).map(r=>r[0]+'대 '+AC_SELF[r[0]]).join(' · ');
   const miss=rows.filter(r=>!AC_SELF[r[0]]).map(r=>r[0]+'대');
-  st.appendChild(cmpBox(optHtml, selfHtml+'<sup>11</sup><small>낮은 값은 삼성, 높은 값은 LG · 제품·설치 포함'+(miss.length?'<br>'+miss.join('·')+' 시세는 확인 못 함':'')+'</small>', AC_OP));
-  st.appendChild(el('div','etc',AC_OP.etc[0]));
-  const mb=moreBtn('천장형 시스템에어컨', AC_OP, '시스템에어컨을 사제로 설치하면(제품·설치 포함, 입주 전 빈집 기준) 삼성은 2대 약 370만원, 3대 약 450만원, 4대 약 530만~570만원, 5대 약 650만원, LG는 2대 약 440만원, 3대 약 490만원, 4대 약 620만~690만원, 5대 약 770만원<sup>11</sup>. 한 시공업체의 단가표이며 방 구성은 우리 옵션표와 조금 다름. 입주 후 설치는 천장 타공·배관 공사가 따르고, 업체·현장 조건에 따라 금액이 달라짐.'); st.appendChild(mb);
+  st.appendChild(el('div','ask','하나를 골라 주세요'));
+  const mb=moreBtn('천장형 시스템에어컨', AC_OP, '시스템에어컨을 사제로 설치하면(제품·설치 포함, 입주 전 빈집 기준) 삼성은 2대 약 370만원, 3대 약 450만원, 4대 약 530만~570만원, 5대 약 650만원, LG는 2대 약 440만원, 3대 약 490만원, 4대 약 620만~690만원, 5대 약 770만원<sup>11</sup>. 한 시공업체의 단가표이며 방 구성은 우리 옵션표와 조금 다름. 입주 후 설치는 천장 타공·배관 공사가 따르고, 업체·현장 조건에 따라 금액이 달라짐.');
   const ops=el('div','ops'); const cur=A.ac||{};
   const sub=el('div','inline hidden');
   const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ const keep=(A.ac&&A.ac.rooms)||[]; A.ac={c:v,rooms:(v==='other'||v==='self')?keep:[]}; pick(ops,b); placeSub(b,v); refreshNav(); save(); }); b.dataset.v=v; ops.appendChild(b); return b; };
-  rows.forEach(([n,where,price,memo])=>add('cfg:'+n,'옵션 '+n+'대',where+(memo?' · '+memo:''),won(price)));
+  rows.forEach(([n,where,price,memo])=>add('cfg:'+n,'옵션 '+n+'대',esc(where)+(memo?' · '+esc(memo):''),won(price)));
   add('other','옵션표에 없는 구성 희망','예: 주방을 뺀 4대처럼 설치할 방을 직접 고름');
-  add('self','사제·공동구매','입주 후 개별 설치 또는 공동구매');
+  add('self','사제·공동구매',(selfTxt?selfTxt+'<sup>11</sup> · 낮은 값 삼성, 높은 값 LG, 제품·설치 포함':'')+(miss.length?' · '+miss.join('·')+' 시세는 확인 못 함':''));
   add('none','하지 않음','스탠드·벽걸이 등');
   function placeSub(btn,v){
     if(v!=='other'&&v!=='self'){ sub.classList.add('hidden'); return; }
@@ -717,22 +722,21 @@ function stepAc(st){
   }
   st.appendChild(ops);
   if(cur.c==='other'||cur.c==='self') placeSub(ops.querySelector('[data-v="'+cur.c+'"]'),cur.c);
+  const os=opinionStrip(AC_OP); if(os) st.appendChild(os); st.appendChild(mb);
 }
 
 /* ---------- 공기청정기 ---------- */
 function stepAp(st){
-  st.appendChild(el('div','q','시스템 공기청정기'));
-  st.appendChild(el('p','d',TYPE+' 기준 · LG전자. 프리미엄환기PLUS(1대)를 함께 고르면 금액이 올라갑니다.'));
-  st.appendChild(aboutBox('ap'));
+  head(st,'시스템 공기청정기',[TYPE,{t:'LG전자',m:true}],ABOUT.ap);
   const rows=AP[TYPE];
-  st.appendChild(cmpBox(man(rows[0][3])+'부터<small>선택안·대수에 따라 '+man(rows[0][3])+'~'+man(rows[rows.length-1][3])+'</small>', '시세 확인 못 함<small>사제는 일반 공기청정기 구입으로 보고 응답</small>', null));
+  st.appendChild(el('div','ask','하나를 골라 주세요'));
   const ops=el('div','ops'); const cur=A.ap||{};
   const tg=el('label','togg hidden'); const cb=el('input'); cb.type='checkbox'; cb.checked=!!cur.plus;
   cb.onchange=()=>{ A.ap.plus=cb.checked; save(); };
   tg.appendChild(cb); tg.appendChild(el('span',null,'프리미엄환기PLUS도 함께 하겠음<small>고른 선택안의 \'환기PLUS 함께\' 금액으로 계산</small>'));
   const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ A.ap={c:v,plus:!!(A.ap&&A.ap.plus)}; pick(ops,b); tg.classList.toggle('hidden',!/^opt/.test(v)); refreshNav(); save(); }); ops.appendChild(b); };
-  rows.forEach(([k,n,where,p,pp])=>add('opt'+k,'옵션 선택'+k+' · '+n+'대',where+' · 환기PLUS 함께 '+won(pp),won(p)));
-  add('self','사제로 하겠음','일반 공기청정기 등을 따로 구입');
+  rows.forEach(([k,n,where,p,pp])=>add('opt'+k,'옵션 선택'+k+' · '+n+'대',esc(where)+' · 환기PLUS 함께 '+won(pp),won(p)));
+  add('self','사제로 하겠음','일반 공기청정기 등을 따로 구입 · 천장형 사제 시세는 확인 못 함');
   add('none','하지 않음');
   st.appendChild(ops); tg.classList.toggle('hidden',!/^opt/.test(cur.c||'')); st.appendChild(tg);
 }
@@ -746,13 +750,10 @@ function partsFor(key){
 }
 function intPrice(){ const r=INT.price[ti(TYPE)]; return A.kit==='opt'||KIT.price[ti(TYPE)]===BASE ? r[1] : r[0]; }
 function pkgName(key){ return key==='kit'?'주방 Style Up':'인테리어 Style Up'; }
-function pkgPriceText(key){ const i=ti(TYPE); if(key==='kit') return won(KIT.price[i]);
-  const r=INT.price[i]; return won(r[0])+'<small>주방 Style Up과 함께 계약하면 '+won(r[1])+'</small>'; }
 function stepParts(st,s){
   const key=s.id;
-  st.appendChild(el('div','q',pkgName(key)+',<br>나눠서 판다면?'));
-  st.appendChild(aboutBox(key+'Parts')); addPhotos(st,key);
-  st.appendChild(el('p','d','지금은 아래 품목을 묶음으로만 팝니다. 품목별로 나눠 판다면 옵션으로 할 품목을 모두 골라 주세요(여러 개 선택 가능).'+(key==='int'&&TYPE==='75'?' (75는 침실1 우물천장·건축화 조명·시트패널 천장이 빠지고, 전체 침실에 매입특화 조명이 들어감)':'')));
+  head(st,pkgName(key)+',<br>나눠서 판다면?',[TYPE],ABOUT[key+'Parts']+(key==='int'&&TYPE==='75'?' 75는 침실1 우물천장·건축화 조명·시트패널 천장이 빠지고, 전체 침실에 매입특화 조명이 들어갑니다.':''));
+  addPhotos(st,key);
   const box=el('div'); const sel=A[key+'P']=A[key+'P']||[];
   partsFor(key).concat([{id:'none',name:'옵션으로 고를 품목 없음'}]).forEach(p=>{
     const l=el('label','chk'); const cb=el('input'); cb.type='checkbox'; cb.value=p.id; cb.checked=sel.includes(p.id);
@@ -767,39 +768,41 @@ function stepParts(st,s){
 }
 function stepPkg(st,s){
   const key=s.id, P0=key==='kit'?KIT:INT, P=Object.assign({},P0,{op:opFor(P0.op)});
-  st.appendChild(el('div','q',pkgName(key)+',<br>지금처럼 묶음이라면?'));
-  st.appendChild(el('p','d',TYPE+' 기준 · 포함 품목: '+partsFor(key).map(p=>esc(p.name)).join(', ')));
-  st.appendChild(aboutBox(key)); addPhotos(st,key);
-  st.appendChild(cmpBox(pkgPriceText(key), P.self, P.op));
-  if(P.op.etc&&P.op.etc.length) st.appendChild(el('div','etc',P.op.etc[0]));
-  const mb=moreBtn(pkgName(key), P.op, null); if(mb) st.appendChild(mb);
+  head(st,pkgName(key)+',<br>지금처럼 묶음이라면?',[TYPE],ABOUT[key]);
+  st.appendChild(el('div','inc','<b>포함 품목</b>'+partsFor(key).map(p=>esc(p.name)).join(' · ')));
+  addPhotos(st,key);
+  const sp=selfParts(P.self), i=ti(TYPE), r=INT.price[i];
+  st.appendChild(el('div','ask','하나를 골라 주세요'));
   const ops=el('div','ops'); const cur=A[key];
-  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur===v,()=>{ A[key]=v; pick(ops,b); refreshNav(); save(); }); ops.appendChild(b); };
-  add('opt','옵션으로 계약',null,key==='kit'?won(KIT.price[ti(TYPE)]):null);
-  add('self','사제로 하겠음','필요한 품목만 입주 후 개별 시공');
-  add('none','하지 않음');
+  const add=(v,title,small,price,lite)=>{ const b=opb(title,small,price,cur===v,()=>{ A[key]=v; pick(ops,b); refreshNav(); save(); },lite); ops.appendChild(b); };
+  if(key==='kit') add('opt','옵션으로 계약',null,won(KIT.price[i]));
+  else add('opt','옵션으로 계약','주방 Style Up과 함께 계약하면 '+won(r[1]),won(r[0]));
+  add('self','사제로 하겠음',(sp.n?sp.n+' · ':'')+'필요한 품목만 입주 후 개별 시공',sp.v);
+  add('none','하지 않음',null,null,true);
   st.appendChild(ops);
+  const os=opinionStrip(P.op); if(os) st.appendChild(os);
+  const mb=moreBtn(pkgName(key), P.op, null); if(mb) st.appendChild(mb);
 }
 
 /* ---------- 개별 품목 ---------- */
 function stepItem(st,s){
   const it=Object.assign({},s.it,{op:opFor(s.it.op)}), p=it.price[ti(TYPE)];
-  st.appendChild(el('div','q',esc(it.name)));
   const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc;
-  st.appendChild(el('p','d',TYPE+' 기준'+(ds?' · '+esc(ds):'')));
-  st.appendChild(aboutBox(it.id)); addPhotos(st,it.id);
-  st.appendChild(cmpBox(p==='free'?'무상 선택<small>166P는 무상으로 고를 수 있음</small>':won(p), it.self, it.op));
-  if(it.op.etc&&it.op.etc.length) st.appendChild(el('div','etc',it.op.etc[0]));
-  const mb=moreBtn(it.name, it.op, it.selfNote); if(mb) st.appendChild(mb);
+  head(st,esc(it.name),[TYPE,it.model?{t:it.model,m:true}:null],ABOUT[it.id]);
+  addPhotos(st,it.id);
+  const sp=selfParts(it.self);
+  st.appendChild(el('div','ask','하나를 골라 주세요'));
   const ops=el('div','ops'); const cur=A[it.id];
-  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur===v,()=>{ A[it.id]=v; pick(ops,b); refreshNav(); save(); }); ops.appendChild(b); };
+  const add=(v,title,small,price,lite)=>{ const b=opb(title,small,price,cur===v,()=>{ A[it.id]=v; pick(ops,b); refreshNav(); save(); },lite); ops.appendChild(b); };
   const lockOpt=it.id==='storage'&&!storageOk();
   if(lockOpt&&A.storage==='opt'){ delete A.storage; save(); }
-  add('opt','옵션으로 계약',lockOpt?'주방 Style Up을 \'옵션으로 계약\'으로 고른 경우에만 고를 수 있음':null,p==='free'?'무상':won(p));
+  add('opt','옵션으로 계약',lockOpt?'주방 Style Up을 \'옵션으로 계약\'으로 고른 경우에만 고를 수 있음':(ds?esc(ds):null)+(p==='free'?(ds?' · ':'')+'166P는 무상으로 고를 수 있음':''),p==='free'?'무상':won(p));
   if(lockOpt) ops.lastChild.disabled=true;
-  add('self','사제·공동구매');
-  add('none','하지 않음');
+  add('self','사제·공동구매',sp.n||null,sp.v||null);
+  add('none','하지 않음',null,null,true);
   st.appendChild(ops);
+  const os=opinionStrip(it.op); if(os) st.appendChild(os);
+  const mb=moreBtn(it.name, it.op, it.selfNote); if(mb) st.appendChild(mb);
 }
 // 특화 수납장은 주방 Style Up을 옵션으로 계약할 때만 (166P는 주방 Style Up 기본 제공)
 function storageOk(){ return KIT.price[ti(TYPE)]===BASE || A.kit==='opt'; }
@@ -825,14 +828,14 @@ function addPhotos(st,key){
 function photoBox(st,key){
   const P=PH_DATA||{}, set=PHOTO_SET[key];
   const list=set.filter(x=>P[x[0]]); if(!list.length) return;
-  const box=el('div','ph'); box.appendChild(el('div','lb','견본주택 안내판 사진'));
+  const box=el('div','ph'); box.appendChild(el('div','lb','견본주택 안내판 사진 · 누르면 크게 보임'));
   const row=el('div','phr');
   list.forEach(([id,cap,note])=>{ const b=el('button'); b.type='button';
     const im=el('img'); im.src=P[id]; im.alt=cap; im.loading='lazy'; b.appendChild(im);
     const c=el('span'); c.textContent=cap; b.appendChild(c);
     b.onclick=()=>openPhoto(P[id],cap+(note?' · '+note:'')); row.appendChild(b); });
   box.appendChild(row);
-  const notes=['84A·84B 견본주택에서 찍은 사진으로, 타입마다 구성과 위치가 다를 수 있음. 사진을 누르면 크게 보임.'];
+  const notes=['84A·84B 견본주택 사진으로, 타입마다 구성과 위치가 다를 수 있음.'];
   list.forEach(x=>{ if(x[2]) notes.push(x[2]); });
   box.appendChild(el('div','nt',notes.join(' ')));
   st.appendChild(box);
@@ -856,7 +859,8 @@ function stepMemo(st){
 
 /* ---------- 확인 ---------- */
 function answerText(s){
-  const i=ti(TYPE);
+  const i=ti(TYPE), miss='<em>아직 답하지 않음</em>';
+  if((s.k==='ac'&&!(A.ac&&A.ac.c))||(s.k==='ap'&&!(A.ap&&A.ap.c))||(s.k==='pkg'&&!A[s.id])||(s.k==='item'&&!A[s.it.id])) return miss;
   if(s.k==='ac'){ const a=A.ac; if(/^cfg:/.test(a.c)){ const r=AC[TYPE].find(x=>'cfg:'+x[0]===a.c); return '<b>옵션 '+r[0]+'대</b><em>'+won(r[2])+'</em>'; }
     if(a.c==='none') return '하지 않음'; return (a.c==='other'?'옵션표에 없는 구성 희망':'사제·공구')+' · '+a.rooms.length+'대<em>'+esc(a.rooms.join(', '))+'</em>'; }
   if(s.k==='ap'){ const a=A.ap; if(/^opt/.test(a.c)){ const r=AP[TYPE].find(x=>'opt'+x[0]===a.c); return '<b>옵션 선택'+r[0]+(a.plus?' + 환기PLUS':'')+'</b><em>'+won(a.plus?r[4]:r[3])+'</em>'; } return CHL[a.c]; }
@@ -871,6 +875,7 @@ function stepReview(st){
   st.appendChild(el('div','q','응답을 확인해 주세요'));
   st.appendChild(el('p','d','고칠 문항을 누르면 그 문항으로 이동합니다.'));
   const tot=el('div','total','<span>옵션으로 고른 금액 합계</span><b>'+won(total())+'</b>'); st.appendChild(tot);
+  const cnt=choiceCount(); st.appendChild(el('div','tsum','<span>옵션 <b>'+cnt.opt+'</b></span><span>사제·공구 <b>'+cnt.self+'</b></span><span>안 함 <b>'+cnt.none+'</b></span>'));
   const rv=el('div','rv');
   const home=el('button',null,'<span class="n">우리 집</span><span class="a">'+esc(DONG+'동 '+HO+'호 · '+TYPE)+'</span>'); home.type='button'; home.onclick=()=>go(0); rv.appendChild(home);
   STEPS.forEach((s,n)=>{ if(s.k==='home'||s.k==='overview'||s.k==='review') return;
@@ -881,6 +886,11 @@ function stepReview(st){
   st.appendChild(el('div','sec','사제 시세 출처'));
   const ol=el('ol','srcs'); SRC.forEach(s=>{ const li=el('li'); const a=el('a'); a.href=s[2]; a.target='_blank'; a.rel='noopener'; a.textContent=s[0]; li.appendChild(a); li.appendChild(document.createTextNode(' — '+s[1])); ol.appendChild(li); }); st.appendChild(ol);
 }
+function choiceCount(){ const c={opt:0,self:0,none:0};
+  if(A.ac&&A.ac.c){ c[/^cfg:|^other/.test(A.ac.c)?'opt':A.ac.c]++; }
+  if(A.ap&&A.ap.c){ c[/^opt/.test(A.ap.c)?'opt':A.ap.c]++; }
+  ['kit','int'].forEach(k=>{ if(A[k]&&c[A[k]]!==undefined) c[A[k]]++; });
+  ITEMS.forEach(it=>{ const v=A[it.id]; if(v&&c[v]!==undefined) c[v]++; }); return c; }
 function total(){
   if(!TYPE) return 0; const i=ti(TYPE); let s=0;
   if(A.ac&&/^cfg:/.test(A.ac.c)){ const r=AC[TYPE].find(x=>'cfg:'+x[0]===A.ac.c); if(r) s+=r[2]; }
