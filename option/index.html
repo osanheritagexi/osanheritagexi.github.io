@@ -89,6 +89,12 @@ sup{font-size:10.5px;color:var(--mute);margin-left:1px;line-height:0}
 input[type=checkbox]{width:22px;height:22px;margin:1px 0 0;accent-color:var(--navy);flex:0 0 22px}
 .togg{display:flex;align-items:flex-start;gap:12px;margin-top:10px;padding:13px 16px;border:1.5px solid var(--line);border-radius:16px;cursor:pointer;font-size:15px;font-weight:600}
 .togg small{display:block;font-size:12.5px;font-weight:400;color:var(--mute);margin-top:2px;line-height:1.5}
+.togg.add{margin:0 0 20px;align-items:flex-start}
+.togg.add .tx{flex:1;min-width:0}
+.togg.add .hd{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.togg.add .pr{font-size:16px;font-weight:700;color:var(--navy);white-space:nowrap}
+.togg.add.on{border-color:var(--navy);background:var(--sel)}
+.togg.add.off{opacity:.45;cursor:default}
 
 /* 입력 */
 label.f{display:block;font-size:14px;font-weight:600;margin:18px 0 6px}
@@ -642,7 +648,7 @@ function stepOverview(st){
   row('천장형 시스템에어컨', ac.map(r=>r[0]+'대').join(' · ')+' 구성 중 선택', man(ac[0][2])+'~'+man(ac[ac.length-1][2]),
     ac.map(r=>ln('옵션 '+r[0]+'대', esc(r[1])+(r[3]?' · '+esc(r[3]):''), man(r[2]))).join('')+tx('구성마다 설치되는 방이 정해져 있음. 옵션표에 없는 구성은 에어컨 문항에서 희망을 받음.'));
   row('시스템 공기청정기', ap.length+'개 선택안 · 환기 PLUS 추가 가능', man(ap[0][3])+'~'+man(ap[ap.length-1][4]),
-    ap.map(r=>ln('선택'+r[0]+' · '+r[1]+'대', esc(r[2]), man(r[3])+'<small>환기 PLUS 추가 시 '+man(r[4])+'</small>')).join('')+tx('프리미엄 환기 PLUS(LG 환기 시스템) 1대를 더하면 작은 글씨 금액이 됨.'));
+    ap.map(r=>ln('선택'+r[0]+' · '+r[1]+'대', esc(r[2]), man(r[3])+'<small>환기 PLUS 추가 시 '+man(r[4])+'</small>')).join('')+tx('프리미엄 환기 PLUS(LG 환기 시스템)를 함께 계약하면 작은 글씨 금액이 됨. 추가 금액은 공기청정기 대수와 관계없이 세대당 같음.'));
   const kitB=KIT.price[i]===BASE, intB=INT.price[i][1]===BASE;
   const partsHtml=k=>partsFor(k).map(p=>ln(esc(p.name), p.small?esc(p.small):'', '')).join('');
   if(!kitB||!intB){ box.appendChild(el('h4',null,'묶음 옵션 (Style Up)'));
@@ -728,19 +734,27 @@ function stepAc(st){
 /* ---------- 공기청정기 ---------- */
 function stepAp(st){
   head(st,'시스템 공기청정기',[TYPE,{t:'LG전자',m:true}],ABOUT.ap);
-  const rows=AP[TYPE];
-  st.appendChild(el('div','ask','하나를 골라 주세요'));
-  const ops=el('div','ops'); const cur=A.ap||{};
-  const plusAdd=rows[0][4]-rows[0][3];   // 프리미엄환기PLUS 1대 추가 금액(타입마다 같음)
-  const tg=el('label','togg hidden'); const cb=el('input'); cb.type='checkbox'; cb.checked=!!cur.plus;
-  const prices=()=>rows.forEach(([k,n,w,p,pp])=>{ const e=ops.querySelector('[data-v="opt'+k+'"] .p'); if(e) e.textContent=won(cb.checked?pp:p); });
-  cb.onchange=()=>{ A.ap.plus=cb.checked; prices(); save(); };
-  tg.appendChild(cb); tg.appendChild(el('span',null,'프리미엄 환기 PLUS 추가<small>1대 +'+man(plusAdd)+' · LG 환기 시스템으로, 바깥 공기를 걸러 들이고 실내 공기를 내보냄. 체크하면 고른 선택안 금액에 더해짐</small>'));
-  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ A.ap={c:v,plus:/^opt/.test(v)&&!!(A.ap&&A.ap.plus)}; if(!/^opt/.test(v)) cb.checked=false; pick(ops,b); prices(); tg.classList.toggle('hidden',!/^opt/.test(v)); refreshNav(); save(); }); b.dataset.v=v; ops.appendChild(b); };
+  const rows=AP[TYPE], cur=A.ap||{};
+  const plusAdd=rows[0][4]-rows[0][3];   // 프리미엄 환기 PLUS 추가 금액(세대당, 선택안·대수와 관계없이 같음)
+  // 1) 함께 고르는 옵션: 프리미엄 환기 PLUS
+  st.appendChild(el('div','ask','함께 고를 수 있는 옵션'));
+  const tg=el('label','togg add'); const cb=el('input'); cb.type='checkbox'; cb.checked=!!cur.plus;
+  tg.appendChild(cb);
+  tg.appendChild(el('span','tx','<span class="hd"><span>프리미엄 <span style="white-space:nowrap">환기 PLUS</span></span><span class="pr">+'+won(plusAdd)+'</span></span><small>세대당 1대 · 공기청정기 대수와 관계없이 같은 금액. 기본 제공 전열교환기 대신 실외기실에 설치하는 LG 환기 시스템이며, 금액은 전열교환기 값을 뺀 금액임. 선택하지 않으면 기본 전열교환기가 설치됨. 아래 옵션 선택안을 고를 때만 계약 가능(모집공고 기준)</small>'));
+  st.appendChild(tg);
+  // 2) 공기청정기 선택안
+  st.appendChild(el('div','ask','공기청정기 선택안을 골라 주세요'));
+  const ops=el('div','ops');
+  const sync=()=>{ const isOpt=/^opt/.test((A.ap&&A.ap.c)||''), anyPick=!!(A.ap&&A.ap.c);
+    const off=anyPick&&!isOpt; if(off){ cb.checked=false; if(A.ap) A.ap.plus=false; }
+    cb.disabled=off; tg.classList.toggle('off',off); tg.classList.toggle('on',cb.checked);
+    rows.forEach(([k,n,w,p,pp])=>{ const e=ops.querySelector('[data-v="opt'+k+'"] .p'); if(e) e.textContent=won(cb.checked?pp:p); }); };
+  cb.onchange=()=>{ A.ap=Object.assign({},A.ap||{},{plus:cb.checked}); sync(); save(); };
+  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ A.ap={c:v,plus:/^opt/.test(v)&&cb.checked}; pick(ops,b); sync(); refreshNav(); save(); }); b.dataset.v=v; ops.appendChild(b); };
   rows.forEach(([k,n,where,p,pp])=>add('opt'+k,'옵션 선택'+k+' · '+n+'대',esc(where),won(cur.plus?pp:p)));
   add('self',CHL.self,'일반 공기청정기 등을 따로 구입 · 천장형 사제 시세는 확인 못 함');
   add('none',CHL.none);
-  st.appendChild(ops); tg.classList.toggle('hidden',!/^opt/.test(cur.c||'')); st.appendChild(tg);
+  st.appendChild(ops); sync();
 }
 
 /* ---------- 묶음 옵션 ---------- */
