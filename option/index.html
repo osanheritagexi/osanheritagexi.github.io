@@ -895,9 +895,10 @@ function openSlides(items){
   const upd=()=>{ cur=Math.round(trk.scrollLeft/Math.max(1,trk.clientWidth)); cur=Math.max(0,Math.min(items.length-1,cur));
     ct.textContent=(cur+1)+' / '+items.length; L.disabled=cur===0; R.disabled=cur===items.length-1;
     [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur)); };
-  const to=i=>trk.scrollTo({left:i*trk.clientWidth,behavior:'smooth'});
+  const to=i=>{ i=Math.max(0,Math.min(items.length-1,i)); const x=i*trk.clientWidth; trk.scrollTo({left:x,behavior:'smooth'});
+    setTimeout(()=>{ if(Math.abs(trk.scrollLeft-x)>2) trk.scrollLeft=x; upd(); },450); };
   L.onclick=()=>to(cur-1); R.onclick=()=>to(cur+1);
-  trk.addEventListener('scroll',()=>requestAnimationFrame(upd),{passive:true});
+  trk.addEventListener('scroll',upd,{passive:true});
   const close=()=>{ o.remove(); document.removeEventListener('keydown',key); };
   const key=e=>{ if(e.key==='Escape') close(); else if(e.key==='ArrowRight') to(cur+1); else if(e.key==='ArrowLeft') to(cur-1); };
   o.onclick=e=>{ if(e.target===o) close(); }; x.onclick=close;
