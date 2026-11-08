@@ -844,8 +844,8 @@ function storageOk(){ return KIT.price[ti(TYPE)]===BASE || A.kit==='opt'; }
 
 /* ---------- 견본주택 안내판 사진 ---------- */
 const PHOTO_SET={
-  kit:[['kit_plan','주방 Style Up 안내판 (84A)'],['kit_plan_b','주방 Style Up 안내판 (84B)'],['kit_base','주방 기본 마감 안내판 (84B)']],
-  int:[['int_plan','인테리어 Style Up 안내판 (84B)'],['room_living','거실 안내판 (84B)'],['room_bed1','침실1(안방) 안내판 (84A)'],['room_bed3','침실3 안내판 (84A)']],
+  kit:[['vr_84a_kit','견본주택 주방·식당 전경 (84A)','자이 e모델하우스 VR 화면(2026.7.8 촬영 견본주택). 견본주택에는 유상옵션과 전시용 소품이 들어가 있으며, 어떤 옵션이 적용됐는지는 VR에 안내되어 있지 않음.'],['vr_84b_kit','견본주택 주방 전경 (84B)','자이 e모델하우스 VR 화면(2026.7.8 촬영 견본주택). 견본주택에는 유상옵션과 전시용 소품이 들어가 있으며, 어떤 옵션이 적용됐는지는 VR에 안내되어 있지 않음.'],['vr_124_kit','견본주택 주방·식당 전경 (124)','자이 e모델하우스 VR 화면(2026.7.8 촬영 견본주택). 견본주택에는 유상옵션과 전시용 소품이 들어가 있으며, 어떤 옵션이 적용됐는지는 VR에 안내되어 있지 않음.'],['kit_plan','주방 Style Up 안내판 (84A)'],['kit_plan_b','주방 Style Up 안내판 (84B)'],['kit_base','주방 기본 마감 안내판 (84B)']],
+  int:[['vr_84a_liv','견본주택 거실 전경 (84A)','자이 e모델하우스 VR 화면(2026.7.8 촬영 견본주택). 견본주택에는 유상옵션과 전시용 소품이 들어가 있으며, 어떤 옵션이 적용됐는지는 VR에 안내되어 있지 않음.'],['vr_84b_liv','견본주택 거실 전경 (84B)','자이 e모델하우스 VR 화면(2026.7.8 촬영 견본주택). 견본주택에는 유상옵션과 전시용 소품이 들어가 있으며, 어떤 옵션이 적용됐는지는 VR에 안내되어 있지 않음.'],['vr_124_liv','견본주택 거실 전경 (124)','자이 e모델하우스 VR 화면(2026.7.8 촬영 견본주택). 견본주택에는 유상옵션과 전시용 소품이 들어가 있으며, 어떤 옵션이 적용됐는지는 VR에 안내되어 있지 않음.'],['int_plan','인테리어 Style Up 안내판 (84B)'],['room_living','거실 안내판 (84B)'],['room_bed1','침실1(안방) 안내판 (84A)'],['room_bed3','침실3 안내판 (84A)']],
   ovw:[['room_living','거실 (84B)'],['room_bed1','침실1·안방 (84A)'],['room_bed3','침실3 (84A)']],
   jungmun:[['jungmun','현관중문 안내판 (84A)']],
   bath:[['bath_family_a','가족욕실 안내판 (84A)'],['bath_master','부부욕실 안내판 (84B)'],['bidet','비데 리모컨 (유상)'],['bath_tile','욕실 타일 안내판 (84A)']],
@@ -872,7 +872,8 @@ function addPhotos(st,key,label){
 }
 const CAM='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
 function photoBox(st,key,label,root){
-  const P=PH_DATA||{}, list=PHOTO_SET[key].filter(x=>P[x[0]]); if(!list.length) return;
+  const P=PH_DATA||{}, rank=x=>!/^vr_/.test(x[0])?2:(x[1].indexOf('('+TYPE+')')>=0?0:1);
+  const list=PHOTO_SET[key].filter(x=>P[x[0]]).map((x,i)=>[x,i]).sort((a,b)=>rank(a[0])-rank(b[0])||a[1]-b[1]).map(a=>a[0]); if(!list.length) return;
   const b=el('button','pbtn',CAM+'<span></span>'); b.type='button';
   b.lastChild.textContent=(label||'견본주택 사진')+' '+list.length+'장';
   b.onclick=()=>openSlides(list.map(([id,cap,note])=>({src:P[id],cap,note})));
