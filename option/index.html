@@ -38,7 +38,7 @@ sup{font-size:10.5px;color:var(--mute);margin-left:1px;line-height:0}
 .q{font-size:24px;font-weight:700;line-height:1.36;letter-spacing:-.01em;margin:10px 0 6px}
 .d{font-size:14.5px;color:#3a3a3c;margin:0 0 18px;line-height:1.6}
 .chips2{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
-.chip{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:7px;background:var(--soft);color:var(--mute);font-size:12px;font-weight:600;letter-spacing:0}
+.chip{display:inline-flex;align-items:center;min-height:24px;padding:0 9px;border-radius:7px;background:var(--soft);color:var(--mute);font-size:12px;font-weight:600;letter-spacing:0}
 .chip.m{color:var(--navy);background:#eef3f9}
 .inc{margin:-8px 0 18px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:13.5px;color:#3a3a3c;line-height:1.6}
 .inc b{display:block;font-size:12px;color:var(--mute);font-weight:600;margin-bottom:4px}
@@ -64,19 +64,26 @@ sup{font-size:10.5px;color:var(--mute);margin-left:1px;line-height:0}
 .opb.on .t,.opb.on .p{color:var(--navy)}
 .opb:disabled{opacity:.45;cursor:default}
 @media (max-width:339px){.opb{grid-template-columns:1fr}.opb .p{text-align:left}.opb small{grid-column:1}}
-.ph{margin:0 0 18px}
-.ph .lb{font-size:12.5px;color:var(--mute);font-weight:600;margin-bottom:8px}
-.ph .phr{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
-.ph button{flex:0 0 auto;width:150px;padding:0;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden;cursor:zoom-in;font:inherit;text-align:left}
-.ph .phr button:only-child{width:100%}
-.ph img{display:block;width:100%;height:104px;object-fit:cover;object-position:top;background:var(--soft)}
-.ph .phr button:only-child img{height:auto;max-height:260px}
-.ph span{display:block;padding:6px 8px;font-size:12px;color:#333;line-height:1.4}
-.ph .nt{margin-top:6px;font-size:12px;color:var(--mute);line-height:1.5}
-.lbx{position:fixed;inset:0;z-index:30;background:#000;overflow:auto;-webkit-overflow-scrolling:touch}
-.lbx img{display:block;width:100%;max-width:900px;margin:56px auto 0}
-.lbx p{max-width:900px;margin:10px auto;padding:0 16px;color:#d1d1d6;font-size:13px;line-height:1.5}
-.lbx button{position:fixed;top:calc(10px + env(safe-area-inset-top));right:12px;height:36px;padding:0 14px;border:0;border-radius:18px;background:rgba(255,255,255,.18);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.pbtn{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px 0 8px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--navy);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.pbtn svg{width:14px;height:14px}
+.pbtn.solo{margin:0 0 14px}
+.lbx{position:fixed;inset:0;z-index:30;background:#000;display:flex;flex-direction:column}
+.lbx .bar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) 12px 10px 16px;color:#fff}
+.lbx .ct{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;color:#d1d1d6}
+.lbx .x{height:36px;padding:0 14px;border:0;border-radius:18px;background:rgba(255,255,255,.18);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.lbx .trk{flex:1 1 auto;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.lbx .trk::-webkit-scrollbar{display:none}
+.lbx .sld{flex:0 0 100%;width:100%;scroll-snap-align:start;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.lbx .sld img{display:block;width:100%;max-width:900px;margin:0 auto;background:#111}
+.lbx .cap{max-width:900px;margin:12px auto 24px;padding:0 16px;color:#d1d1d6;font-size:13px;line-height:1.55}
+.lbx .cap b{display:block;color:#fff;font-size:15px;font-weight:600;margin-bottom:4px}
+.lbx .cap small{display:block;margin-top:6px;color:#8e8e93;font-size:12px}
+.lbx .sn{width:40px;height:40px;padding:0;border:0;border-radius:20px;background:rgba(255,255,255,.18);color:#fff;font:inherit;font-size:20px;line-height:40px;cursor:pointer}
+.lbx .sn:disabled{opacity:.25;cursor:default}
+.lbx .ft{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:18px;padding:10px 0 calc(14px + env(safe-area-inset-bottom))}
+.lbx .dots{display:flex;gap:6px}
+.lbx .dots i{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.3)}
+.lbx .dots i.on{background:#fff}
 .prev-card .sub{background:transparent;color:var(--mute);border-color:transparent;font-weight:600;height:38px;margin-top:4px}
 .inline{margin:0;padding:12px 14px;border-radius:14px;background:var(--sel)}
 .inline label{display:block;font-size:13.5px;font-weight:600;margin-bottom:8px}
@@ -362,7 +369,7 @@ const ITEMS = [
   price:[759000,759000,759000,759000,759000,946000,946000,'free'],
   self:'시세 확인 못 함<small>맞춤 가구라 업체 실측 견적 필요 · 참고값은 자세히</small>', selfNote:'같은 구성의 사제 시세는 찾지 못함. 참고로 맞춤 수납 가구는 자당(30cm) 약 9만~23만원 수준이고<sup>21</sup>, 기성 로봇청소기 수납장은 10만원대 제품도 있음. 옵션 수납장의 크기가 옵션표에 없어 금액을 견주지는 못함.',
   op:{opt:[], self:[], etc:[]}},
- {id:'fan', group:'개별 옵션', name:'욕실 복합 환풍기', desc:'부부욕실·가족욕실 2대', model:'힘펠 기본형',
+ {id:'fan', group:'개별 옵션', name:'욕실 복합 환풍기', desc:'부부욕실·가족욕실 2대', model:'힘펠 기본형', model2:'견본주택: 힘펠 휴젠뜨 루미',
   price:[1200000,1200000,1200000,1200000,1200000,1200000,1200000,BASE],
   self:'2곳 약 50만~120만원<sup>6</sup><small>1대 약 25만~60만원, 설치 포함</small>', selfNote:'힘펠 휴젠뜨 등 복합 환풍기 기준임. 일반 환풍기 교체는 1대 평균 약 10만원(5만~26만원)<sup>16</sup>.',
   op:{optS:'기존 스위치로 켤 수 있어 편함',selfS:'사제도 스위치 연동 가능',opt:['옵션은 기존 환풍기 스위치로 켤 수 있어 편하다는 의견'], self:['사제로 달아도 스위치 연동이 된다는 의견']}},
@@ -642,6 +649,7 @@ function stepOverview(st){
   st.appendChild(el('div','q',TYPE+' 타입 옵션<br>한눈에 보기'));
   st.appendChild(el('p','d','우리 집에서 고를 수 있는 유상옵션과 공급금액입니다(모집공고 옵션표 기준, 부가세 포함). 다음 화면부터 하나씩 여쭙니다.'));
   st.appendChild(el('p','ovtip','항목을 누르면 구성별 금액과 포함 품목이 펼쳐집니다.'));
+  addPhotos(st,'ovw','견본주택 방별 안내판');
   // 한 줄 = 누르면 세부 내용이 펼쳐지는 버튼
   const row=(name,small,val,detail)=>{
     const r=el('button','r','<span class="nm"></span><span class="pv"></span><i class="chev" aria-hidden="true"></i>'); r.type='button';
@@ -681,7 +689,6 @@ function stepOverview(st){
   if(base.length) notes.push(TYPE+'는 발코니 확장 시 다음 품목을 기본으로 줍니다: '+base.join(', '));
   box.appendChild(el('ul','note',notes.map(x=>'<li>'+x+'</li>').join('')));
   st.appendChild(box);
-  addPhotos(st,'ovw','견본주택 방별 안내판 (참고) · 누르면 크게 보임');
 }
 function baseList(){ const i=ti(TYPE), out=[]; if(KIT.price[i]===BASE) out.push('주방 Style Up'); if(INT.price[i][1]===BASE) out.push('인테리어 Style Up');
   ITEMS.forEach(it=>{ if(it.price[i]===BASE) out.push(it.name); }); return out; }
@@ -815,7 +822,7 @@ function stepPkg(st,s){
 function stepItem(st,s){
   const it=Object.assign({},s.it,{op:opFor(s.it.op)}), p=it.price[ti(TYPE)];
   const ds=typeof it.desc==='object'?(it.desc[TYPE]||it.desc['*']):it.desc;
-  head(st,esc(it.name),[TYPE,it.model?{t:it.model,m:true}:null],ABOUT[it.id]);
+  head(st,esc(it.name),[TYPE,it.model?{t:it.model,m:true}:null,it.model2?{t:it.model2,m:true}:null],ABOUT[it.id]);
   addPhotos(st,it.id);
   const sp=selfParts(it.self);
   st.appendChild(el('div','ask','하나를 골라 주세요'));
@@ -839,7 +846,6 @@ const PHOTO_SET={
   kit:[['kit_plan','주방 Style Up 안내판 (84A)'],['kit_plan_b','주방 Style Up 안내판 (84B)'],['kit_base','주방 기본 마감 안내판 (84B)']],
   int:[['int_plan','인테리어 Style Up 안내판 (84B)'],['room_living','거실 안내판 (84B)'],['room_bed1','침실1(안방) 안내판 (84A)'],['room_bed3','침실3 안내판 (84A)']],
   ovw:[['room_living','거실 (84B)'],['room_bed1','침실1·안방 (84A)'],['room_bed3','침실3 (84A)']],
-  ap:[['vent','실외기실 안내판 (84B)','실외기실 안내판에 유상 개별선택으로 \'전열교환기(LG전자 프리미엄)\'이 적혀 있음. 이 품목이 프리미엄 환기 PLUS와 같은 것인지는 확인되지 않음.']],
   jungmun:[['jungmun','현관중문 안내판 (84A)']],
   bath:[['bath_family_a','가족욕실 안내판 (84A)'],['bath_master','부부욕실 안내판 (84B)'],['bidet','비데 리모컨 (유상)'],['bath_tile','욕실 타일 안내판 (84A)']],
   closet2:[['closet2','침실2 붙박이장 안내판 (84B)','붙박이장(유상)을 고르면 스위치 설치를 위한 측벽이 함께 시공되고, 거울은 제공되지 않는다고 안내되어 있음.']],
@@ -860,31 +866,42 @@ async function loadPhotos(){   // 사진은 참여 코드 확인 뒤 서버에�
 }
 function addPhotos(st,key,label){
   if(!PHOTO_SET[key]) return;
-  if(!PH_DATA){ const holder=el('div'); st.appendChild(holder); PH_WAIT.push(()=>photoBox(holder,key,label)); loadPhotos(); return; }
+  if(!PH_DATA){ const holder=el('div'); st.appendChild(holder); PH_WAIT.push(()=>photoBox(holder,key,label,st)); loadPhotos(); return; }
   photoBox(st,key,label);
 }
-function photoBox(st,key,label){
-  const P=PH_DATA||{}, set=PHOTO_SET[key];
-  const list=set.filter(x=>P[x[0]]); if(!list.length) return;
-  const box=el('div','ph'); box.appendChild(el('div','lb',label||'견본주택 안내판 사진 · 누르면 크게 보임'));
-  const row=el('div','phr');
-  list.forEach(([id,cap,note])=>{ const b=el('button'); b.type='button';
-    const im=el('img'); im.src=P[id]; im.alt=cap; im.loading='lazy'; b.appendChild(im);
-    const c=el('span'); c.textContent=cap; b.appendChild(c);
-    b.onclick=()=>openPhoto(P[id],cap+(note?' · '+note:'')); row.appendChild(b); });
-  box.appendChild(row);
-  const notes=['견본주택 사진이며 괄호 안은 사진 속 타입임. 우리 집 타입과 구성·위치가 다를 수 있음.'];
-  list.forEach(x=>{ if(x[2]) notes.push(x[2]); });
-  box.appendChild(el('div','nt',notes.join(' ')));
-  st.appendChild(box);
+const CAM='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+function photoBox(st,key,label,root){
+  const P=PH_DATA||{}, list=PHOTO_SET[key].filter(x=>P[x[0]]); if(!list.length) return;
+  const b=el('button','pbtn',CAM+'<span></span>'); b.type='button';
+  b.lastChild.textContent=(label||'견본주택 사진')+' '+list.length+'장';
+  b.onclick=()=>openSlides(list.map(([id,cap,note])=>({src:P[id],cap,note})));
+  const chips=(root||st).querySelector('.chips2');
+  if(chips) chips.appendChild(b); else { b.classList.add('solo'); st.appendChild(b); }
 }
-function openPhoto(src,cap){
-  const o=el('div','lbx'); const im=el('img'); im.src=src; im.alt=cap; o.appendChild(im);
-  const p=el('p'); p.textContent=cap; o.appendChild(p);
-  const x=el('button'); x.type='button'; x.textContent='닫기'; o.appendChild(x);
-  const close=()=>{ o.remove(); document.removeEventListener('keydown',esc1); };
-  const esc1=e=>{ if(e.key==='Escape') close(); };
-  o.onclick=close; document.addEventListener('keydown',esc1); document.body.appendChild(o);
+function openSlides(items){
+  const o=el('div','lbx'); o.setAttribute('role','dialog'); o.setAttribute('aria-label','견본주택 사진');
+  const bar=el('div','bar'); const ct=el('span','ct'); const x=el('button','x'); x.type='button'; x.textContent='닫기';
+  bar.appendChild(ct); bar.appendChild(x); o.appendChild(bar);
+  const trk=el('div','trk'); o.appendChild(trk);
+  items.forEach(it=>{ const sd=el('div','sld'); const im=el('img'); im.src=it.src; im.alt=it.cap; sd.appendChild(im);
+    const c=el('div','cap'); const t=el('b'); t.textContent=it.cap; c.appendChild(t);
+    if(it.note){ const n=el('span'); n.textContent=it.note; c.appendChild(n); }
+    const k=el('small'); k.textContent='견본주택 사진이며 괄호 안은 사진 속 타입임. 우리 집 타입과 구성·위치가 다를 수 있음.'; c.appendChild(k);
+    sd.appendChild(c); trk.appendChild(sd); });
+  const L=el('button','sn','‹'), R=el('button','sn','›'); L.type=R.type='button'; L.setAttribute('aria-label','이전 사진'); R.setAttribute('aria-label','다음 사진');
+  const dots=el('div','dots'); items.forEach(()=>dots.appendChild(el('i')));
+  if(items.length>1){ const ft=el('div','ft'); ft.appendChild(L); ft.appendChild(dots); ft.appendChild(R); o.appendChild(ft); }
+  let cur=0;
+  const upd=()=>{ cur=Math.round(trk.scrollLeft/Math.max(1,trk.clientWidth)); cur=Math.max(0,Math.min(items.length-1,cur));
+    ct.textContent=(cur+1)+' / '+items.length; L.disabled=cur===0; R.disabled=cur===items.length-1;
+    [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur)); };
+  const to=i=>trk.scrollTo({left:i*trk.clientWidth,behavior:'smooth'});
+  L.onclick=()=>to(cur-1); R.onclick=()=>to(cur+1);
+  trk.addEventListener('scroll',()=>requestAnimationFrame(upd),{passive:true});
+  const close=()=>{ o.remove(); document.removeEventListener('keydown',key); };
+  const key=e=>{ if(e.key==='Escape') close(); else if(e.key==='ArrowRight') to(cur+1); else if(e.key==='ArrowLeft') to(cur-1); };
+  o.onclick=e=>{ if(e.target===o) close(); }; x.onclick=close;
+  document.addEventListener('keydown',key); document.body.appendChild(o); upd();
 }
 
 /* ---------- 의견 ---------- */
