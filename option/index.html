@@ -873,7 +873,8 @@ function addPhotos(st,key,label){
 const CAM='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
 function photoBox(st,key,label,root){
   const P=PH_DATA||{}, rank=x=>!/^vr_/.test(x[0])?2:(x[1].indexOf('('+TYPE+')')>=0?0:1);
-  const list=PHOTO_SET[key].filter(x=>P[x[0]]).map((x,i)=>[x,i]).sort((a,b)=>rank(a[0])-rank(b[0])||a[1]-b[1]).map(a=>a[0]); if(!list.length) return;
+  const own=x=>!/^room_/.test(x[0])||x[1].indexOf('('+TYPE+')')>=0;   // 방별 안내판은 우리 집 타입 것만
+  const list=PHOTO_SET[key].filter(x=>P[x[0]]&&own(x)).map((x,i)=>[x,i]).sort((a,b)=>rank(a[0])-rank(b[0])||a[1]-b[1]).map(a=>a[0]); if(!list.length) return;
   const b=el('button','pbtn',CAM+'<span></span>'); b.type='button';
   b.lastChild.textContent=(label||'견본주택 사진')+' '+list.length+'장';
   b.onclick=()=>openSlides(list.map(([id,cap,note])=>({src:P[id],cap,note})));
