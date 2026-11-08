@@ -427,7 +427,7 @@ const INT = {price:[[8999000,8904000],[12784000,12246000],[13156000,13093000],[1
  self:'품목별 참고값만 있음<small>벽 타일·천장 목공·조명이 섞인 묶음</small>',
  op:{optS:'하자보수 때문에 옵션으로 하겠다는 의견',selfS:'실링팬·조명만 따로 하겠다는 의견',opt:['하자보수 때문에 인테리어는 옵션으로 하겠다는 의견'], self:['실링팬·조명만 사제로 따로 하겠다는 의견']}};
 
-const CHL = {opt:'옵션',self:'사제·공구',none:'안 함'};
+const CHL = {opt:'옵션으로 계약',self:'사제·공동구매',none:'하지 않음'};   // 화면 전체 선택지 이름(한곳에서 관리)
 
 // 동별 [라인, 시작층, 끝층] : 동호수 배치도 기준 1,783세대 (1단지 1,069 · 2단지 714)
 const UNITS = {"101":[[1,2,25],[2,2,25],[3,2,27],[4,2,25]],"102":[[1,2,22],[2,2,22],[3,2,20],[4,2,22]],"103":[[1,3,19],[2,1,19],[3,1,20],[4,3,20]],"104":[[1,2,17],[2,2,17],[3,2,16],[4,2,16],[3,17,17]],"105":[[1,2,11],[2,2,11],[3,2,14],[4,2,14],[3,15,15]],"106":[[1,2,24],[2,2,24],[3,2,27],[4,2,27]],"107":[[1,1,25],[2,3,26],[3,3,26],[4,1,26]],"108":[[1,2,27],[2,2,27],[3,2,27],[4,2,25]],"109":[[1,3,27],[2,1,27],[3,3,27],[4,1,27]],"110":[[1,3,27],[2,1,27]],"111":[[1,2,27],[2,2,27],[3,2,27],[4,2,27]],"112":[[1,1,27],[2,1,27],[3,3,27]],"113":[[1,2,17],[2,2,17],[3,2,18],[4,2,18],[1,18,18]],"201":[[1,2,26],[2,2,26],[3,2,26],[4,2,26]],"202":[[1,2,19],[2,2,22]],"203":[[1,2,22],[2,2,25]],"204":[[1,3,26],[2,1,26],[3,1,26],[4,3,26]],"205":[[1,3,27],[2,1,27],[3,1,25],[4,3,25]],"206":[[1,3,25],[2,1,25],[3,1,24],[4,3,24],[3,25,25]],"207":[[1,2,23],[2,2,23],[3,2,22],[4,2,22],[3,23,23]],"208":[[1,3,23],[2,1,23]],"209":[[1,2,27],[2,2,27],[3,2,27],[4,2,27]]};
@@ -444,7 +444,7 @@ function cfgOf(rooms){ return AC[TYPE].find(r=>sameRooms(r[1].split(', '),rooms)
 // 문항별 설명 ('이 옵션은?') — 옵션표·견본주택 안내판 기준
 const ABOUT = {
  ac:'천장에 실내기를 묻어 설치하는 에어컨입니다. 옵션표에 정해진 대수 구성 중에서만 고를 수 있고, 구성마다 설치되는 방이 정해져 있습니다.',
- ap:'천장에 설치하는 시스템 공기청정기입니다. 선택안마다 설치되는 방과 대수가 정해져 있고, 프리미엄환기PLUS(1대)를 더하면 금액이 올라갑니다.',
+ ap:'천장에 설치하는 시스템 공기청정기입니다. 선택안마다 설치되는 방과 대수가 정해져 있습니다.',
  kitParts:'지금은 아래 품목을 묶음으로만 팝니다. 품목별로 나눠 판다면 옵션으로 할 품목을 모두 골라 주세요(여러 개 선택 가능).',
  kit:'주방 가구·상판·조명·천장 마감 등을 하나로 묶어 파는 옵션입니다. 품목별로 따로 계약할 수 없습니다.',
  intParts:'지금은 아래 품목을 묶음으로만 팝니다. 품목별로 나눠 판다면 옵션으로 할 품목을 모두 골라 주세요(여러 개 선택 가능).',
@@ -641,8 +641,8 @@ function stepOverview(st){
   box.appendChild(el('h4',null,'냉난방·공기'));
   row('천장형 시스템에어컨', ac.map(r=>r[0]+'대').join(' · ')+' 구성 중 선택', man(ac[0][2])+'~'+man(ac[ac.length-1][2]),
     ac.map(r=>ln('옵션 '+r[0]+'대', esc(r[1])+(r[3]?' · '+esc(r[3]):''), man(r[2]))).join('')+tx('구성마다 설치되는 방이 정해져 있음. 옵션표에 없는 구성은 에어컨 문항에서 희망을 받음.'));
-  row('시스템 공기청정기', ap.length+'개 선택안 · 환기PLUS 추가 가능', man(ap[0][3])+'~'+man(ap[ap.length-1][4]),
-    ap.map(r=>ln('선택'+r[0]+' · '+r[1]+'대', esc(r[2]), man(r[3])+'<small>환기PLUS 포함 '+man(r[4])+'</small>')).join('')+tx('프리미엄환기PLUS(1대)를 더하면 작은 글씨 금액이 됨.'));
+  row('시스템 공기청정기', ap.length+'개 선택안 · 환기 PLUS 추가 가능', man(ap[0][3])+'~'+man(ap[ap.length-1][4]),
+    ap.map(r=>ln('선택'+r[0]+' · '+r[1]+'대', esc(r[2]), man(r[3])+'<small>환기 PLUS 추가 시 '+man(r[4])+'</small>')).join('')+tx('프리미엄 환기 PLUS(LG 환기 시스템) 1대를 더하면 작은 글씨 금액이 됨.'));
   const kitB=KIT.price[i]===BASE, intB=INT.price[i][1]===BASE;
   const partsHtml=k=>partsFor(k).map(p=>ln(esc(p.name), p.small?esc(p.small):'', '')).join('');
   if(!kitB||!intB){ box.appendChild(el('h4',null,'묶음 옵션 (Style Up)'));
@@ -708,8 +708,8 @@ function stepAc(st){
   const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ const keep=(A.ac&&A.ac.rooms)||[]; A.ac={c:v,rooms:(v==='other'||v==='self')?keep:[]}; pick(ops,b); placeSub(b,v); refreshNav(); save(); }); b.dataset.v=v; ops.appendChild(b); return b; };
   rows.forEach(([n,where,price,memo])=>add('cfg:'+n,'옵션 '+n+'대',esc(where)+(memo?' · '+esc(memo):''),won(price)));
   add('other','옵션표에 없는 구성 희망','예: 주방을 뺀 4대처럼 설치할 방을 직접 고름');
-  add('self','사제·공동구매',(selfTxt?selfTxt+'<sup>11</sup> · 낮은 값 삼성, 높은 값 LG, 제품·설치 포함':'')+(miss.length?' · '+miss.join('·')+' 시세는 확인 못 함':''));
-  add('none','하지 않음','스탠드·벽걸이 등');
+  add('self',CHL.self,(selfTxt?selfTxt+'<sup>11</sup> · 낮은 값 삼성, 높은 값 LG, 제품·설치 포함':'')+(miss.length?' · '+miss.join('·')+' 시세는 확인 못 함':''));
+  add('none',CHL.none,'스탠드·벽걸이 등');
   function placeSub(btn,v){
     if(v!=='other'&&v!=='self'){ sub.classList.add('hidden'); return; }
     sub.innerHTML='<label>'+(v==='other'?'옵션으로 설치하고 싶은 방을 모두 골라 주세요':'사제로 설치할 방을 모두 골라 주세요(예상)')+'</label>';
@@ -731,13 +731,15 @@ function stepAp(st){
   const rows=AP[TYPE];
   st.appendChild(el('div','ask','하나를 골라 주세요'));
   const ops=el('div','ops'); const cur=A.ap||{};
+  const plusAdd=rows[0][4]-rows[0][3];   // 프리미엄환기PLUS 1대 추가 금액(타입마다 같음)
   const tg=el('label','togg hidden'); const cb=el('input'); cb.type='checkbox'; cb.checked=!!cur.plus;
-  cb.onchange=()=>{ A.ap.plus=cb.checked; save(); };
-  tg.appendChild(cb); tg.appendChild(el('span',null,'프리미엄환기PLUS도 함께 하겠음<small>고른 선택안의 \'환기PLUS 함께\' 금액으로 계산</small>'));
-  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ A.ap={c:v,plus:!!(A.ap&&A.ap.plus)}; pick(ops,b); tg.classList.toggle('hidden',!/^opt/.test(v)); refreshNav(); save(); }); ops.appendChild(b); };
-  rows.forEach(([k,n,where,p,pp])=>add('opt'+k,'옵션 선택'+k+' · '+n+'대',esc(where)+' · 환기PLUS 함께 '+won(pp),won(p)));
-  add('self','사제로 하겠음','일반 공기청정기 등을 따로 구입 · 천장형 사제 시세는 확인 못 함');
-  add('none','하지 않음');
+  const prices=()=>rows.forEach(([k,n,w,p,pp])=>{ const e=ops.querySelector('[data-v="opt'+k+'"] .p'); if(e) e.textContent=won(cb.checked?pp:p); });
+  cb.onchange=()=>{ A.ap.plus=cb.checked; prices(); save(); };
+  tg.appendChild(cb); tg.appendChild(el('span',null,'프리미엄 환기 PLUS 추가<small>1대 +'+man(plusAdd)+' · LG 환기 시스템으로, 바깥 공기를 걸러 들이고 실내 공기를 내보냄. 체크하면 고른 선택안 금액에 더해짐</small>'));
+  const add=(v,title,small,price)=>{ const b=opb(title,small,price,cur.c===v,()=>{ A.ap={c:v,plus:/^opt/.test(v)&&!!(A.ap&&A.ap.plus)}; if(!/^opt/.test(v)) cb.checked=false; pick(ops,b); prices(); tg.classList.toggle('hidden',!/^opt/.test(v)); refreshNav(); save(); }); b.dataset.v=v; ops.appendChild(b); };
+  rows.forEach(([k,n,where,p,pp])=>add('opt'+k,'옵션 선택'+k+' · '+n+'대',esc(where),won(cur.plus?pp:p)));
+  add('self',CHL.self,'일반 공기청정기 등을 따로 구입 · 천장형 사제 시세는 확인 못 함');
+  add('none',CHL.none);
   st.appendChild(ops); tg.classList.toggle('hidden',!/^opt/.test(cur.c||'')); st.appendChild(tg);
 }
 
@@ -775,10 +777,10 @@ function stepPkg(st,s){
   st.appendChild(el('div','ask','하나를 골라 주세요'));
   const ops=el('div','ops'); const cur=A[key];
   const add=(v,title,small,price,lite)=>{ const b=opb(title,small,price,cur===v,()=>{ A[key]=v; pick(ops,b); refreshNav(); save(); },lite); ops.appendChild(b); };
-  if(key==='kit') add('opt','옵션으로 계약',null,won(KIT.price[i]));
-  else add('opt','옵션으로 계약','주방 Style Up과 함께 계약하면 '+won(r[1]),won(r[0]));
-  add('self','사제로 하겠음',(sp.n?sp.n+' · ':'')+'필요한 품목만 입주 후 개별 시공',sp.v);
-  add('none','하지 않음',null,null,true);
+  if(key==='kit') add('opt',CHL.opt,null,won(KIT.price[i]));
+  else add('opt',CHL.opt,'주방 Style Up과 함께 계약하면 '+won(r[1]),won(r[0]));
+  add('self',CHL.self,(sp.n?sp.n+' · ':'')+'필요한 품목만 입주 후 개별 시공',sp.v);
+  add('none',CHL.none,null,null,true);
   st.appendChild(ops);
   const os=opinionStrip(P.op); if(os) st.appendChild(os);
   const mb=moreBtn(pkgName(key), P.op, null); if(mb) st.appendChild(mb);
@@ -796,10 +798,10 @@ function stepItem(st,s){
   const add=(v,title,small,price,lite)=>{ const b=opb(title,small,price,cur===v,()=>{ A[it.id]=v; pick(ops,b); refreshNav(); save(); },lite); ops.appendChild(b); };
   const lockOpt=it.id==='storage'&&!storageOk();
   if(lockOpt&&A.storage==='opt'){ delete A.storage; save(); }
-  add('opt','옵션으로 계약',lockOpt?'주방 Style Up을 \'옵션으로 계약\'으로 고른 경우에만 고를 수 있음':(ds?esc(ds):null)+(p==='free'?(ds?' · ':'')+'166P는 무상으로 고를 수 있음':''),p==='free'?'무상':won(p));
+  add('opt',CHL.opt,lockOpt?'주방 Style Up을 \'옵션으로 계약\'으로 고른 경우에만 고를 수 있음':(ds?esc(ds):null)+(p==='free'?(ds?' · ':'')+'166P는 무상으로 고를 수 있음':''),p==='free'?'무상':won(p));
   if(lockOpt) ops.lastChild.disabled=true;
-  add('self','사제·공동구매',sp.n||null,sp.v||null);
-  add('none','하지 않음',null,null,true);
+  add('self',CHL.self,sp.n||null,sp.v||null);
+  add('none',CHL.none,null,null,true);
   st.appendChild(ops);
   const os=opinionStrip(it.op); if(os) st.appendChild(os);
   const mb=moreBtn(it.name, it.op, it.selfNote); if(mb) st.appendChild(mb);
@@ -862,11 +864,11 @@ function answerText(s){
   const i=ti(TYPE), miss='<em>아직 답하지 않음</em>';
   if((s.k==='ac'&&!(A.ac&&A.ac.c))||(s.k==='ap'&&!(A.ap&&A.ap.c))||(s.k==='pkg'&&!A[s.id])||(s.k==='item'&&!A[s.it.id])) return miss;
   if(s.k==='ac'){ const a=A.ac; if(/^cfg:/.test(a.c)){ const r=AC[TYPE].find(x=>'cfg:'+x[0]===a.c); return '<b>옵션 '+r[0]+'대</b><em>'+won(r[2])+'</em>'; }
-    if(a.c==='none') return '하지 않음'; return (a.c==='other'?'옵션표에 없는 구성 희망':'사제·공구')+' · '+a.rooms.length+'대<em>'+esc(a.rooms.join(', '))+'</em>'; }
-  if(s.k==='ap'){ const a=A.ap; if(/^opt/.test(a.c)){ const r=AP[TYPE].find(x=>'opt'+x[0]===a.c); return '<b>옵션 선택'+r[0]+(a.plus?' + 환기PLUS':'')+'</b><em>'+won(a.plus?r[4]:r[3])+'</em>'; } return CHL[a.c]; }
+    if(a.c==='none') return CHL.none; return (a.c==='other'?'옵션표에 없는 구성 희망':CHL.self)+' · '+a.rooms.length+'대<em>'+esc(a.rooms.join(', '))+'</em>'; }
+  if(s.k==='ap'){ const a=A.ap; if(/^opt/.test(a.c)){ const r=AP[TYPE].find(x=>'opt'+x[0]===a.c); return '<b>옵션 선택'+r[0]+(a.plus?' + 환기 PLUS':'')+'</b><em>'+won(a.plus?r[4]:r[3])+'</em>'; } return CHL[a.c]; }
   if(s.k==='pkgParts'){ const arr=A[s.id+'P']||[]; if(arr.includes('none')) return '고를 품목 없음'; return arr.length+'개 품목<em>'+partsFor(s.id).filter(p=>arr.includes(p.id)).map(p=>esc(p.name)).join(', ')+'</em>'; }
-  if(s.k==='pkg'){ const v=A[s.id]; return v==='opt'?'<b>옵션</b><em>'+won(s.id==='kit'?KIT.price[i]:intPrice())+'</em>':CHL[v]; }
-  if(s.k==='item'){ const v=A[s.it.id], p=s.it.price[i]; return v==='opt'?'<b>옵션</b><em>'+(p==='free'?'무상':won(p))+'</em>':CHL[v]; }
+  if(s.k==='pkg'){ const v=A[s.id]; return v==='opt'?'<b>'+CHL.opt+'</b><em>'+won(s.id==='kit'?KIT.price[i]:intPrice())+'</em>':CHL[v]; }
+  if(s.k==='item'){ const v=A[s.it.id], p=s.it.price[i]; return v==='opt'?'<b>'+CHL.opt+'</b><em>'+(p==='free'?'무상':won(p))+'</em>':CHL[v]; }
   if(s.k==='memo') return A.memo?'<em>'+esc(A.memo.slice(0,40))+(A.memo.length>40?'…':'')+'</em>':'<em>없음</em>';
   return '';
 }
@@ -875,7 +877,7 @@ function stepReview(st){
   st.appendChild(el('div','q','응답을 확인해 주세요'));
   st.appendChild(el('p','d','고칠 문항을 누르면 그 문항으로 이동합니다.'));
   const tot=el('div','total','<span>옵션으로 고른 금액 합계</span><b>'+won(total())+'</b>'); st.appendChild(tot);
-  const cnt=choiceCount(); st.appendChild(el('div','tsum','<span>옵션 <b>'+cnt.opt+'</b></span><span>사제·공구 <b>'+cnt.self+'</b></span><span>안 함 <b>'+cnt.none+'</b></span>'));
+  const cnt=choiceCount(); st.appendChild(el('div','tsum','<span>'+CHL.opt+' <b>'+cnt.opt+'</b></span><span>'+CHL.self+' <b>'+cnt.self+'</b></span><span>'+CHL.none+' <b>'+cnt.none+'</b></span>'));
   const rv=el('div','rv');
   const home=el('button',null,'<span class="n">우리 집</span><span class="a">'+esc(DONG+'동 '+HO+'호 · '+TYPE)+'</span>'); home.type='button'; home.onclick=()=>go(0); rv.appendChild(home);
   STEPS.forEach((s,n)=>{ if(s.k==='home'||s.k==='overview'||s.k==='review') return;
@@ -1017,7 +1019,7 @@ function renderResults(){
     const r=el('div','ritem'); r.innerHTML='<div class="nm"><b style="font-weight:600"></b><span>'+tot+'세대</span></div>'; r.querySelector('b').textContent=name;
     const st=el('div','stack'); ['opt','self','none'].forEach(k=>{ if(c[k]){ const i=el('i'); i.style.width=(c[k]/tot*100)+'%'; i.style.background=COL[k]; st.appendChild(i);} }); r.appendChild(st);
     const pc=k=>Math.round((c[k]||0)/tot*100);
-    r.appendChild(el('div','nums','옵션 <b>'+pc('opt')+'%</b> · 사제·공구 '+pc('self')+'% · 안 함 '+pc('none')+'%'));
+    r.appendChild(el('div','nums',CHL.opt+' <b>'+pc('opt')+'%</b> · '+CHL.self+' '+pc('self')+'% · '+CHL.none+' '+pc('none')+'%'));
     if(extra) r.appendChild(extra); box.appendChild(r); };
   if(d.ac){ const c={opt:(d.ac.other||0),self:d.ac.self||0,none:d.ac.none||0}; Object.keys(d.ac).forEach(k=>{ if(/^cfg:/.test(k)) c.opt+=d.ac[k]; });
     const parts=Object.keys(d.ac).filter(k=>/^cfg:/.test(k)).sort((a,b)=>+a.slice(4)-+b.slice(4)).map(k=>'옵션 '+k.slice(4)+'대 '+d.ac[k]+'세대');
@@ -1025,7 +1027,7 @@ function renderResults(){
       parts.push('옵션표에 없는 구성 희망 '+d.ac.other+'세대'+(top.length?' — '+top.join(' / '):'')); }
     row('천장형 시스템에어컨',c,parts.length?el('div','nums',parts.join(' · ')):null); }
   if(d.ap){ const c={opt:0,self:d.ap.self||0,none:d.ap.none||0}; Object.keys(d.ap).forEach(k=>{ if(/^opt/.test(k)) c.opt+=d.ap[k]; });
-    row('시스템 공기청정기',c,d.apPlus?el('div','nums','프리미엄환기PLUS 함께 '+d.apPlus+'세대'):null); }
+    row('시스템 공기청정기',c,d.apPlus?el('div','nums','프리미엄 환기 PLUS 추가 '+d.apPlus+'세대'):null); }
   ['kit','int'].forEach(key=>{ const c=(d.items||{})[key]; if(!c) return; const ex=el('div');
     const pp=(d.parts||{})[key], base=(d.partsBase||{})[key]||0;
     if(pp&&base){ ex.appendChild(el('div','nums','나눠 판다면 옵션으로 고르겠다는 비율'));
