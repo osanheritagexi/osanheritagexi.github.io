@@ -86,6 +86,23 @@ a{color:var(--blue)}
 .two figcaption{font-size:13px}
 h3{font-size:17px;margin:30px 0 8px}
 @media (max-width:480px){h1{font-size:28px}.lead{font-size:17px}h2{font-size:21px}body{font-size:16px}}
+.cmp{margin:22px 0 4px}
+.cmp .r{display:grid;grid-template-columns:1fr auto;align-items:end;gap:6px 10px;margin-bottom:14px;font-size:14px;color:var(--sub)}
+.cmp .r b{color:var(--ink);font-size:20px;font-weight:700;line-height:1}
+.cmp .bar{grid-column:1/-1;height:8px;border-radius:4px;background:var(--soft)}
+.cmp .bar i{display:block;height:100%;background:#8e8e93;border-radius:4px}
+.cmp .r.me b{color:var(--red)}
+.cmp .r.me .bar i{background:var(--red)}
+.verdict{font-size:19px;line-height:1.55;font-weight:600;letter-spacing:-0.02em;margin:20px 0 0;padding-top:18px;border-top:1px solid var(--line)}
+.verdict a{font-size:14px;font-weight:500;white-space:nowrap}
+.ck{list-style:none;padding:0;margin:18px 0;border-top:1px solid var(--line)}
+.ck li{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.ck b{font-size:16.5px;font-weight:600;line-height:1.45}
+.ck .d{grid-column:1/-1;font-size:15px;color:#3a3a3c;line-height:1.65}
+.chip{font-style:normal;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;align-self:start;margin-top:1px;border:1px solid #d1d1d6;color:var(--sub)}
+.chip.x{background:var(--red);border-color:var(--red);color:#fff}
+.chip.t{background:var(--soft);color:var(--ink)}
+.tag{font-size:13px;font-weight:700;color:var(--red);letter-spacing:.02em;margin:30px 0 -18px}
 </style>
 </head>
 <body>
@@ -96,6 +113,11 @@ h3{font-size:17px;margin:30px 0 8px}
   <h1>양산1초 셀프 통학안전평가</h1>
   <p class="sub">80m를 두고, 800m를 걷습니다.</p>
   <p class="lead">단지 앞 양산초를 두고 아이들은 서부로 건너 양산1초로 배정됐습니다. 2029년 입주하는 오산헤리티지자이 1·2단지(1,783세대)의 초등학교 배정 계획과, 그 아이들이 걷게 될 길을 공개 자료와 현장 사진으로 기록했습니다.</p>
+  <div class="cmp">
+    <div class="r"><span>단지 경계에서 양산초까지</span><b>80m</b><div class="bar"><i style="width:10%"></i></div></div>
+    <div class="r me"><span>배정된 (가칭)양산1초까지</span><b>약 800m</b><div class="bar"><i style="width:100%"></i></div></div>
+  </div>
+  <p class="verdict">그 800m를 직접 걷고 10개 항목으로 평가했습니다. <span class="key">5개 미충족, 4개 우려.</span> 충족은 1개였습니다. <a href="#check">평가표 보기</a></p>
 </header>
 
 <div class="toc">
@@ -103,9 +125,10 @@ h3{font-size:17px;margin:30px 0 8px}
   <ol>
     <li><a href="#where">단지 주변 초등학교 세 곳</a></li>
     <li><a href="#walk">걸어 보았다</a></li>
+    <li><a href="#check">체크리스트 평가 — 10개 항목</a></li>
     <li><a href="#land">이 길은 바뀌는가 — 지적 조회</a></li>
     <li><a href="#plan">배정 계획 — 부지는 같은데 세대는 1.9배</a></li>
-    <li><a href="#ask">묻고 싶은 것</a></li>
+    <li><a href="#ask">제기하는 의혹, 그리고 질문</a></li>
   </ol>
 </div>
 
@@ -136,7 +159,6 @@ h3{font-size:17px;margin:30px 0 8px}
 
 <h3>지하보도를 나오면 — 서부로 연결도로와 좁은 보도</h3>
 <p>지하보도를 나와 처음 마주하는 곳은 <b>왕복 6차로 서부로로 빠지는 연결도로</b>입니다. 보도는 한쪽에만 있고 폭은 눈대중으로 1.7m 안팎입니다. 어른 둘이 나란히 걷기에 넉넉하지 않습니다.</p>
-<p>「도로의 구조·시설 기준에 관한 규칙」은 보도의 유효폭을 <b>최소 2m</b>로 정하고, 부득이한 경우에만 1.5m까지 허용합니다. 초등학생이 무리 지어 다닐 통학로라면 2m는 확보해야 할 폭입니다. 그런데 이 길은 넓히기가 쉽지 않습니다. <b>보도 오른쪽은 논과 카센터·세차장 진출입로가 바로 붙어 있고, 왼쪽으로 넓히면 왕복 2차로인 차로를 깎아야 합니다.</b></p>
 <figure><img src="https://lh3.googleusercontent.com/d/1JBm3WpqCZ1VyyztB0jss4rgH19Un0pOl=w1600" alt="지하보도 출구에서 본 연결도로" loading="lazy"><figcaption><b>출구에서 본 길.</b> 왼쪽 위로 올라가는 길이 서부로 진입로, 트럭이 서 있는 쪽이 터미널 앞길 방향입니다.</figcaption></figure>
 <figure><img src="https://lh3.googleusercontent.com/d/1drBKZg2L94jcp6ADWxJnYbllQqozLMd7=w1600" alt="보도 시작 구간" loading="lazy"><figcaption><b>보도의 시작.</b> 지하보도 구조물과 차도 사이에 보도가 끼어 있습니다. 점자블록은 깔려 있습니다.</figcaption></figure>
 <figure><img src="https://lh3.googleusercontent.com/d/1Viska7U_aELRcm-dqf32K1WJ2_NgvC9P=w1600" alt="연결도로 전경" loading="lazy"><figcaption><b>연결도로와 중장비 야적장.</b> 길 건너 왼쪽, '한국토건중기' 간판이 걸린 곳이 중장비 야적장입니다. 굴착기와 트럭이 드나드는 마당이 길에 바로 붙어 있습니다. 한진택배 터미널은 이보다 더 올라가야 나오는 별개의 시설입니다.</figcaption></figure>
@@ -174,7 +196,23 @@ h3{font-size:17px;margin:30px 0 8px}
 <p>등하교 시간에는 지하차도 교차로와 왕복 2차로 터미널 앞길에 학부모 차량이 몰려 정체가 예상됩니다(통행량을 조사한 것은 아닙니다). 그 차들은 택배차·화물차와 같은 길을 씁니다.</p>
 <p>어느 길로 가든 <b>서부로를 지하로 통과한 뒤 터미널 앞길의 터미널·야적장 구간을 지나는 것은 같습니다.</b> 보도가 좁거나 끊긴 것은 고칠 수 있지만, 택배 터미널과 중장비 야적장은 사유지에서 합법적으로 영업하는 시설이라 통학로를 고쳐도 없어지지 않습니다.</p>
 
-<h2 id="land"><small>3</small>이 길은 바뀌는가 — 지적 조회</h2>
+<h2 id="check"><small>3</small>체크리스트 평가 — 10개 항목</h2>
+<p>법정 평가가 아닙니다. 초등학생이 혼자 걸어도 되는 길인지를 열 가지 질문으로 묻고, 걸으며 본 것으로 답했습니다. 보도 폭만 법령 기준을 따랐습니다.</p>
+<ul class="ck">
+  <li><b>1. 큰 도로를 차와 마주치지 않고 건너는가</b><i class="chip">충족</i><span class="d">서부로는 지하보도로 지납니다. 남쪽 출구에는 계단과 경사로가 함께 있습니다.</span></li>
+  <li><b>2. 지하보도는 안심하고 지날 상태인가</b><i class="chip t">우려</i><span class="d">벽과 천장에 물이 샌 자국이 길게 남아 있고, 맑은 날에도 바닥에 물이 고여 있었습니다.</span></li>
+  <li><b>3. 보도가 길 양쪽에 있는가</b><i class="chip x">미충족</i><span class="d">지하보도를 나온 뒤로는 한쪽에만 있습니다. 터미널과 야적장이 있는 쪽에는 보도가 없습니다.</span></li>
+  <li><b>4. 보도 폭이 2m 이상인가</b><i class="chip x">미충족</i><span class="d">눈대중으로 1.7m 안팎입니다. 「도로의 구조·시설 기준에 관한 규칙」은 보도의 유효폭을 최소 2m로 정하고, 부득이한 경우에만 1.5m까지 허용합니다. 넓히기도 쉽지 않습니다. 보도 오른쪽은 논과 카센터·세차장 진출입로가 바로 붙어 있고, 왼쪽으로 넓히면 왕복 2차로인 차로를 깎아야 합니다.</span></li>
+  <li><b>5. 길가에 화물차가 드나드는 시설이 없는가</b><i class="chip x">미충족</i><span class="d">중장비 야적장과 한진택배 터미널이 길에 바로 붙어 있습니다. 낮 10분 남짓 사이에도 택배차와 대형 트럭이 계속 드나들었습니다.</span></li>
+  <li><b>6. 보도를 가로지르는 차량 출입구가 없는가</b><i class="chip x">미충족</i><span class="d">타이어 가게, 카센터, 손세차장의 출입구가 보도를 가로지릅니다. 보도 옆에는 타이어가 쌓여 있습니다.</span></li>
+  <li><b>7. 공사 차량과 떨어져 있는가</b><i class="chip t">우려</i><span class="d">학교 부지 앞은 롯데캐슬 공사장입니다. 이 공사가 끝나면 학교 부지가 공사장이 됩니다.</span></li>
+  <li><b>8. 차로 데려다줄 때 길이 감당하는가</b><i class="chip t">우려</i><span class="d">차량 지하차도 교차로와 왕복 2차로 길을 택배차·화물차와 함께 써야 합니다. 등하교 시간 정체가 예상되지만 통행량을 조사하지는 못했습니다.</span></li>
+  <li><b>9. 개교 전에 나아진다는 계획이 확인되는가</b><i class="chip t">우려</i><span class="d">길을 20m 이상으로 넓히는 도시계획은 있으나 언제 공사하는지는 확인하지 못했습니다. 넓어져도 터미널과 야적장은 그대로입니다.</span></li>
+  <li><b>10. 이 구간을 피해 갈 다른 길이 있는가</b><i class="chip x">미충족</i><span class="d">보행 지하보도로 가든 차량 지하차도로 가든, 터미널과 야적장 앞을 지나야 학교에 닿습니다.</span></li>
+</ul>
+<p class="big">충족 1, 우려 4, 미충족 5. <span class="key">고칠 수 있는 것은 보도이고, 고칠 수 없는 것은 길가의 시설입니다.</span></p>
+
+<h2 id="land"><small>4</small>이 길은 바뀌는가 — 지적 조회</h2>
 <p>사진만으로는 "지금은 그렇지만 곧 바뀐다"는 반론이 가능합니다. 그래서 길 양옆 필지를 토지이음(국토교통부 토지이용규제정보)에서 하나씩 찾아보았습니다. 2026년 11월 9일 기준입니다.</p>
 <figure><img src="https://lh3.googleusercontent.com/d/1Mt_b7OaGeXAh-s7u-kqqMGlZV-QPB8h-=w1600" data-full="https://lh3.googleusercontent.com/d/1Mt_b7OaGeXAh-s7u-kqqMGlZV-QPB8h-=w1600" alt="터미널 앞길 양옆 필지의 지번과 지목" loading="lazy"><figcaption>터미널 앞길 양옆 땅의 지번과 지목. 전 구간 자연녹지지역, 점 위치는 대략입니다</figcaption></figure>
 <p>확인한 사실은 네 가지입니다.</p>
@@ -184,23 +222,27 @@ h3{font-size:17px;margin:30px 0 8px}
 <p><b>넷째, 카센터·세차장 블록(117-1, 117-15)은 지목이 주유소용지입니다.</b> 차량 관련 업종이 들어서도록 되어 있는 땅입니다. 한진 터미널 부지(126-1)는 공장용지 4,998㎡에 건물은 139.5㎡ 한 동뿐이고, 도시계획시설이나 개발구역이 아니어서 공공이 사들이거나 옮길 근거가 없습니다.</p>
 <div class="note"><div class="t">법이 보는 학교 주변</div>이 길 전체가 (가칭)양산1초 설립예정지 기준 <b>교육환경보호구역(상대보호구역, 학교 경계에서 200m)</b> 안입니다. 택배 터미널이나 중장비 야적장은 이 법의 금지시설이 아니므로 위법은 아닙니다. 다만 법이 특별히 보호하라고 정한 바로 그 구역에서 대형 화물차가 드나든다는 사실은 달라지지 않습니다.</div>
 
-<h2 id="plan"><small>4</small>배정 계획 — 부지는 같은데 세대는 1.9배</h2>
+<h2 id="plan"><small>5</small>배정 계획 — 부지는 같은데 세대는 1.9배</h2>
 <figure><img src="https://lh3.googleusercontent.com/d/1AK3USTx-pZ0vBcqjp-OX-XfGpwstN6b-=w1600" data-full="https://lh3.googleusercontent.com/d/1AK3USTx-pZ0vBcqjp-OX-XfGpwstN6b-=w1600" alt="현재 배정 계획 — 양산초 3,008세대, 양산1초 5,714세대" loading="lazy"><figcaption>화성오산교육지원청 학생배치계획(2026. 9. 정보공개 답변)을 단지별로 옮긴 것</figcaption></figure>
 <p class="big">양산초 부지 11,992㎡에 3,008세대, 양산1초 부지 12,037㎡에 5,714세대. 부지는 같은데 세대는 <span class="key">1.9배</span>입니다.</p>
 <p>5,714세대 가운데 <b>늘푸른오스카빌 600세대</b>는 지금 양산초에 다니는 기존 단지라 새로 이사 오는 세대만 옮겨 가고, <b>오산세마2지구 1,659세대</b>는 분양공고 전이라 입주 시기를 알 수 없습니다. 2030년 개교 때 양산1초를 채우는 것은 <b>롯데캐슬위너스포레 1,672세대와 오산헤리티지자이 1,783세대</b>입니다. 교육지원청이 써 온 기준값(세대당 초등학생 0.292명, 학급당 28명)으로 1,009명, <b>36학급</b> — 양산1초의 계획 규모와 같습니다. 롯데캐슬만으로는 18학급 안팎으로 경기도교육청 최소 적정규모(24학급)에 미치지 못합니다.</p>
 <div class="alert"><span class="key">오산헤리티지자이 학생이 빠지면 양산1초 36학급은 성립하지 않습니다.</span> 양산1초 부지는 2003년에 정해져 2014년 양산2구역(롯데캐슬) 지구단위계획에 들어간 땅이고, 양산4지구는 2024년에 지정됐습니다. <span class="key">이 단지의 학생 수가 양산2구역 학교 설립의 토대로 쓰이고 있습니다.</span></div>
 <p>양산1초는 교육부 중앙투자심사를 통과해 2030년 3월 개교 예정으로 보도되었습니다. 설립이 확정된 만큼 남는 질문은 배정입니다. 배정표의 5,714세대가 다 들어오면 같은 기준값으로 약 1,670명, 36개 교실에 학급당 46명이 됩니다. 양산초는 지금 25학급 506명이고 힐스테이트 970세대를 더해도 약 790명으로, 2017년에 34학급 915명을 받았던 건물입니다. 한쪽은 비고 한쪽은 넘치는 계획입니다.</p>
-<p class="big">서부로는 양산동을 남과 북으로 끊어 놓았습니다. 통학로를 정비하면 끊긴 두 동네가 이어지고, 아이들이 오가면 거리가 살아나고 상가도 들어설 것입니다. 그 발전은 양산동에 필요한 일입니다. <span class="key">그런데 왜 그 첫 토대와 시발점이 아이들의 안전이어야 합니까.</span></p>
-<p class="big">오산헤리티지자이 아이들은 더 가까운 학교를 두고, 더 멀고 더 붐빌 학교로 가게 되어 있습니다. <span class="key">이 배정이 누구의 필요에 따라 정해졌는지, 어떤 사정과 이해관계가 있었는지 철저히 조사하고 설명해야 합니다.</span></p>
-<p>통학구역은 교육장이 해마다 다시 정하며(초·중등교육법 시행령 제16조) 오산헤리티지자이가 처음 들어가는 통학구역은 2028년 9~10월에 행정예고됩니다. 아직 바꿀 수 있습니다.</p>
 
-<h2 id="ask"><small>5</small>묻고 싶은 것</h2>
+<h2 id="ask"><small>6</small>제기하는 의혹, 그리고 질문</h2>
+<p>걸어 본 길과 배정표를 나란히 놓으면 두 가지 의혹이 남습니다.</p>
+<p class="tag">의혹 1 · 학생 수가 양산1초를 채우는 데 쓰였는가</p>
+<p class="big">오산헤리티지자이 아이들은 더 가까운 학교를 두고, 더 멀고 더 붐빌 학교로 가게 되어 있습니다. <span class="key">이 배정이 누구의 필요에 따라 정해졌는지, 어떤 사정과 이해관계가 있었는지 철저히 조사하고 설명해야 합니다.</span></p>
+<p class="tag">의혹 2 · 아이들의 통학이 남북 연결의 첫 토대로 쓰였는가</p>
+<p class="big">서부로는 양산동을 남과 북으로 끊어 놓았습니다. 통학로를 정비하면 끊긴 두 동네가 이어지고, 아이들이 오가면 거리가 살아나고 상가도 들어설 것입니다. 그 발전은 양산동에 필요한 일입니다. <span class="key">그런데 왜 그 첫 토대와 시발점이 아이들의 안전이어야 합니까.</span></p>
+<h3>오산시와 화성오산교육지원청에 묻습니다</h3>
 <ul class="q">
   <li><b><span class="n">1</span>80m에 학교를 두고 왜 800m 길인가</b><span>통학구역을 정할 때 통학 안전은 어디까지 고려됐는지, 양산초·새봄초가 아닌 양산1초로 정한 근거 문서는 무엇인지 공개해 주시기 바랍니다.</span></li>
   <li><b><span class="n">2</span>부지가 같은 두 학교에 세대를 1.9배로 나눈 이유는 무엇인가</b><span><span class="key">오산헤리티지자이 아이들이 양산1초 36학급의 절반을 채우는 숫자로 쓰이고 있는 것은 아닌지, 더 멀고 더 붐빌 학교로 가야 하는 데 어떤 사정과 이해관계가 있었는지</span> 설명이 필요합니다.</span></li>
   <li><b><span class="n">3</span>양산동 남북을 잇는 일의 시발점이 왜 아이들의 통학이어야 하는가</b><span>터미널 앞길은 양산2구역과 양산로를 잇는 20m 계획도로입니다. 서부로로 끊긴 남북을 잇는 일은 필요하지만, 길이 완성되기 전 터미널과 야적장 사이로 아이들을 먼저 걷게 하는 것이 그 출발점이어야 하는지 묻습니다.</span></li>
   <li><b><span class="n">4</span>등하교 시간의 교통을 예상하고 있는가</b><span>교육지원청이 이 단지 초등학생을 약 300명으로 본다는 이야기가 있습니다(공식 문서로는 확인하지 못했습니다). 이 길을 아이 혼자 걷게 할 부모는 많지 않을 것이고, 상당수가 자차로 데려다줄 것입니다. 차량 지하차도 교차로와 왕복 2차로 터미널 앞길, 학교 앞에 등하교 차량이 몰리면 체증과 함께 걷는 아이들의 위험도 커집니다. 오산시와 교육지원청은 이 교통을 예상하고 있는지, 대책이 있는지 묻습니다.</span></li>
 </ul>
+<p style="margin-top:26px">통학구역은 교육장이 해마다 다시 정하며(초·중등교육법 시행령 제16조) 오산헤리티지자이가 처음 들어가는 통학구역은 2028년 9~10월에 행정예고됩니다. <b>아직 바꿀 수 있습니다.</b></p>
 
 
 </div>
