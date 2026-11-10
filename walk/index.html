@@ -116,6 +116,7 @@ header.top{padding:34px 0 0}.kicker{margin-bottom:14px}h1{margin-bottom:14px}
 .end{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--sub)}
 @media (min-width:761px){.dark{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:calc(50vw - 340px);padding-right:calc(50vw - 340px)}}
 .small{font-size:13px;color:var(--sub)}
+.pswp__cap{position:absolute;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom));text-align:center;color:#fff;font-size:15px;font-weight:600;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 </style>
 </head>
 <body>
@@ -147,7 +148,7 @@ header.top{padding:34px 0 0}.kicker{margin-bottom:14px}h1{margin-bottom:14px}
 
 <h3>서부로 아래, 보행 지하보도</h3>
 <figure><img data-w="1600" data-h="739" src="https://lh3.googleusercontent.com/d/1VvjSXILn0Qqs1TMz6PttXBJ3bsu9yvxU=w1600" alt="게이트볼장 옆 광장에서 본 지하보도 입구" loading="lazy"><figcaption><b>게이트볼장 옆 광장.</b> 상가 뒤편에 지하보도 입구가 있습니다.</figcaption></figure>
-<figure><img data-w="1600" data-h="1088" src="https://lh3.googleusercontent.com/d/1G5w3V8SJJ_Ct92canKn0a0nVqLwbrlx1=w1600" data-full="https://lh3.googleusercontent.com/d/1G5w3V8SJJ_Ct92canKn0a0nVqLwbrlx1=w2000" alt="지하보도 입구, 내부, 바닥의 고인 물, 벽 이음새 누수 자국, 출구 쪽 벽의 틈" loading="lazy"><figcaption><b>지하보도 안.</b> 천장과 벽에 물 자국, 맑은 날에도 바닥에 고인 물, 출구 쪽 벽의 긴 틈.</figcaption></figure>
+<figure><img data-parts='[{"id":"1nDsp5FsxqfqgBPh84AJeZ5H3huVZ7WfO","w":1600,"h":739,"c":"지하보도 입구","b":[0.0,0.0,0.4975,0.4044]},{"id":"16fQAHcmZgjY6hYuBPtBB2g2-wIH87P5x","w":1600,"h":739,"c":"지하보도 내부","b":[0.5025,0.0,1.0,0.4044]},{"id":"1w55QCNwWUZ1o_qn7cEM2z2lq6jUE8PWq","w":739,"h":1600,"c":"바닥에 고인 물","b":[0.0,0.4118,0.275,1.0]},{"id":"1OyvhVyZlCLGxoKFujH-mY6bh3zd0iNHX","w":1600,"h":739,"c":"벽 이음새 누수 자국","b":[0.28,0.4118,0.72,1.0]},{"id":"1a3SEQUDLWbszgBDF93lf8OSjdnFC21hn","w":739,"h":1600,"c":"출구 쪽 벽의 틈","b":[0.725,0.4118,1.0,1.0]}]' data-w="1600" data-h="1088" src="https://lh3.googleusercontent.com/d/1G5w3V8SJJ_Ct92canKn0a0nVqLwbrlx1=w1600" data-full="https://lh3.googleusercontent.com/d/1G5w3V8SJJ_Ct92canKn0a0nVqLwbrlx1=w2000" alt="지하보도 입구, 내부, 바닥의 고인 물, 벽 이음새 누수 자국, 출구 쪽 벽의 틈" loading="lazy"><figcaption><b>지하보도 안.</b> 천장과 벽에 물 자국, 맑은 날에도 바닥에 고인 물, 출구 쪽 벽의 긴 틈.</figcaption></figure>
 <p>벽화는 밝지만 천장과 벽에 물이 샌 자국이 길게 남아 있고, 맑은 날인데도 바닥에 물이 고여 있습니다. 출구 쪽 벽에는 천장부터 바닥까지 이어진 틈을 따라 물이 흘러내린 자국이 있습니다.</p>
 <p>나가는 쪽은 두 갈래입니다. <b>왼쪽은 계단, 오른쪽은 유모차도 다닐 수 있는 경사로</b>입니다. 들어온 쪽(단지 쪽)은 평지로 바로 이어집니다.</p>
 <div class="two">
@@ -251,21 +252,44 @@ header.top{padding:34px 0 0}.kicker{margin-bottom:14px}h1{margin-bottom:14px}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
 <script type="module">
 import PhotoSwipe from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js';
+const U='https://lh3.googleusercontent.com/d/';
 const imgs=[...document.querySelectorAll('figure img')];
-function open(i){
-  const ds=imgs.map(el=>{
-    const w=+el.dataset.w||el.naturalWidth||1600, h=+el.dataset.h||el.naturalHeight||1000;
-    const cs=getComputedStyle(el);
-    return {src:el.dataset.full||el.currentSrc||el.src, msrc:el.currentSrc||el.src, width:w, height:h, element:el, alt:el.alt, thumbCropped:cs.objectFit==='cover'};
+function build(){
+  const ds=[],start=[];
+  imgs.forEach(el=>{
+    start.push(ds.length);
+    if(el.dataset.parts){
+      JSON.parse(el.dataset.parts).forEach(p=>ds.push({src:U+p.id+'=w1600',msrc:U+p.id+'=w400',width:p.w,height:p.h,alt:p.c,caption:p.c,element:el,box:p.b}));
+    }else{
+      const w=+el.dataset.w||el.naturalWidth||1600,h=+el.dataset.h||el.naturalHeight||1000;
+      ds.push({src:el.dataset.full||el.currentSrc||el.src,msrc:el.currentSrc||el.src,width:w,height:h,element:el,alt:el.alt,thumbCropped:getComputedStyle(el).objectFit==='cover'});
+    }
   });
-  const p=new PhotoSwipe({dataSource:ds,index:i,bgOpacity:0.96,showHideAnimationType:'zoom',
+  return {ds,start};
+}
+function open(i,e){
+  const {ds,start}=build(); let idx=start[i]; const el=imgs[i];
+  if(el.dataset.parts&&e){
+    const r=el.getBoundingClientRect(),fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;
+    JSON.parse(el.dataset.parts).forEach((p,k)=>{const b=p.b;if(fx>=b[0]&&fx<=b[2]&&fy>=b[1]&&fy<=b[3])idx=start[i]+k;});
+  }
+  const p=new PhotoSwipe({dataSource:ds,index:idx,bgOpacity:0.96,showHideAnimationType:'zoom',
     secondaryZoomLevel:z=>Math.min(z.fit*2.5,Math.max(z.fit,1.4)),maxZoomLevel:z=>Math.max(z.fit*4,2),
     wheelToZoom:true,imageClickAction:'zoom-or-close',tapAction:'close',doubleTapAction:'zoom',
     closeOnVerticalDrag:true,pinchToClose:true,padding:{top:20,bottom:20,left:0,right:0},
     closeTitle:'닫기',zoomTitle:'확대',arrowPrevTitle:'이전',arrowNextTitle:'다음',errorMsg:'사진을 불러오지 못했습니다'});
+  p.addFilter('thumbBounds',(tb,item)=>{
+    if(!item.box||!item.element)return tb;
+    const r=item.element.getBoundingClientRect(),b=item.box;
+    const cx=r.left+b[0]*r.width,cy=r.top+b[1]*r.height,cw=(b[2]-b[0])*r.width,ch=(b[3]-b[1])*r.height;
+    const z=Math.max(cw/item.width,ch/item.height),ox=(cw-item.width*z)/2,oy=(ch-item.height*z)/2;
+    return {x:cx+ox,y:cy+oy,w:item.width*z,innerRect:{w:cw,h:ch,x:ox,y:oy}};
+  });
+  p.on('uiRegister',()=>{p.ui.registerElement({name:'cap',order:9,isButton:false,appendTo:'root',html:'',
+    onInit:(el2,ps)=>{const u=()=>{const c=ps.currSlide&&ps.currSlide.data.caption;el2.textContent=c||'';el2.style.display=c?'block':'none';};ps.on('change',u);u();}});});
   p.init();
 }
-imgs.forEach((el,i)=>el.addEventListener('click',e=>{e.preventDefault();open(i);}));
+imgs.forEach((el,i)=>el.addEventListener('click',e=>{e.preventDefault();open(i,e);}));
 </script>
 </body>
 </html>
