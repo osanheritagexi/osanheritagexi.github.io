@@ -296,8 +296,13 @@ function open(i,e){
   });
   p.on('uiRegister',()=>{p.ui.registerElement({name:'cap',order:9,isButton:false,appendTo:'root',html:'',
     onInit:(el2,ps)=>{const u=()=>{const c=ps.currSlide&&ps.currSlide.data.caption;el2.textContent=c||'';el2.style.display=c?'block':'none';};ps.on('change',u);u();}});});
+  history.pushState({pswp:1},'');
+  p.on('close',()=>{cur=null;if(history.state&&history.state.pswp)history.back();});
+  cur=p;
   p.init();
 }
+let cur=null;
+addEventListener('popstate',()=>{if(cur){const c=cur;cur=null;c.close();}});
 imgs.forEach((el,i)=>el.addEventListener('click',e=>{e.preventDefault();open(i,e);}));
 </script>
 </body>
